@@ -4,24 +4,24 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.1.0.post165"
-version_tuple = (0, 1, 0, 165)
+version_str = "0.1.1.post126"
+version_tuple = (0, 1, 1, 126)
 try:
     from packaging.version import Version as V
-    pversion = V("0.1.0.post165")
+    pversion = V("0.1.1.post126")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.1.0.post39"
-data_version_tuple = (0, 1, 0, 39)
+data_version_str = "0.1.1.post0"
+data_version_tuple = (0, 1, 1, 0)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.1.0.post39")
+    pdata_version = V("0.1.1.post0")
 except ImportError:
     pass
 data_git_hash = "ebbe1ecac502a5905347eee0e7430b6357710235"
-data_git_describe = "0.1.0-39-gebbe1ec"
+data_git_describe = "0.1.1-0-gebbe1ec"
 data_git_msg = """\
 commit ebbe1ecac502a5905347eee0e7430b6357710235
 Merge: b798165 3b7eba9
