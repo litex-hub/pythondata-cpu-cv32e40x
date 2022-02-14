@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.1.0.post156"
-version_tuple = (0, 1, 0, 156)
+version_str = "0.1.0.post165"
+version_tuple = (0, 1, 0, 165)
 try:
     from packaging.version import Version as V
-    pversion = V("0.1.0.post156")
+    pversion = V("0.1.0.post165")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.1.0.post30"
-data_version_tuple = (0, 1, 0, 30)
+data_version_str = "0.1.0.post39"
+data_version_tuple = (0, 1, 0, 39)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.1.0.post30")
+    pdata_version = V("0.1.0.post39")
 except ImportError:
     pass
-data_git_hash = "b7981654bc917a3ced2ba0068ddfbe15f1eacc16"
-data_git_describe = "0.1.0-30-gb798165"
+data_git_hash = "ebbe1ecac502a5905347eee0e7430b6357710235"
+data_git_describe = "0.1.0-39-gebbe1ec"
 data_git_msg = """\
-commit b7981654bc917a3ced2ba0068ddfbe15f1eacc16
-Merge: e0f7db0 a46a260
+commit ebbe1ecac502a5905347eee0e7430b6357710235
+Merge: b798165 3b7eba9
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Fri Feb 11 12:25:47 2022 +0100
+Date:   Mon Feb 14 15:12:48 2022 +0100
 
-    Merge pull request #428 from silabs-oysteink/silabs-oysteink_UM-mstatus
+    Merge pull request #429 from silabs-halfdan/finalized_core_interface
     
-    Updated cycle counts and hazards.
+    Finalized core interface
 
 """
 
