@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.1.1.post140"
-version_tuple = (0, 1, 1, 140)
+version_str = "0.1.1.post143"
+version_tuple = (0, 1, 1, 143)
 try:
     from packaging.version import Version as V
-    pversion = V("0.1.1.post140")
+    pversion = V("0.1.1.post143")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.1.1.post14"
-data_version_tuple = (0, 1, 1, 14)
+data_version_str = "0.1.1.post17"
+data_version_tuple = (0, 1, 1, 17)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.1.1.post14")
+    pdata_version = V("0.1.1.post17")
 except ImportError:
     pass
-data_git_hash = "e67f8e3449ba3c8fef4f3028fc6ea154efd824fa"
-data_git_describe = "0.1.1-14-ge67f8e3"
+data_git_hash = "cf8a85b7a25df497a9669cf0ad7cf3515eb4057e"
+data_git_describe = "0.1.1-17-gcf8a85b"
 data_git_msg = """\
-commit e67f8e3449ba3c8fef4f3028fc6ea154efd824fa
-Merge: 9de70dc d88a9a0
-Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Tue Feb 15 15:17:19 2022 +0100
+commit cf8a85b7a25df497a9669cf0ad7cf3515eb4057e
+Merge: e67f8e3 3ac62d6
+Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
+Date:   Tue Feb 15 15:46:29 2022 +0100
 
-    Merge pull request #432 from Silabs-ArjanB/ArjanB_doccl
+    Merge pull request #433 from silabs-halfdan/clic_if_update
     
-    CLIC related documentation updates
+    Updated CLIC interface signals and added them to documentation
 
 """
 
