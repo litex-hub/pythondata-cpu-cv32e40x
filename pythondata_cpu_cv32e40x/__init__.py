@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.1.1.post126"
-version_tuple = (0, 1, 1, 126)
+version_str = "0.1.1.post135"
+version_tuple = (0, 1, 1, 135)
 try:
     from packaging.version import Version as V
-    pversion = V("0.1.1.post126")
+    pversion = V("0.1.1.post135")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.1.1.post0"
-data_version_tuple = (0, 1, 1, 0)
+data_version_str = "0.1.1.post9"
+data_version_tuple = (0, 1, 1, 9)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.1.1.post0")
+    pdata_version = V("0.1.1.post9")
 except ImportError:
     pass
-data_git_hash = "ebbe1ecac502a5905347eee0e7430b6357710235"
-data_git_describe = "0.1.1-0-gebbe1ec"
+data_git_hash = "1d56e0e1eae6925c62fbbf2fea8a3fe155ac802a"
+data_git_describe = "0.1.1-9-g1d56e0e"
 data_git_msg = """\
-commit ebbe1ecac502a5905347eee0e7430b6357710235
-Merge: b798165 3b7eba9
+commit 1d56e0e1eae6925c62fbbf2fea8a3fe155ac802a
+Merge: ebbe1ec 21bc43e
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Mon Feb 14 15:12:48 2022 +0100
+Date:   Tue Feb 15 07:59:49 2022 +0100
 
-    Merge pull request #429 from silabs-halfdan/finalized_core_interface
+    Merge pull request #430 from silabs-oysteink/silabs-oysteink_UM-CSR-1
     
-    Finalized core interface
+    Doc only: User manual CSR updates
 
 """
 
