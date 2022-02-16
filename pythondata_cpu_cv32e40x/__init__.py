@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.1.1.post143"
-version_tuple = (0, 1, 1, 143)
+version_str = "0.1.1.post145"
+version_tuple = (0, 1, 1, 145)
 try:
     from packaging.version import Version as V
-    pversion = V("0.1.1.post143")
+    pversion = V("0.1.1.post145")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.1.1.post17"
-data_version_tuple = (0, 1, 1, 17)
+data_version_str = "0.1.1.post19"
+data_version_tuple = (0, 1, 1, 19)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.1.1.post17")
+    pdata_version = V("0.1.1.post19")
 except ImportError:
     pass
-data_git_hash = "cf8a85b7a25df497a9669cf0ad7cf3515eb4057e"
-data_git_describe = "0.1.1-17-gcf8a85b"
+data_git_hash = "705ed1905461e4b9e0af7d727d62008c092e8ca0"
+data_git_describe = "0.1.1-19-g705ed19"
 data_git_msg = """\
-commit cf8a85b7a25df497a9669cf0ad7cf3515eb4057e
-Merge: e67f8e3 3ac62d6
+commit 705ed1905461e4b9e0af7d727d62008c092e8ca0
+Merge: cf8a85b e462c8d
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Tue Feb 15 15:46:29 2022 +0100
+Date:   Wed Feb 16 07:36:58 2022 +0100
 
-    Merge pull request #433 from silabs-halfdan/clic_if_update
+    Merge pull request #435 from silabs-halfdan/mcycle_in_integration_manual
     
-    Updated CLIC interface signals and added them to documentation
+    Added missing signal in user manual integration guide
 
 """
 
