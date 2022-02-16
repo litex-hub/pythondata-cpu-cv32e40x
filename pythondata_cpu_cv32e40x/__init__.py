@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.1.1.post151"
-version_tuple = (0, 1, 1, 151)
+version_str = "0.1.1.post155"
+version_tuple = (0, 1, 1, 155)
 try:
     from packaging.version import Version as V
-    pversion = V("0.1.1.post151")
+    pversion = V("0.1.1.post155")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.1.1.post25"
-data_version_tuple = (0, 1, 1, 25)
+data_version_str = "0.1.1.post29"
+data_version_tuple = (0, 1, 1, 29)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.1.1.post25")
+    pdata_version = V("0.1.1.post29")
 except ImportError:
     pass
-data_git_hash = "b6214af00c698ef48e93fc040f733673b3590c5b"
-data_git_describe = "0.1.1-25-gb6214af"
+data_git_hash = "380b9fd6dff586d332886e0eaa875e9aafa54ca6"
+data_git_describe = "0.1.1-29-g380b9fd"
 data_git_msg = """\
-commit b6214af00c698ef48e93fc040f733673b3590c5b
-Merge: 9bba199 28e2db9
-Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Wed Feb 16 13:40:26 2022 +0100
+commit 380b9fd6dff586d332886e0eaa875e9aafa54ca6
+Merge: b6214af 2b0d849
+Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
+Date:   Wed Feb 16 14:11:58 2022 +0100
 
-    Merge pull request #438 from silabs-oysteink/silabs-oysteink-UM-CSR-2
+    Merge pull request #439 from Silabs-ArjanB/ArjanB_docm
     
-    Doc only: Tinfo and typos
+    Fixing mtvec and mtvt alignment requirements. Better links for spec v…
 
 """
 
