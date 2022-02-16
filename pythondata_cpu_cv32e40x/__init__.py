@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.1.1.post147"
-version_tuple = (0, 1, 1, 147)
+version_str = "0.1.1.post149"
+version_tuple = (0, 1, 1, 149)
 try:
     from packaging.version import Version as V
-    pversion = V("0.1.1.post147")
+    pversion = V("0.1.1.post149")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.1.1.post21"
-data_version_tuple = (0, 1, 1, 21)
+data_version_str = "0.1.1.post23"
+data_version_tuple = (0, 1, 1, 23)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.1.1.post21")
+    pdata_version = V("0.1.1.post23")
 except ImportError:
     pass
-data_git_hash = "34bb6aa5261e8a1464125bfee1fef8015b3f48f4"
-data_git_describe = "0.1.1-21-g34bb6aa"
+data_git_hash = "9bba199df0fed5f48dd093040d36a0a3eea3446f"
+data_git_describe = "0.1.1-23-g9bba199"
 data_git_msg = """\
-commit 34bb6aa5261e8a1464125bfee1fef8015b3f48f4
-Merge: 705ed19 276b3de
-Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Wed Feb 16 10:05:41 2022 +0100
+commit 9bba199df0fed5f48dd093040d36a0a3eea3446f
+Merge: 34bb6aa 73c0aa6
+Author: Henrik Fegran <henrik.fegran@silabs.com>
+Date:   Wed Feb 16 11:09:29 2022 +0100
 
-    Merge pull request #436 from openhwgroup/silabs-hfegran-release-notes-cfg
+    Merge pull request #437 from openhwgroup/silabs-hfegran-release_yaml-update
     
-    Create release.yaml (Release notes configuration)
+    Update release.yaml
 
 """
 
