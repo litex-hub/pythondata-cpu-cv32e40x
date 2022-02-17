@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.1.0.post128"
-version_tuple = (0, 1, 0, 128)
+version_str = "0.1.0.post130"
+version_tuple = (0, 1, 0, 130)
 try:
     from packaging.version import Version as V
-    pversion = V("0.1.0.post128")
+    pversion = V("0.1.0.post130")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.1.0.post2"
-data_version_tuple = (0, 1, 0, 2)
+data_version_str = "0.1.0.post4"
+data_version_tuple = (0, 1, 0, 4)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.1.0.post2")
+    pdata_version = V("0.1.0.post4")
 except ImportError:
     pass
-data_git_hash = "35944de48a0fe8de162bdccac707389aca955aaa"
-data_git_describe = "0.1.0-2-g35944de"
+data_git_hash = "ae8cce614fd18dcad1c880cc283943c694f0b8c7"
+data_git_describe = "0.1.0-4-gae8cce6"
 data_git_msg = """\
-commit 35944de48a0fe8de162bdccac707389aca955aaa
-Merge: 380b9fd 223b014
+commit ae8cce614fd18dcad1c880cc283943c694f0b8c7
+Merge: 35944de 9871699
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Thu Feb 17 09:00:53 2022 +0100
+Date:   Thu Feb 17 12:15:48 2022 +0100
 
-    Merge pull request #441 from silabs-halfdan/parameterized_clic_id
+    Merge pull request #442 from Silabs-ArjanB/ArjanB_cch
     
-    Parameterized width of CLIC clic_irq_id_i, clic_irq_id_o signals.
+    Added copyright headers (not an actual documentation update)
 
 """
 
