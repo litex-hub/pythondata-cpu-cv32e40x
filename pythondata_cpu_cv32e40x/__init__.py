@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.1.0.post132"
-version_tuple = (0, 1, 0, 132)
+version_str = "0.1.0.post141"
+version_tuple = (0, 1, 0, 141)
 try:
     from packaging.version import Version as V
-    pversion = V("0.1.0.post132")
+    pversion = V("0.1.0.post141")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.1.0.post6"
-data_version_tuple = (0, 1, 0, 6)
+data_version_str = "0.1.0.post15"
+data_version_tuple = (0, 1, 0, 15)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.1.0.post6")
+    pdata_version = V("0.1.0.post15")
 except ImportError:
     pass
-data_git_hash = "f62adb348140ec9f449e9d1ffab216a5b1058e40"
-data_git_describe = "0.1.0-6-gf62adb3"
+data_git_hash = "80ee57d367deb1da4c086a4d97f0e8c40dc2878b"
+data_git_describe = "0.1.0-15-g80ee57d"
 data_git_msg = """\
-commit f62adb348140ec9f449e9d1ffab216a5b1058e40
-Merge: ae8cce6 e289b7a
-Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Thu Feb 17 16:02:22 2022 +0100
+commit 80ee57d367deb1da4c086a4d97f0e8c40dc2878b
+Merge: fa83afb 760e647
+Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
+Date:   Mon Feb 21 10:18:13 2022 +0100
 
-    Merge pull request #443 from Silabs-ArjanB/ArjanB_clku
+    Merge pull request #447 from silabs-oivind/pma_rename_doc
     
-    Removed unused clock signal
+    Rename pma_region_t -> pma_cfg_t in documentation
 
 """
 
