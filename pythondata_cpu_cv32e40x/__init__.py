@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.1.0.post141"
-version_tuple = (0, 1, 0, 141)
+version_str = "0.1.0.post143"
+version_tuple = (0, 1, 0, 143)
 try:
     from packaging.version import Version as V
-    pversion = V("0.1.0.post141")
+    pversion = V("0.1.0.post143")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.1.0.post15"
-data_version_tuple = (0, 1, 0, 15)
+data_version_str = "0.1.0.post17"
+data_version_tuple = (0, 1, 0, 17)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.1.0.post15")
+    pdata_version = V("0.1.0.post17")
 except ImportError:
     pass
-data_git_hash = "80ee57d367deb1da4c086a4d97f0e8c40dc2878b"
-data_git_describe = "0.1.0-15-g80ee57d"
+data_git_hash = "45545c989be4654d1400ebcfead53d57fadbb941"
+data_git_describe = "0.1.0-17-g45545c9"
 data_git_msg = """\
-commit 80ee57d367deb1da4c086a4d97f0e8c40dc2878b
-Merge: fa83afb 760e647
+commit 45545c989be4654d1400ebcfead53d57fadbb941
+Merge: 80ee57d db21f94
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Mon Feb 21 10:18:13 2022 +0100
+Date:   Tue Feb 22 08:13:20 2022 +0100
 
-    Merge pull request #447 from silabs-oivind/pma_rename_doc
+    Merge pull request #449 from Silabs-ArjanB/ArjanB_obiv13
     
-    Rename pma_region_t -> pma_cfg_t in documentation
+    Updated to OBI v1.3
 
 """
 
