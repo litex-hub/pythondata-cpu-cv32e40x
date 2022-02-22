@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.1.0.post145"
-version_tuple = (0, 1, 0, 145)
+version_str = "0.1.0.post147"
+version_tuple = (0, 1, 0, 147)
 try:
     from packaging.version import Version as V
-    pversion = V("0.1.0.post145")
+    pversion = V("0.1.0.post147")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.1.0.post19"
-data_version_tuple = (0, 1, 0, 19)
+data_version_str = "0.1.0.post21"
+data_version_tuple = (0, 1, 0, 21)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.1.0.post19")
+    pdata_version = V("0.1.0.post21")
 except ImportError:
     pass
-data_git_hash = "337529c353ad74cda2690263252bcdbcf95c79c8"
-data_git_describe = "0.1.0-19-g337529c"
+data_git_hash = "e6cce90ce4869b05f9e1a16b8a74e2e97fa5e1cb"
+data_git_describe = "0.1.0-21-ge6cce90"
 data_git_msg = """\
-commit 337529c353ad74cda2690263252bcdbcf95c79c8
-Merge: 45545c9 978641b
+commit e6cce90ce4869b05f9e1a16b8a74e2e97fa5e1cb
+Merge: 337529c 9fac5ee
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Tue Feb 22 10:16:21 2022 +0100
+Date:   Tue Feb 22 10:58:07 2022 +0100
 
-    Merge pull request #450 from silabs-oivind/align_mpu_e40s_e40x
+    Merge pull request #451 from silabs-oivind/rvfi_sim_trace
     
-    Update MPU to support data access in instruction side. In preparation…
+    Add tracer for waveform annotation with assembly instruction etc
 
 """
 
