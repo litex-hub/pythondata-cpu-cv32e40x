@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.1.0.post147"
-version_tuple = (0, 1, 0, 147)
+version_str = "0.1.0.post149"
+version_tuple = (0, 1, 0, 149)
 try:
     from packaging.version import Version as V
-    pversion = V("0.1.0.post147")
+    pversion = V("0.1.0.post149")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.1.0.post21"
-data_version_tuple = (0, 1, 0, 21)
+data_version_str = "0.1.0.post23"
+data_version_tuple = (0, 1, 0, 23)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.1.0.post21")
+    pdata_version = V("0.1.0.post23")
 except ImportError:
     pass
-data_git_hash = "e6cce90ce4869b05f9e1a16b8a74e2e97fa5e1cb"
-data_git_describe = "0.1.0-21-ge6cce90"
+data_git_hash = "f612df5108bf8dd076a0804cc05ca30b9fb49f1f"
+data_git_describe = "0.1.0-23-gf612df5"
 data_git_msg = """\
-commit e6cce90ce4869b05f9e1a16b8a74e2e97fa5e1cb
-Merge: 337529c 9fac5ee
+commit f612df5108bf8dd076a0804cc05ca30b9fb49f1f
+Merge: e6cce90 7ee7d65
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Tue Feb 22 10:58:07 2022 +0100
+Date:   Wed Feb 23 12:32:36 2022 +0100
 
-    Merge pull request #451 from silabs-oivind/rvfi_sim_trace
+    Merge pull request #455 from Silabs-ArjanB/ArjanB_uie
     
-    Add tracer for waveform annotation with assembly instruction etc
+    Removed obsolete bitfields
 
 """
 
