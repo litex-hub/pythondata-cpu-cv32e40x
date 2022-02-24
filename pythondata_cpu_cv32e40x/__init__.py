@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.1.0.post149"
-version_tuple = (0, 1, 0, 149)
+version_str = "0.1.0.post151"
+version_tuple = (0, 1, 0, 151)
 try:
     from packaging.version import Version as V
-    pversion = V("0.1.0.post149")
+    pversion = V("0.1.0.post151")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.1.0.post23"
-data_version_tuple = (0, 1, 0, 23)
+data_version_str = "0.1.0.post25"
+data_version_tuple = (0, 1, 0, 25)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.1.0.post23")
+    pdata_version = V("0.1.0.post25")
 except ImportError:
     pass
-data_git_hash = "f612df5108bf8dd076a0804cc05ca30b9fb49f1f"
-data_git_describe = "0.1.0-23-gf612df5"
+data_git_hash = "3575f67321af51a8b370116bfed80215c9490c22"
+data_git_describe = "0.1.0-25-g3575f67"
 data_git_msg = """\
-commit f612df5108bf8dd076a0804cc05ca30b9fb49f1f
-Merge: e6cce90 7ee7d65
+commit 3575f67321af51a8b370116bfed80215c9490c22
+Merge: f612df5 53ec738
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Wed Feb 23 12:32:36 2022 +0100
+Date:   Thu Feb 24 16:31:18 2022 +0100
 
-    Merge pull request #455 from Silabs-ArjanB/ArjanB_uie
+    Merge pull request #457 from silabs-halfdan/rvfi_sim_trace_cast
     
-    Removed obsolete bitfields
+    Fixed dsim/vsim compatibility
 
 """
 
