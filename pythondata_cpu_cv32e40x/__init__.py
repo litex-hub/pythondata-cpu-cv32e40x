@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.1.0.post156"
-version_tuple = (0, 1, 0, 156)
+version_str = "0.1.0.post158"
+version_tuple = (0, 1, 0, 158)
 try:
     from packaging.version import Version as V
-    pversion = V("0.1.0.post156")
+    pversion = V("0.1.0.post158")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.1.0.post30"
-data_version_tuple = (0, 1, 0, 30)
+data_version_str = "0.1.0.post32"
+data_version_tuple = (0, 1, 0, 32)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.1.0.post30")
+    pdata_version = V("0.1.0.post32")
 except ImportError:
     pass
-data_git_hash = "7240216a9b4aa9892df767d436c105171fff9b76"
-data_git_describe = "0.1.0-30-g7240216"
+data_git_hash = "b8dea46f8da85dad209f5d8f73bfbfc5d345e61c"
+data_git_describe = "0.1.0-32-gb8dea46"
 data_git_msg = """\
-commit 7240216a9b4aa9892df767d436c105171fff9b76
-Merge: 3575f67 a18191e
+commit b8dea46f8da85dad209f5d8f73bfbfc5d345e61c
+Merge: 7240216 097a84d
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Fri Feb 25 10:40:01 2022 +0100
+Date:   Fri Feb 25 14:14:46 2022 +0100
 
-    Merge pull request #456 from silabs-halfdan/rvfi_bugfix
+    Merge pull request #459 from silabs-halfdan/doc_rvfi_intr_multibit
     
-    RVFI bugfixes
+    Made rvfi_intr multibit
 
 """
 
