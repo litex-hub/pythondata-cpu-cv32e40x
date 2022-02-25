@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.1.0.post151"
-version_tuple = (0, 1, 0, 151)
+version_str = "0.1.0.post156"
+version_tuple = (0, 1, 0, 156)
 try:
     from packaging.version import Version as V
-    pversion = V("0.1.0.post151")
+    pversion = V("0.1.0.post156")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.1.0.post25"
-data_version_tuple = (0, 1, 0, 25)
+data_version_str = "0.1.0.post30"
+data_version_tuple = (0, 1, 0, 30)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.1.0.post25")
+    pdata_version = V("0.1.0.post30")
 except ImportError:
     pass
-data_git_hash = "3575f67321af51a8b370116bfed80215c9490c22"
-data_git_describe = "0.1.0-25-g3575f67"
+data_git_hash = "7240216a9b4aa9892df767d436c105171fff9b76"
+data_git_describe = "0.1.0-30-g7240216"
 data_git_msg = """\
-commit 3575f67321af51a8b370116bfed80215c9490c22
-Merge: f612df5 53ec738
+commit 7240216a9b4aa9892df767d436c105171fff9b76
+Merge: 3575f67 a18191e
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Thu Feb 24 16:31:18 2022 +0100
+Date:   Fri Feb 25 10:40:01 2022 +0100
 
-    Merge pull request #457 from silabs-halfdan/rvfi_sim_trace_cast
+    Merge pull request #456 from silabs-halfdan/rvfi_bugfix
     
-    Fixed dsim/vsim compatibility
+    RVFI bugfixes
 
 """
 
