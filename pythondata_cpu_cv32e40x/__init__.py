@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.1.0.post158"
-version_tuple = (0, 1, 0, 158)
+version_str = "0.1.0.post163"
+version_tuple = (0, 1, 0, 163)
 try:
     from packaging.version import Version as V
-    pversion = V("0.1.0.post158")
+    pversion = V("0.1.0.post163")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.1.0.post32"
-data_version_tuple = (0, 1, 0, 32)
+data_version_str = "0.1.0.post37"
+data_version_tuple = (0, 1, 0, 37)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.1.0.post32")
+    pdata_version = V("0.1.0.post37")
 except ImportError:
     pass
-data_git_hash = "b8dea46f8da85dad209f5d8f73bfbfc5d345e61c"
-data_git_describe = "0.1.0-32-gb8dea46"
+data_git_hash = "efd9817c57272e78547754f07881fa41d30ba9b4"
+data_git_describe = "0.1.0-37-gefd9817"
 data_git_msg = """\
-commit b8dea46f8da85dad209f5d8f73bfbfc5d345e61c
-Merge: 7240216 097a84d
-Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Fri Feb 25 14:14:46 2022 +0100
+commit efd9817c57272e78547754f07881fa41d30ba9b4
+Merge: a3bb291 4cf64eb
+Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
+Date:   Mon Feb 28 08:59:33 2022 +0100
 
-    Merge pull request #459 from silabs-halfdan/doc_rvfi_intr_multibit
+    Merge pull request #461 from Silabs-ArjanB/ArjanB_mimpid2
     
-    Made rvfi_intr multibit
+    Split mimpid into major, minor,patch
 
 """
 
