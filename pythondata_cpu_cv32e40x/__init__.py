@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.1.0.post166"
-version_tuple = (0, 1, 0, 166)
+version_str = "0.1.0.post173"
+version_tuple = (0, 1, 0, 173)
 try:
     from packaging.version import Version as V
-    pversion = V("0.1.0.post166")
+    pversion = V("0.1.0.post173")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.1.0.post40"
-data_version_tuple = (0, 1, 0, 40)
+data_version_str = "0.1.0.post47"
+data_version_tuple = (0, 1, 0, 47)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.1.0.post40")
+    pdata_version = V("0.1.0.post47")
 except ImportError:
     pass
-data_git_hash = "77a16e896d3f7091b564ec6ad368a8571e2fed02"
-data_git_describe = "0.1.0-40-g77a16e8"
+data_git_hash = "1fa469ac7e6511e2c3be692bdb0f07890c720e8e"
+data_git_describe = "0.1.0-47-g1fa469a"
 data_git_msg = """\
-commit 77a16e896d3f7091b564ec6ad368a8571e2fed02
-Merge: efd9817 1cc9220
+commit 1fa469ac7e6511e2c3be692bdb0f07890c720e8e
+Merge: 77a16e8 36c961e
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Mon Feb 28 15:13:01 2022 +0100
+Date:   Mon Feb 28 16:30:12 2022 +0100
 
-    Merge pull request #462 from silabs-halfdan/rvfi_intr_multibit
+    Merge pull request #440 from michael-platzer/xif-mem-iface
     
-    Multibit rvfi_intr
+    Add XIF memory interface
 
 """
 
