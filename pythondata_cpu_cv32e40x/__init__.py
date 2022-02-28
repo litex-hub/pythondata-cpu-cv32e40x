@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.1.0.post173"
-version_tuple = (0, 1, 0, 173)
+version_str = "0.1.0.post176"
+version_tuple = (0, 1, 0, 176)
 try:
     from packaging.version import Version as V
-    pversion = V("0.1.0.post173")
+    pversion = V("0.1.0.post176")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.1.0.post47"
-data_version_tuple = (0, 1, 0, 47)
+data_version_str = "0.1.0.post50"
+data_version_tuple = (0, 1, 0, 50)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.1.0.post47")
+    pdata_version = V("0.1.0.post50")
 except ImportError:
     pass
-data_git_hash = "1fa469ac7e6511e2c3be692bdb0f07890c720e8e"
-data_git_describe = "0.1.0-47-g1fa469a"
+data_git_hash = "97b67b6ccb125b0fbdd29bd1cb25e0c34b300653"
+data_git_describe = "0.1.0-50-g97b67b6"
 data_git_msg = """\
-commit 1fa469ac7e6511e2c3be692bdb0f07890c720e8e
-Merge: 77a16e8 36c961e
-Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Mon Feb 28 16:30:12 2022 +0100
+commit 97b67b6ccb125b0fbdd29bd1cb25e0c34b300653
+Merge: 1fa469a 8662185
+Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
+Date:   Mon Feb 28 19:13:48 2022 +0100
 
-    Merge pull request #440 from michael-platzer/xif-mem-iface
+    Merge pull request #465 from Silabs-ArjanB/ArjanB_xiff
     
-    Add XIF memory interface
+    Syntax fix + IF stage fix
 
 """
 
