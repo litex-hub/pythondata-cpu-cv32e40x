@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.1.0.post178"
-version_tuple = (0, 1, 0, 178)
+version_str = "0.1.0.post183"
+version_tuple = (0, 1, 0, 183)
 try:
     from packaging.version import Version as V
-    pversion = V("0.1.0.post178")
+    pversion = V("0.1.0.post183")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.1.0.post52"
-data_version_tuple = (0, 1, 0, 52)
+data_version_str = "0.1.0.post57"
+data_version_tuple = (0, 1, 0, 57)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.1.0.post52")
+    pdata_version = V("0.1.0.post57")
 except ImportError:
     pass
-data_git_hash = "b4edeee7ae002f80fe6e977b6f4c07f57495665d"
-data_git_describe = "0.1.0-52-gb4edeee"
+data_git_hash = "a4829d10977941de1c1bbc73a39e420b81ec9582"
+data_git_describe = "0.1.0-57-ga4829d1"
 data_git_msg = """\
-commit b4edeee7ae002f80fe6e977b6f4c07f57495665d
-Merge: 97b67b6 50f6558
+commit a4829d10977941de1c1bbc73a39e420b81ec9582
+Merge: b4edeee d3813b0
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Wed Mar 2 15:54:44 2022 +0100
+Date:   Fri Mar 4 14:30:04 2022 +0100
 
-    Merge pull request #467 from silabs-halfdan/doc_rvfi_struct_desctiption_update
+    Merge pull request #468 from silabs-halfdan/relative_nmi_address
     
-    Updated documentation of rvfi trap and intr structs
+    NMI address update
 
 """
 
