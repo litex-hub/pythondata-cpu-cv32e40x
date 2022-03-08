@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.1.0.post185"
-version_tuple = (0, 1, 0, 185)
+version_str = "0.1.0.post189"
+version_tuple = (0, 1, 0, 189)
 try:
     from packaging.version import Version as V
-    pversion = V("0.1.0.post185")
+    pversion = V("0.1.0.post189")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.1.0.post59"
-data_version_tuple = (0, 1, 0, 59)
+data_version_str = "0.1.0.post63"
+data_version_tuple = (0, 1, 0, 63)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.1.0.post59")
+    pdata_version = V("0.1.0.post63")
 except ImportError:
     pass
-data_git_hash = "6be51b7052888cad2f278b5fdbc9945e5b8b22cf"
-data_git_describe = "0.1.0-59-g6be51b7"
+data_git_hash = "44dbee68ad28de87e080ffda0f790cf03d568a1a"
+data_git_describe = "0.1.0-63-g44dbee6"
 data_git_msg = """\
-commit 6be51b7052888cad2f278b5fdbc9945e5b8b22cf
-Merge: a4829d1 9667651
-Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Mon Mar 7 17:47:54 2022 +0100
+commit 44dbee68ad28de87e080ffda0f790cf03d568a1a
+Merge: a4264f1 7b5b545
+Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
+Date:   Tue Mar 8 09:54:56 2022 +0100
 
-    Merge pull request #469 from silabs-halfdan/doc_deprecated_parameter
+    Merge pull request #471 from Silabs-ArjanB/ArjanB_obiv14
     
-    Document USE_DEPRECATED_FEATURE_SET
+    Changed SMCLIC_ID_WIDTH default to 5
 
 """
 
