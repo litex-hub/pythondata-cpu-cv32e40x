@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.1.0.post189"
-version_tuple = (0, 1, 0, 189)
+version_str = "0.1.0.post191"
+version_tuple = (0, 1, 0, 191)
 try:
     from packaging.version import Version as V
-    pversion = V("0.1.0.post189")
+    pversion = V("0.1.0.post191")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.1.0.post63"
-data_version_tuple = (0, 1, 0, 63)
+data_version_str = "0.1.0.post65"
+data_version_tuple = (0, 1, 0, 65)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.1.0.post63")
+    pdata_version = V("0.1.0.post65")
 except ImportError:
     pass
-data_git_hash = "44dbee68ad28de87e080ffda0f790cf03d568a1a"
-data_git_describe = "0.1.0-63-g44dbee6"
+data_git_hash = "f6656cd080d70c1288ae7fa2be6e20d44d98d890"
+data_git_describe = "0.1.0-65-gf6656cd"
 data_git_msg = """\
-commit 44dbee68ad28de87e080ffda0f790cf03d568a1a
-Merge: a4264f1 7b5b545
+commit f6656cd080d70c1288ae7fa2be6e20d44d98d890
+Merge: 44dbee6 86e2ab1
 Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Tue Mar 8 09:54:56 2022 +0100
+Date:   Tue Mar 8 11:01:06 2022 +0100
 
-    Merge pull request #471 from Silabs-ArjanB/ArjanB_obiv14
+    Merge pull request #473 from Silabs-ArjanB/ArjanB_nmivec
     
-    Changed SMCLIC_ID_WIDTH default to 5
+    Removed mention of deprecated nmi_addr_i signal from user manual. Def…
 
 """
 
