@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.1.0.post191"
-version_tuple = (0, 1, 0, 191)
+version_str = "0.1.0.post193"
+version_tuple = (0, 1, 0, 193)
 try:
     from packaging.version import Version as V
-    pversion = V("0.1.0.post191")
+    pversion = V("0.1.0.post193")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.1.0.post65"
-data_version_tuple = (0, 1, 0, 65)
+data_version_str = "0.1.0.post67"
+data_version_tuple = (0, 1, 0, 67)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.1.0.post65")
+    pdata_version = V("0.1.0.post67")
 except ImportError:
     pass
-data_git_hash = "f6656cd080d70c1288ae7fa2be6e20d44d98d890"
-data_git_describe = "0.1.0-65-gf6656cd"
+data_git_hash = "584254b061e77f989b2db36e5e820420a9bfc922"
+data_git_describe = "0.1.0-67-g584254b"
 data_git_msg = """\
-commit f6656cd080d70c1288ae7fa2be6e20d44d98d890
-Merge: 44dbee6 86e2ab1
-Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Tue Mar 8 11:01:06 2022 +0100
+commit 584254b061e77f989b2db36e5e820420a9bfc922
+Merge: f6656cd b807fa3
+Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
+Date:   Tue Mar 15 11:08:14 2022 +0100
 
-    Merge pull request #473 from Silabs-ArjanB/ArjanB_nmivec
+    Merge pull request #474 from Silabs-ArjanB/ArjanB_preempt
     
-    Removed mention of deprecated nmi_addr_i signal from user manual. Def…
+    Increased SMCLIC_ID_WIDTH range. Removed wrong preemption example cod…
 
 """
 
