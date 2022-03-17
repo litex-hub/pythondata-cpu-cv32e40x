@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.1.0.post193"
-version_tuple = (0, 1, 0, 193)
+version_str = "0.1.0.post195"
+version_tuple = (0, 1, 0, 195)
 try:
     from packaging.version import Version as V
-    pversion = V("0.1.0.post193")
+    pversion = V("0.1.0.post195")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.1.0.post67"
-data_version_tuple = (0, 1, 0, 67)
+data_version_str = "0.1.0.post69"
+data_version_tuple = (0, 1, 0, 69)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.1.0.post67")
+    pdata_version = V("0.1.0.post69")
 except ImportError:
     pass
-data_git_hash = "584254b061e77f989b2db36e5e820420a9bfc922"
-data_git_describe = "0.1.0-67-g584254b"
+data_git_hash = "a96ab271502c0a529689144e25bd239dca3ced0a"
+data_git_describe = "0.1.0-69-ga96ab27"
 data_git_msg = """\
-commit 584254b061e77f989b2db36e5e820420a9bfc922
-Merge: f6656cd b807fa3
+commit a96ab271502c0a529689144e25bd239dca3ced0a
+Merge: 584254b 5ce0692
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Tue Mar 15 11:08:14 2022 +0100
+Date:   Thu Mar 17 10:39:55 2022 +0100
 
-    Merge pull request #474 from Silabs-ArjanB/ArjanB_preempt
+    Merge pull request #475 from silabs-oivind/sticky_tracer
     
-    Increased SMCLIC_ID_WIDTH range. Removed wrong preemption example cod…
+    Make tracer sticky in between retired instructions. Makes it easier t…
 
 """
 
