@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.1.0.post195"
-version_tuple = (0, 1, 0, 195)
+version_str = "0.1.0.post197"
+version_tuple = (0, 1, 0, 197)
 try:
     from packaging.version import Version as V
-    pversion = V("0.1.0.post195")
+    pversion = V("0.1.0.post197")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.1.0.post69"
-data_version_tuple = (0, 1, 0, 69)
+data_version_str = "0.1.0.post71"
+data_version_tuple = (0, 1, 0, 71)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.1.0.post69")
+    pdata_version = V("0.1.0.post71")
 except ImportError:
     pass
-data_git_hash = "a96ab271502c0a529689144e25bd239dca3ced0a"
-data_git_describe = "0.1.0-69-ga96ab27"
+data_git_hash = "861d72eead19a40ba42c4e6080f3c9e8795f58dd"
+data_git_describe = "0.1.0-71-g861d72e"
 data_git_msg = """\
-commit a96ab271502c0a529689144e25bd239dca3ced0a
-Merge: 584254b 5ce0692
+commit 861d72eead19a40ba42c4e6080f3c9e8795f58dd
+Merge: a96ab27 7a4c03b
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Thu Mar 17 10:39:55 2022 +0100
+Date:   Thu Mar 17 12:18:16 2022 +0100
 
-    Merge pull request #475 from silabs-oivind/sticky_tracer
+    Merge pull request #476 from silabs-oivind/doc_typo_fix
     
-    Make tracer sticky in between retired instructions. Makes it easier t…
+    Fix typo in doc
 
 """
 
