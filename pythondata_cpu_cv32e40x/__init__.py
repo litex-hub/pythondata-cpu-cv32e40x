@@ -20,17 +20,17 @@ try:
     pdata_version = V("0.2.0.post0")
 except ImportError:
     pass
-data_git_hash = "861d72eead19a40ba42c4e6080f3c9e8795f58dd"
-data_git_describe = "0.2.0-0-g861d72e"
+data_git_hash = "902ea671b78909f42c53a5367c090d1fa89bea8f"
+data_git_describe = "0.2.0-0-g902ea67"
 data_git_msg = """\
-commit 861d72eead19a40ba42c4e6080f3c9e8795f58dd
-Merge: a96ab27 7a4c03b
+commit 902ea671b78909f42c53a5367c090d1fa89bea8f
+Merge: 861d72e 76e88c4
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Thu Mar 17 12:18:16 2022 +0100
+Date:   Fri Mar 18 08:01:28 2022 +0100
 
-    Merge pull request #476 from silabs-oivind/doc_typo_fix
+    Merge pull request #477 from Silabs-ArjanB/ArjanB_clic2
     
-    Fix typo in doc
+    Update CLIC version
 
 """
 
