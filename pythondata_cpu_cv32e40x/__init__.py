@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.2.0.post126"
-version_tuple = (0, 2, 0, 126)
+version_str = "0.2.0.post128"
+version_tuple = (0, 2, 0, 128)
 try:
     from packaging.version import Version as V
-    pversion = V("0.2.0.post126")
+    pversion = V("0.2.0.post128")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.2.0.post0"
-data_version_tuple = (0, 2, 0, 0)
+data_version_str = "0.2.0.post2"
+data_version_tuple = (0, 2, 0, 2)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.2.0.post0")
+    pdata_version = V("0.2.0.post2")
 except ImportError:
     pass
-data_git_hash = "902ea671b78909f42c53a5367c090d1fa89bea8f"
-data_git_describe = "0.2.0-0-g902ea67"
+data_git_hash = "96f09e52e955aedf1e10df2ed6163bc09182f150"
+data_git_describe = "0.2.0-2-g96f09e5"
 data_git_msg = """\
-commit 902ea671b78909f42c53a5367c090d1fa89bea8f
-Merge: 861d72e 76e88c4
+commit 96f09e52e955aedf1e10df2ed6163bc09182f150
+Merge: 902ea67 e0365b1
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Fri Mar 18 08:01:28 2022 +0100
+Date:   Wed Mar 23 09:56:14 2022 +0100
 
-    Merge pull request #477 from Silabs-ArjanB/ArjanB_clic2
+    Merge pull request #480 from silabs-oysteink/silabs-oysteink_csr-types
     
-    Update CLIC version
+    Updated typedefs for CSR registers to match new fields in the user manual
 
 """
 
