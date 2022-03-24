@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.2.0.post134"
-version_tuple = (0, 2, 0, 134)
+version_str = "0.2.0.post139"
+version_tuple = (0, 2, 0, 139)
 try:
     from packaging.version import Version as V
-    pversion = V("0.2.0.post134")
+    pversion = V("0.2.0.post139")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.2.0.post8"
-data_version_tuple = (0, 2, 0, 8)
+data_version_str = "0.2.0.post13"
+data_version_tuple = (0, 2, 0, 13)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.2.0.post8")
+    pdata_version = V("0.2.0.post13")
 except ImportError:
     pass
-data_git_hash = "8738b718649a0535a83f59d6b72523282a6fb4a6"
-data_git_describe = "0.2.0-8-g8738b71"
+data_git_hash = "243bb9cde7a2815effeb3a7aa3991fe3b7fd8a63"
+data_git_describe = "0.2.0-13-g243bb9c"
 data_git_msg = """\
-commit 8738b718649a0535a83f59d6b72523282a6fb4a6
-Merge: 3700096 9d14b87
+commit 243bb9cde7a2815effeb3a7aa3991fe3b7fd8a63
+Merge: 8738b71 2e66627
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Wed Mar 23 15:01:09 2022 +0100
+Date:   Thu Mar 24 09:28:00 2022 +0100
 
-    Merge pull request #482 from silabs-halfdan/doc_rvfi_sleep_signals
+    Merge pull request #485 from silabs-oysteink/silabs-oysteink_clic-1
     
-    Added sleep signals to rvfi documentation
+    CLIC: Spec chapter 5.1
 
 """
 
