@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.2.0.post146"
-version_tuple = (0, 2, 0, 146)
+version_str = "0.2.0.post148"
+version_tuple = (0, 2, 0, 148)
 try:
     from packaging.version import Version as V
-    pversion = V("0.2.0.post146")
+    pversion = V("0.2.0.post148")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.2.0.post20"
-data_version_tuple = (0, 2, 0, 20)
+data_version_str = "0.2.0.post22"
+data_version_tuple = (0, 2, 0, 22)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.2.0.post20")
+    pdata_version = V("0.2.0.post22")
 except ImportError:
     pass
-data_git_hash = "2140bb5cd8b8588c1cb4f85e19f5a842224cfaf5"
-data_git_describe = "0.2.0-20-g2140bb5"
+data_git_hash = "b84f137aa02f59df1be43e48ff3569ecb9de30cd"
+data_git_describe = "0.2.0-22-gb84f137"
 data_git_msg = """\
-commit 2140bb5cd8b8588c1cb4f85e19f5a842224cfaf5
-Merge: 141b5f2 eaa0eb7
+commit b84f137aa02f59df1be43e48ff3569ecb9de30cd
+Merge: 2140bb5 174dcfa
 Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Mon Mar 28 12:38:19 2022 +0200
+Date:   Mon Mar 28 15:15:55 2022 +0200
 
-    Merge pull request #490 from Silabs-ArjanB/ArjanB_warlu2
+    Merge pull request #491 from Silabs-ArjanB/ArjanB_warlu3
     
-    Better explanation of mtvt WARL behavior
+    Updated WARL behavior of pmpxcfg
 
 """
 
