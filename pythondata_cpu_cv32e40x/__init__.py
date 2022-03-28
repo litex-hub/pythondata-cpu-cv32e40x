@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.2.0.post144"
-version_tuple = (0, 2, 0, 144)
+version_str = "0.2.0.post146"
+version_tuple = (0, 2, 0, 146)
 try:
     from packaging.version import Version as V
-    pversion = V("0.2.0.post144")
+    pversion = V("0.2.0.post146")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.2.0.post18"
-data_version_tuple = (0, 2, 0, 18)
+data_version_str = "0.2.0.post20"
+data_version_tuple = (0, 2, 0, 20)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.2.0.post18")
+    pdata_version = V("0.2.0.post20")
 except ImportError:
     pass
-data_git_hash = "141b5f2856b673b4ce37a6bca2f07a792ac8eaa7"
-data_git_describe = "0.2.0-18-g141b5f2"
+data_git_hash = "2140bb5cd8b8588c1cb4f85e19f5a842224cfaf5"
+data_git_describe = "0.2.0-20-g2140bb5"
 data_git_msg = """\
-commit 141b5f2856b673b4ce37a6bca2f07a792ac8eaa7
-Merge: d74b732 86922ae
+commit 2140bb5cd8b8588c1cb4f85e19f5a842224cfaf5
+Merge: 141b5f2 eaa0eb7
 Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Mon Mar 28 11:44:55 2022 +0200
+Date:   Mon Mar 28 12:38:19 2022 +0200
 
-    Merge pull request #489 from Silabs-ArjanB/ArjanB_warlu
+    Merge pull request #490 from Silabs-ArjanB/ArjanB_warlu2
     
-    Changed WARL resolution to preserved/unchanged
+    Better explanation of mtvt WARL behavior
 
 """
 
