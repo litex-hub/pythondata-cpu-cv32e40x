@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.2.0.post142"
-version_tuple = (0, 2, 0, 142)
+version_str = "0.2.0.post144"
+version_tuple = (0, 2, 0, 144)
 try:
     from packaging.version import Version as V
-    pversion = V("0.2.0.post142")
+    pversion = V("0.2.0.post144")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.2.0.post16"
-data_version_tuple = (0, 2, 0, 16)
+data_version_str = "0.2.0.post18"
+data_version_tuple = (0, 2, 0, 18)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.2.0.post16")
+    pdata_version = V("0.2.0.post18")
 except ImportError:
     pass
-data_git_hash = "d74b7324dc22383679e16275e143a1f3ec551bec"
-data_git_describe = "0.2.0-16-gd74b732"
+data_git_hash = "141b5f2856b673b4ce37a6bca2f07a792ac8eaa7"
+data_git_describe = "0.2.0-18-g141b5f2"
 data_git_msg = """\
-commit d74b7324dc22383679e16275e143a1f3ec551bec
-Merge: 243bb9c aca5b42
-Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Thu Mar 24 14:24:30 2022 +0100
+commit 141b5f2856b673b4ce37a6bca2f07a792ac8eaa7
+Merge: d74b732 86922ae
+Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
+Date:   Mon Mar 28 11:44:55 2022 +0200
 
-    Merge pull request #486 from silabs-oysteink/silabs-oysteink_clic-2
+    Merge pull request #489 from Silabs-ArjanB/ArjanB_warlu
     
-    CLIC: Spec chapter 5.3
+    Changed WARL resolution to preserved/unchanged
 
 """
 
