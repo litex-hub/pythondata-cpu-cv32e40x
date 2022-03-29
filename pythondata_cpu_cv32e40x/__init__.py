@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.2.0.post148"
-version_tuple = (0, 2, 0, 148)
+version_str = "0.2.0.post151"
+version_tuple = (0, 2, 0, 151)
 try:
     from packaging.version import Version as V
-    pversion = V("0.2.0.post148")
+    pversion = V("0.2.0.post151")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.2.0.post22"
-data_version_tuple = (0, 2, 0, 22)
+data_version_str = "0.2.0.post25"
+data_version_tuple = (0, 2, 0, 25)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.2.0.post22")
+    pdata_version = V("0.2.0.post25")
 except ImportError:
     pass
-data_git_hash = "b84f137aa02f59df1be43e48ff3569ecb9de30cd"
-data_git_describe = "0.2.0-22-gb84f137"
+data_git_hash = "991a430a9d685fd35935c91e73ff826cdb12adf7"
+data_git_describe = "0.2.0-25-g991a430"
 data_git_msg = """\
-commit b84f137aa02f59df1be43e48ff3569ecb9de30cd
-Merge: 2140bb5 174dcfa
-Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Mon Mar 28 15:15:55 2022 +0200
+commit 991a430a9d685fd35935c91e73ff826cdb12adf7
+Merge: b84f137 affb070
+Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
+Date:   Tue Mar 29 08:01:47 2022 +0200
 
-    Merge pull request #491 from Silabs-ArjanB/ArjanB_warlu3
+    Merge pull request #487 from silabs-halfdan/rvfi_sleep_signals_extension
     
-    Updated WARL behavior of pmpxcfg
+    RVFI Sleep Signals
 
 """
 
