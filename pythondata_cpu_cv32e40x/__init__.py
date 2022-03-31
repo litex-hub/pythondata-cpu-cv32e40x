@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.3.0.post126"
-version_tuple = (0, 3, 0, 126)
+version_str = "0.3.0.post128"
+version_tuple = (0, 3, 0, 128)
 try:
     from packaging.version import Version as V
-    pversion = V("0.3.0.post126")
+    pversion = V("0.3.0.post128")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.3.0.post0"
-data_version_tuple = (0, 3, 0, 0)
+data_version_str = "0.3.0.post2"
+data_version_tuple = (0, 3, 0, 2)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.3.0.post0")
+    pdata_version = V("0.3.0.post2")
 except ImportError:
     pass
-data_git_hash = "991a430a9d685fd35935c91e73ff826cdb12adf7"
-data_git_describe = "0.3.0-0-g991a430"
+data_git_hash = "db3746634940d7db77720e58d4df32fc1060f695"
+data_git_describe = "0.3.0-2-gdb37466"
 data_git_msg = """\
-commit 991a430a9d685fd35935c91e73ff826cdb12adf7
-Merge: b84f137 affb070
-Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Tue Mar 29 08:01:47 2022 +0200
+commit db3746634940d7db77720e58d4df32fc1060f695
+Merge: 991a430 fd755de
+Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
+Date:   Thu Mar 31 10:40:11 2022 +0200
 
-    Merge pull request #487 from silabs-halfdan/rvfi_sleep_signals_extension
+    Merge pull request #493 from silabs-halfdan/rvfi_csr_sleep_assertions
     
-    RVFI Sleep Signals
+    Added RVFI assertions
 
 """
 
