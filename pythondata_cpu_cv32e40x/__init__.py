@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.3.0.post128"
-version_tuple = (0, 3, 0, 128)
+version_str = "0.3.0.post138"
+version_tuple = (0, 3, 0, 138)
 try:
     from packaging.version import Version as V
-    pversion = V("0.3.0.post128")
+    pversion = V("0.3.0.post138")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.3.0.post2"
-data_version_tuple = (0, 3, 0, 2)
+data_version_str = "0.3.0.post12"
+data_version_tuple = (0, 3, 0, 12)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.3.0.post2")
+    pdata_version = V("0.3.0.post12")
 except ImportError:
     pass
-data_git_hash = "db3746634940d7db77720e58d4df32fc1060f695"
-data_git_describe = "0.3.0-2-gdb37466"
+data_git_hash = "28fc1a3f369a18f0faaa840a0fcb7451db52aabc"
+data_git_describe = "0.3.0-12-g28fc1a3"
 data_git_msg = """\
-commit db3746634940d7db77720e58d4df32fc1060f695
-Merge: 991a430 fd755de
-Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Thu Mar 31 10:40:11 2022 +0200
+commit 28fc1a3f369a18f0faaa840a0fcb7451db52aabc
+Merge: db37466 a84e73e
+Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
+Date:   Thu Apr 7 11:43:56 2022 +0200
 
-    Merge pull request #493 from silabs-halfdan/rvfi_csr_sleep_assertions
+    Merge pull request #492 from silabs-oysteink/silabs-oysteink_clic-3
     
-    Added RVFI assertions
+    Basic CLIC vectoring support
 
 """
 
