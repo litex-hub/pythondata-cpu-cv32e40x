@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.3.0.post143"
-version_tuple = (0, 3, 0, 143)
+version_str = "0.3.0.post145"
+version_tuple = (0, 3, 0, 145)
 try:
     from packaging.version import Version as V
-    pversion = V("0.3.0.post143")
+    pversion = V("0.3.0.post145")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.3.0.post17"
-data_version_tuple = (0, 3, 0, 17)
+data_version_str = "0.3.0.post19"
+data_version_tuple = (0, 3, 0, 19)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.3.0.post17")
+    pdata_version = V("0.3.0.post19")
 except ImportError:
     pass
-data_git_hash = "d5cfe18b6a1fd9cc328afac0ad1394ff5812537f"
-data_git_describe = "0.3.0-17-gd5cfe18b"
+data_git_hash = "ba4c905fbfc31975f93f40bf39611d83b153324e"
+data_git_describe = "0.3.0-19-gba4c905f"
 data_git_msg = """\
-commit d5cfe18b6a1fd9cc328afac0ad1394ff5812537f
-Merge: 27f67bc4 fe057c87
+commit ba4c905fbfc31975f93f40bf39611d83b153324e
+Merge: d5cfe18b ae3b654d
 Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Thu Apr 7 14:03:43 2022 +0200
+Date:   Thu Apr 7 14:48:39 2022 +0200
 
-    Merge pull request #503 from Silabs-ArjanB/ArjanB_wfir
+    Merge pull request #505 from Silabs-ArjanB/ArjanB_wfim
     
-    Now signaling wfi on RVFI only when its wakeup condition has been met…
+    minstret rvfi reporting fix for WFI
 
 """
 
