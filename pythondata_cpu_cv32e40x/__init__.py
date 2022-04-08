@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.3.0.post145"
-version_tuple = (0, 3, 0, 145)
+version_str = "0.3.0.post147"
+version_tuple = (0, 3, 0, 147)
 try:
     from packaging.version import Version as V
-    pversion = V("0.3.0.post145")
+    pversion = V("0.3.0.post147")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.3.0.post19"
-data_version_tuple = (0, 3, 0, 19)
+data_version_str = "0.3.0.post21"
+data_version_tuple = (0, 3, 0, 21)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.3.0.post19")
+    pdata_version = V("0.3.0.post21")
 except ImportError:
     pass
-data_git_hash = "ba4c905fbfc31975f93f40bf39611d83b153324e"
-data_git_describe = "0.3.0-19-gba4c905f"
+data_git_hash = "27524327f31a6bed9fbfcad89f3050ff26144a94"
+data_git_describe = "0.3.0-21-g27524327"
 data_git_msg = """\
-commit ba4c905fbfc31975f93f40bf39611d83b153324e
-Merge: d5cfe18b ae3b654d
+commit 27524327f31a6bed9fbfcad89f3050ff26144a94
+Merge: ba4c905f 8a79c59f
 Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Thu Apr 7 14:48:39 2022 +0200
+Date:   Fri Apr 8 14:05:24 2022 +0200
 
-    Merge pull request #505 from Silabs-ArjanB/ArjanB_wfim
+    Merge pull request #504 from Silabs-ArjanB/ArjanB_wfirdoc
     
-    minstret rvfi reporting fix for WFI
+    Removed rvfi_sleep and rvfi_wu
 
 """
 
