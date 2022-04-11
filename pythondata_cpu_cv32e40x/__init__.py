@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.3.0.post147"
-version_tuple = (0, 3, 0, 147)
+version_str = "0.3.0.post153"
+version_tuple = (0, 3, 0, 153)
 try:
     from packaging.version import Version as V
-    pversion = V("0.3.0.post147")
+    pversion = V("0.3.0.post153")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.3.0.post21"
-data_version_tuple = (0, 3, 0, 21)
+data_version_str = "0.3.0.post27"
+data_version_tuple = (0, 3, 0, 27)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.3.0.post21")
+    pdata_version = V("0.3.0.post27")
 except ImportError:
     pass
-data_git_hash = "27524327f31a6bed9fbfcad89f3050ff26144a94"
-data_git_describe = "0.3.0-21-g27524327"
+data_git_hash = "f9e7cb6e712a4ceff369de8099f85b62b0c2ad4c"
+data_git_describe = "0.3.0-27-gf9e7cb6e"
 data_git_msg = """\
-commit 27524327f31a6bed9fbfcad89f3050ff26144a94
-Merge: ba4c905f 8a79c59f
-Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Fri Apr 8 14:05:24 2022 +0200
+commit f9e7cb6e712a4ceff369de8099f85b62b0c2ad4c
+Merge: 27524327 2a97802e
+Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
+Date:   Mon Apr 11 09:56:07 2022 +0200
 
-    Merge pull request #504 from Silabs-ArjanB/ArjanB_wfirdoc
+    Merge pull request #506 from silabs-oysteink/silabs-oysteink_clic-mnxti
     
-    Removed rvfi_sleep and rvfi_wu
+    Implementation of mnxti
 
 """
 
