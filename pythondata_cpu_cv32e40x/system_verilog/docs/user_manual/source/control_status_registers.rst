@@ -98,10 +98,6 @@ instruction exception.
   +---------------+-------------------+-----------+--------------------------+---------------------------------------------------------+
   | 0x7A5         | ``tcontrol``      | MRW       | ``DBG_NUM_TRIGGERS`` > 0 | Trigger Control                                         |
   +---------------+-------------------+-----------+--------------------------+---------------------------------------------------------+
-  | 0x7A8         | ``mcontext``      | MRW       | ``DBG_NUM_TRIGGERS`` > 0 | Machine Context Register                                |
-  +---------------+-------------------+-----------+--------------------------+---------------------------------------------------------+
-  | 0x7AA         | ``mscontext``     | MRW       | ``DBG_NUM_TRIGGERS`` > 0 | Machine Context Register                                |
-  +---------------+-------------------+-----------+--------------------------+---------------------------------------------------------+
   | 0x7B0         | ``dcsr``          | DRW       |                          | Debug Control and Status                                |
   +---------------+-------------------+-----------+--------------------------+---------------------------------------------------------+
   | 0x7B1         | ``dpc``           | DRW       |                          | Debug PC                                                |
@@ -208,7 +204,23 @@ instruction exception.
     +-------------------+----------------+------------+------------+----------------------------------------------------+
     | 0x30A             | ``menvcfg``    | MRW        |            | Machine Environment Configuration (lower 32 bits)  |
     +-------------------+----------------+------------+------------+----------------------------------------------------+
+    | 0x30C             | ``mstateen0``  | MRW        |            | Machine state enable 0 (lower 32 bits)             |
+    +-------------------+----------------+------------+------------+----------------------------------------------------+
+    | 0x30D             | ``mstateen1``  | MRW        |            | Machine state enable 1 (lower 32 bits)             |
+    +-------------------+----------------+------------+------------+----------------------------------------------------+
+    | 0x30E             | ``mstateen2``  | MRW        |            | Machine state enable 2 (lower 32 bits)             |
+    +-------------------+----------------+------------+------------+----------------------------------------------------+
+    | 0x30F             | ``mstateen3``  | MRW        |            | Machine state enable 3 (lower 32 bits)             |
+    +-------------------+----------------+------------+------------+----------------------------------------------------+
     | 0x31A             | ``menvcfgh``   | MRW        |            | Machine Environment Configuration (upper 32 bits)  |
+    +-------------------+----------------+------------+------------+----------------------------------------------------+
+    | 0x31C             | ``mstateen0h`` | MRW        |            | Machine state enable 0 (upper 32 bits)             |
+    +-------------------+----------------+------------+------------+----------------------------------------------------+
+    | 0x31D             | ``mstateen1h`` | MRW        |            | Machine state enable 1 (upper 32 bits)             |
+    +-------------------+----------------+------------+------------+----------------------------------------------------+
+    | 0x31E             | ``mstateen2h`` | MRW        |            | Machine state enable 2 (upper 32 bits)             |
+    +-------------------+----------------+------------+------------+----------------------------------------------------+
+    | 0x31F             | ``mstateen3h`` | MRW        |            | Machine state enable 3 (upper 32 bits)             |
     +-------------------+----------------+------------+------------+----------------------------------------------------+
 
 .. only:: PMP
@@ -282,6 +294,8 @@ level):
   operation of the core.
 
 * **WARL**: **write-any-read-legal** fields store only legal values written by CSR writes.
+  The WARL keyword can optionally be followed by a legal value (or comma separated list of legal values) enclosed in brackets.
+  If the legal value(s) are not specified, then all possible values are considered valid.
   For example, a WARL (0x0) field supports only the value 0x0. Any value may be written, but
   all reads would return 0x0 regardless of the value being written to it. A WARL field may
   support more than one value. If an unsupported value is (attempted to be) written to a WARL field, the original (legal) value
@@ -358,8 +372,6 @@ level):
   | 4:0         | RW        | Accrued Exceptions (``fflags``)                                        |
   +-------------+-----------+------------------------------------------------------------------------+
 
-
-
 .. _csr-jvt:
 
 Jump Vector Table (``jvt``)
@@ -383,6 +395,8 @@ Detailed:
 
 Table jump base vector and control register
 
+.. note::
+   Memory writes to the ``jvt`` based vector table require an instruction barrier (``fence.i``) to guarantee that they are visible to the instruction fetch (see :ref:`fencei` and [RISC-V-UNPRIV]_).
 
 .. _csr-mstatus:
 
@@ -599,11 +613,11 @@ Detailed:
 +---------+------------------+---------------------------------------------------------------------------------------------------------------+
 |   Bit # | R/W              |   Description                                                                                                 |
 +=========+==================+===============================================================================================================+
-| 31:7    | RW               | **BASE[31:7]**: Trap-handler base address, always aligned to 128 bytes.                                       |
+| 31:7    | WARL             | **BASE[31:7]**: Trap-handler base address, always aligned to 128 bytes.                                       |
 +---------+------------------+---------------------------------------------------------------------------------------------------------------+
 | 6:2     | WARL (0x0)       | **BASE[6:2]**: Trap-handler base address, always aligned to 128 bytes. ``mtvec[6:2]`` is hardwired to 0x0.    |
 +---------+------------------+---------------------------------------------------------------------------------------------------------------+
-| 1:0     | WARL (0x0, 0x1)  | **MODE[0]**: Interrupt handling mode. 0x0 = non-vectored basic mode, 0x1 = vectored basic mode.               |
+| 1:0     | WARL (0x0, 0x1)  | **MODE**: Interrupt handling mode. 0x0 = non-vectored basic mode, 0x1 = vectored basic mode.                  |
 +---------+------------------+---------------------------------------------------------------------------------------------------------------+
 
 The initial value of ``mtvec`` is equal to {**mtvec_addr_i[31:7]**, 5'b0, 2'b01}.
@@ -613,6 +627,9 @@ handler using the content of the ``mtvec[31:7]`` as base address. Both direct mo
 are supported.
 
 The NMI vector location is at index 15 of the machine trap vector table for both direct mode and vectored mode (i.e. at {**mtvec[31:7]**, 5'hF, 2'b00}).
+
+.. note::
+   Memory writes to the ``mtvec`` based vector table require an instruction barrier (``fence.i``) to guarantee that they are visible to the instruction fetch (see :ref:`fencei` and [RISC-V-UNPRIV]_).
 
 .. _csr-mtvec-smclic:
 
@@ -628,7 +645,7 @@ Detailed:
 +---------+------------------+---------------------------------------------------------------------------------------------------------------+
 |   Bit # | R/W              |   Description                                                                                                 |
 +=========+==================+===============================================================================================================+
-| 31:7    | RW               | **BASE[31:7]**: Trap-handler base address, always aligned to 128 bytes.                                       |
+| 31:7    | WARL             | **BASE[31:7]**: Trap-handler base address, always aligned to 128 bytes.                                       |
 +---------+------------------+---------------------------------------------------------------------------------------------------------------+
 | 6:2     | WARL (0x0)       | **BASE[6:2]**: Trap-handler base address, always aligned to 128 bytes. ``mtvec[6:2]`` is hardwired to 0x0.    |
 +---------+------------------+---------------------------------------------------------------------------------------------------------------+
@@ -636,6 +653,9 @@ Detailed:
 +---------+------------------+---------------------------------------------------------------------------------------------------------------+
 
 The initial value of ``mtvec`` is equal to {**mtvec_addr_i[31:7]**, 5'b0, 2'b11}.
+
+.. note::
+   Memory writes to the ``mtvec`` based vector table require an instruction barrier (``fence.i``) to guarantee that they are visible to the instruction fetch (see :ref:`fencei` and [RISC-V-UNPRIV]_).
 
 .. _csr-mtvt:
 
@@ -671,6 +691,9 @@ Detailed:
    ``2^(2+SMCLIC_ID_WIDTH)`` bytes or greater power-of-two boundary. For example if ``SMCLIC_ID_WIDTH`` = 8, then 256 CLIC interrupts are supported and the trap vector table
    is aligned to 1024 bytes, and therefore **BASE[9:6]** will be WARL (0x0).
 
+.. note::
+   Memory writes to the ``mtvt`` based vector table require an instruction barrier (``fence.i``) to guarantee that they are visible to the instruction fetch (see :ref:`fencei` and [RISC-V-UNPRIV]_).
+
 Machine Status (``mstatush``)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -703,22 +726,14 @@ Detailed:
 
   Detailed:
 
-  Each bit in the machine counter-enable register allows the associated read-only
-  unprivileged shadow performance register to be read from user mode. If the bit
-  is clear an attempt to read the register in user mode will trigger an illegal
-  instruction exception.
-
   +-------+------------+------------------------------------------------------------------+
   | Bit#  | R/W        | Description                                                      |
   +=======+============+==================================================================+
-  | 31:3  | WARL (0x0) | Hardwired to 0.                                                  |
+  | 31:0  | WARL (0x0) | Hardwired to 0.                                                  |
   +-------+------------+------------------------------------------------------------------+
-  | 2     | RW         | **IR**: ``instret`` enable for user mode.                        |
-  +-------+------------+------------------------------------------------------------------+
-  | 1     | WARL (0x0) | **TM**. Hardwired to 0.                                          |
-  +-------+------------+------------------------------------------------------------------+
-  | 0     | RW         | **CY**: ``cycle`` enable for user mode.                          |
-  +-------+------------+------------------------------------------------------------------+
+
+  .. note::
+     ``mcounteren`` is WARL (0x0) as the Zicntr and Zihpm extensions are not supported on |corev|.
 
   Machine Environment Configuration (``menvcfg``)
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -745,6 +760,74 @@ Detailed:
   | 0    | R (0x0)     | **FIOM**. Hardwired to 0.                                     |
   +------+-------------+---------------------------------------------------------------+
 
+  Machine State Enable 0 (``mstateen0``)
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  CSR Address: 0x30C
+
+  Reset Value: 0x0000_0000
+
+  Detailed:
+
+  +-------+------------+------------------------------------------------------------------+
+  | Bit#  | R/W        | Description                                                      |
+  +=======+============+==================================================================+
+  | 31:0  | WARL (0x0) | Hardwired to 0.                                                  |
+  +-------+------------+------------------------------------------------------------------+
+  | 2     | RW         | Controls user mode access to the ``jvt`` CSR.                    |
+  +-------+------------+------------------------------------------------------------------+
+  | 1:0   | WARL (0x0) | Hardwired to 0.                                                  |
+  +-------+------------+------------------------------------------------------------------+
+
+  .. note::
+
+     The bit position for controlling access to the ``jvt`` CSR is not yet ratified and open to change.
+
+  Machine State Enable 1 (``mstateen1``)
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  CSR Address: 0x30D
+
+  Reset Value: 0x0000_0000
+
+  Detailed:
+
+  +-------+------------+------------------------------------------------------------------+
+  | Bit#  | R/W        | Description                                                      |
+  +=======+============+==================================================================+
+  | 31:0  | WARL (0x0) | Hardwired to 0.                                                  |
+  +-------+------------+------------------------------------------------------------------+
+
+  Machine State Enable 2 (``mstateen2``)
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  CSR Address: 0x30E
+
+  Reset Value: 0x0000_0000
+
+  Detailed:
+
+  +-------+------------+------------------------------------------------------------------+
+  | Bit#  | R/W        | Description                                                      |
+  +=======+============+==================================================================+
+  | 31:0  | WARL (0x0) | Hardwired to 0.                                                  |
+  +-------+------------+------------------------------------------------------------------+
+
+  Machine State Enable 3 (``mstateen3``)
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  CSR Address: 0x30F
+
+  Reset Value: 0x0000_0000
+
+  Detailed:
+
+  +-------+------------+------------------------------------------------------------------+
+  | Bit#  | R/W        | Description                                                      |
+  +=======+============+==================================================================+
+  | 31:0  | WARL (0x0) | Hardwired to 0.                                                  |
+  +-------+------------+------------------------------------------------------------------+
+
   Machine Environment Configuration (``menvcfgh``)
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -761,6 +844,66 @@ Detailed:
   +------+-------------+---------------------------------------------------------------+
   | 30:0 | WPRI (0x0)  | Reserved. Hardwired to 0.                                     |
   +------+-------------+---------------------------------------------------------------+
+
+  Machine State Enable 0 (``mstateen0h``)
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  CSR Address: 0x31C
+
+  Reset Value: 0x0000_0000
+
+  Detailed:
+
+  +-------+------------+------------------------------------------------------------------+
+  | Bit#  | R/W        | Description                                                      |
+  +=======+============+==================================================================+
+  | 31:0  | WARL (0x0) | Hardwired to 0.                                                  |
+  +-------+------------+------------------------------------------------------------------+
+
+  Machine State Enable 1 (``mstateen1h``)
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  CSR Address: 0x31D
+
+  Reset Value: 0x0000_0000
+
+  Detailed:
+
+  +-------+------------+------------------------------------------------------------------+
+  | Bit#  | R/W        | Description                                                      |
+  +=======+============+==================================================================+
+  | 31:0  | WARL (0x0) | Hardwired to 0.                                                  |
+  +-------+------------+------------------------------------------------------------------+
+
+  Machine State Enable 2 (``mstateen2h``)
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  CSR Address: 0x31E
+
+  Reset Value: 0x0000_0000
+
+  Detailed:
+
+  +-------+------------+------------------------------------------------------------------+
+  | Bit#  | R/W        | Description                                                      |
+  +=======+============+==================================================================+
+  | 31:0  | WARL (0x0) | Hardwired to 0.                                                  |
+  +-------+------------+------------------------------------------------------------------+
+
+  Machine State Enable 3 (``mstateen3h``)
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  CSR Address: 0x31F
+
+  Reset Value: 0x0000_0000
+
+  Detailed:
+
+  +-------+------------+------------------------------------------------------------------+
+  | Bit#  | R/W        | Description                                                      |
+  +=======+============+==================================================================+
+  | 31:0  | WARL (0x0) | Hardwired to 0.                                                  |
+  +-------+------------+------------------------------------------------------------------+
 
 Machine Counter-Inhibit Register (``mcountinhibit``)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -802,7 +945,7 @@ Detailed:
 +=======+=============+===============================================================+
 | 31:16 | WARL (0x0)  | Hardwired to 0.                                               |
 +-------+-------------+---------------------------------------------------------------+
-| 15:0  | WARL        | **SELECTORS:** Each bit represents a unique event to count.   |
+| 15:0  | WARL        | **SELECTORS**. Each bit represents a unique event to count.   |
 +-------+-------------+---------------------------------------------------------------+
 
 The event selector fields are further described in Performance Counters section.
@@ -853,7 +996,7 @@ Reset Value: 0x0000_0000
 +-------------+------------+----------------------------------------------------------------------------------+
 |   Bit #     |   R/W      |   Description                                                                    |
 +=============+============+==================================================================================+
-| 31          | RW         | **INTERRUPT:** This bit is set when the exception was triggered by an interrupt. |
+| 31          | RW         | **INTERRUPT**. This bit is set when the exception was triggered by an interrupt. |
 +-------------+------------+----------------------------------------------------------------------------------+
 | 30:11       | WLRL (0x0) | **EXCCODE[30:11]**. Hardwired to 0.                                              |
 +-------------+------------+----------------------------------------------------------------------------------+
@@ -875,18 +1018,18 @@ Reset Value: 0x0000_0000
 +-------------+------------+----------------------------------------------------------------------------------+
 |   Bit #     |   R/W      |   Description                                                                    |
 +=============+============+==================================================================================+
-| 31          | RW         | **INTERRUPT:** This bit is set when the exception was triggered by an interrupt. |
+| 31          | RW         | **INTERRUPT**. This bit is set when the exception was triggered by an interrupt. |
 +-------------+------------+----------------------------------------------------------------------------------+
 | 30          | RW         | **MINHV**. Set by hardware at start of hardware vectoring, cleared by            |
 |             |            | hardware at end of successful hardware vectoring.                                |
 +-------------+------------+----------------------------------------------------------------------------------+
-| 29:28       | WARL (0x3) | **MPP:** Previous privilege mode. Same as ``mstatus.MPP``                        |
+| 29:28       | WARL (0x3) | **MPP**: Previous privilege mode. Same as ``mstatus.MPP``                        |
 +-------------+------------+----------------------------------------------------------------------------------+
-| 27          | RW         | **MPIE:** Previous interrupt enable. Same as ``mstatus.MPIE``                    |
+| 27          | RW         | **MPIE**: Previous interrupt enable. Same as ``mstatus.MPIE``                    |
 +-------------+------------+----------------------------------------------------------------------------------+
 | 26:24       | RW         | Reserved. Hardwired to 0.                                                        |
 +-------------+------------+----------------------------------------------------------------------------------+
-| 23:16       | RW         | **MPIL:** Previous interrupt level.                                              |
+| 23:16       | RW         | **MPIL**: Previous interrupt level.                                              |
 +-------------+------------+----------------------------------------------------------------------------------+
 | 15:12       | WARL (0x0) | Reserved. Hardwired to 0.                                                        |
 +-------------+------------+----------------------------------------------------------------------------------+
@@ -1145,18 +1288,18 @@ CSR Address: 0x7A1
 
 Reset Value: 0x6800_1044
 
-Accessible in Debug Mode or M-Mode, depending on **TDATA1.dmode**. The contents of the **data** field depends on the current
+Accessible in Debug Mode or M-Mode, depending on **tdata1.dmode**. The contents of the **data** field depends on the current
 value of the **type** field. See [RISC-V-DEBUG]_ for details regarding all trigger related CSRs.
 
 +-------+-------------+----------------------------------------------------------------+
 | Bit#  | R/W         | Description                                                    |
 +=======+=============+================================================================+
-|| 31:28|| WARL       || **type:** 6 = Address match trigger type.                     |
+|| 31:28|| WARL       || **TYPE**. 6 = Address match trigger type.                     |
 ||      || (0x5, 0x6) ||           5 = Exception trigger                               |
 +-------+-------------+----------------------------------------------------------------+
-| 27    | WARL (0x1)  | **dmode:** Only debug mode can write tdata registers           |
+| 27    | WARL (0x1)  | **DMODE**. Only debug mode can write tdata registers           |
 +-------+-------------+----------------------------------------------------------------+
-| 26:0  | WARL        | **data:** Trigger data depending on type                       |
+| 26:0  | WARL        | **DATA**. Trigger data depending on type                       |
 +-------+-------------+----------------------------------------------------------------+
 
 .. _csr-mcontrol6:
@@ -1166,53 +1309,53 @@ Match Control Type 6 (``mcontrol6``)
 
 CSR Address: 0x7A1
 
-Reset Value: 0x6800_1044
+Reset Value: 0x6800_1000
 
-Accessible in Debug Mode or M-Mode, depending on **TDATA1.DMODE**.
+Accessible in Debug Mode or M-Mode, depending on **tdata1.dmode**.
 
 +-------+-------------+----------------------------------------------------------------+
 | Bit#  | R/W         | Description                                                    |
 +=======+=============+================================================================+
-| 31:28 | WARL (0x6)  | **TYPE:** 6 = Address match trigger.                           |
+| 31:28 | WARL (0x6)  | **TYPE**. 6 = Address match trigger.                           |
 +-------+-------------+----------------------------------------------------------------+
-| 27    | WARL (0x1)  | **DMODE:** Only debug mode can write tdata registers           |
+| 27    | WARL (0x1)  | **DMODE**. Only debug mode can write tdata registers           |
 +-------+-------------+----------------------------------------------------------------+
 | 26:25 | WARL (0x0)  | Hardwired to 0.                                                |
 +-------+-------------+----------------------------------------------------------------+
-| 24    | WARL (0x0)  | **VS:**. Hardwired to 0.                                       |
+| 24    | WARL (0x0)  | **VS**. Hardwired to 0.                                        |
 +-------+-------------+----------------------------------------------------------------+
-| 23    | WARL (0x0)  | **VU:**. Hardwired to 0.                                       |
+| 23    | WARL (0x0)  | **VU**. Hardwired to 0.                                        |
 +-------+-------------+----------------------------------------------------------------+
-| 22    | WARL (0x0)  | **HIT:**. Hardwired to 0.                                      |
+| 22    | WARL (0x0)  | **HIT**. Hardwired to 0.                                       |
 +-------+-------------+----------------------------------------------------------------+
-| 21    | WARL (0x0)  | **SELECT:** Only address matching is supported.                |
+| 21    | WARL (0x0)  | **SELECT**. Only address matching is supported.                |
 +-------+-------------+----------------------------------------------------------------+
-|| 20   || WARL (0x0) || **TIMING:** Break before the instruction at the specified     |
+|| 20   || WARL (0x0) || **TIMING**. Break before the instruction at the specified     |
 ||      ||            || address.                                                      |
 +-------+-------------+----------------------------------------------------------------+
-| 19:16 | WARL (0x0)  | **SIZE:** Match accesses of any size.                          |
+| 19:16 | WARL (0x0)  | **SIZE**. Match accesses of any size.                          |
 +-------+-------------+----------------------------------------------------------------+
-| 15:12 | WARL (0x1)  | **ACTION:** Enter debug mode on match.                         |
+| 15:12 | WARL (0x1)  | **ACTION**. Enter debug mode on match.                         |
 +-------+-------------+----------------------------------------------------------------+
-| 11    | WARL (0x0)  | **CHAIN:**. Hardwired to 0                                     |
+| 11    | WARL (0x0)  | **CHAIN**. Hardwired to 0.                                     |
 +-------+-------------+----------------------------------------------------------------+
-|| 10:7 || WARL       || **MATCH:** 0: Address matches `tdata2`.                       |
+|| 10:7 || WARL       || **MATCH**. 0: Address matches `tdata2`.                       |
 ||      || (0x0, 0x2, ||            2: Address is greater than or equal to `tdata2`    |
 ||      ||  0x3)      ||            3: Address is less than `tdata2`                   |
 +-------+-------------+----------------------------------------------------------------+
-| 6     | WARL (0x1)  | **M:** Match in M-Mode.                                        |
+| 6     | WARL        | **M**. Match in M-Mode.                                        |
 +-------+-------------+----------------------------------------------------------------+
 | 5     | WARL (0x0)  | Hardwired to 0.                                                |
 +-------+-------------+----------------------------------------------------------------+
-| 4     | WARL (0x0)  | **S:**. Hardwired to 0.                                        |
+| 4     | WARL (0x0)  | **S**.  Hardwired to 0.                                        |
 +-------+-------------+----------------------------------------------------------------+
-| 3     | WARL (0x0)  | **U:**. Hardwired to 0.                                        |
+| 3     | WARL (0x0)  | **U**.  Hardwired to 0.                                        |
 +-------+-------------+----------------------------------------------------------------+
-| 2     | WARL        | **EXECUTE:** Enable matching on instruction address.           |
+| 2     | WARL        | **EXECUTE**. Enable matching on instruction address.           |
 +-------+-------------+----------------------------------------------------------------+
-| 1     | WARL        | **STORE:** Enable matching on store address.                   |
+| 1     | WARL        | **STORE**. Enable matching on store address.                   |
 +-------+-------------+----------------------------------------------------------------+
-| 0     | WARL        | **LOAD:** Enable matching on load address.                     |
+| 0     | WARL        | **LOAD**. Enable matching on load address.                     |
 +-------+-------------+----------------------------------------------------------------+
 
 .. _csr-etrigger:
@@ -1222,36 +1365,36 @@ Exception Trigger (``etrigger``)
 
 CSR Address: 0x7A1
 
-Reset Value: 0x5800_0201
+Reset Value: 0x5800_0001
 
-Accessible in Debug Mode or M-Mode, depending on **TDATA1.DMODE**.
+Accessible in Debug Mode or M-Mode, depending on **tdata1.dmode**.
 
 +-------+--------------+----------------------------------------------------------------+
 | Bit#  | R/W          | Description                                                    |
 +=======+==============+================================================================+
-| 31:28 | WARL  (0x5)  | **TYPE:** 5 = Exception trigger.                               |
+| 31:28 | WARL (0x5)   | **TYPE**. 5 = Exception trigger.                               |
 +-------+--------------+----------------------------------------------------------------+
-| 27    | WARL (0x1)   | **DMODE:** Only debug mode can write tdata registers           |
+| 27    | WARL (0x1)   | **DMODE**. Only debug mode can write tdata registers           |
 +-------+--------------+----------------------------------------------------------------+
-| 26    | WARL (0x0)   | **HIT:**. Hardwired to 0.                                      |
+| 26    | WARL (0x0)   | **HIT**. Hardwired to 0.                                       |
 +-------+--------------+----------------------------------------------------------------+
 | 25:13 | WARL (0x0)   | Hardwired to 0.                                                |
 +-------+--------------+----------------------------------------------------------------+
-| 12    | WARL (0x0)   | **VS:**. Hardwired to 0.                                       |
+| 12    | WARL (0x0)   | **VS**. Hardwired to 0.                                        |
 +-------+--------------+----------------------------------------------------------------+
-| 11    | WARL (0x0)   | **VU:**. Hardwired to 0.                                       |
+| 11    | WARL (0x0)   | **VU**. Hardwired to 0.                                        |
 +-------+--------------+----------------------------------------------------------------+
-| 10    | WARL         | **NMI:** Set to enable trigger on NMI.                         |
+| 10    | WARL         | **NMI**. Set to enable trigger on NMI.                         |
 +-------+--------------+----------------------------------------------------------------+
-| 9     | WARL (0x1)   | **M:** Match in M-Mode.                                        |
+| 9     | WARL         | **M**. Match in M-Mode.                                        |
 +-------+--------------+----------------------------------------------------------------+
 | 8     | WARL (0x0)   | Hardwired to 0.                                                |
 +-------+--------------+----------------------------------------------------------------+
-| 7     | WARL (0x0)   | **S:**. Hardwired to 0.                                        |
+| 7     | WARL (0x0)   | **S**. Hardwired to 0.                                         |
 +-------+--------------+----------------------------------------------------------------+
-| 6     | WARL (0x0)   | **U:**. Hardwired to 0.                                        |
+| 6     | WARL (0x0)   | **U**. Hardwired to 0.                                         |
 +-------+--------------+----------------------------------------------------------------+
-| 5:0   | WARL (0x1)   | **ACTION:** Enter debug mode on match.                         |
+| 5:0   | WARL (0x1)   | **ACTION**. Enter debug mode on match.                         |
 +-------+--------------+----------------------------------------------------------------+
 
 
@@ -1272,8 +1415,10 @@ Detailed:
 | 31:0  | RW   | **DATA**                                                         |
 +-------+------+------------------------------------------------------------------+
 
-Accessible in Debug Mode or M-Mode, depending on **TDATA1.DMODE**.
+Accessible in Debug Mode or M-Mode, depending on **tdata1.dmode**.
 This register stores the instruction address to match against for a breakpoint trigger or the currently selected exception codes for an exception trigger.
+
+.. _csr-tdata3:
 
 Trigger Data Register 3 (``tdata3``)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1320,6 +1465,8 @@ does not exist, this field contains 1.
 
 Accessible in Debug Mode or M-Mode.
 
+.. _csr-tcontrol:
+
 Trigger Control (``tcontrol``)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1345,42 +1492,6 @@ Detailed:
 
 |corev| does not support the features requiring this register. CSR is hardwired to 0.
 
-Machine Context Register (``mcontext``)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-CSR Address: 0x7A8
-
-Reset Value: 0x0000_0000
-
-Detailed:
-
-+-------+------------+------------------------------------------------------------------+
-| Bit#  | R/W        | Description                                                      |
-+=======+============+==================================================================+
-| 31:0  | WARL (0x0) | Hardwired to 0.                                                  |
-+-------+------------+------------------------------------------------------------------+
-
-Accessible in Debug Mode or M-Mode.
-|corev| does not support the features requiring this register. CSR is hardwired to 0.
-
-Machine Supervisor Context Register (``mscontext``)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-CSR Address: 0x7AA
-
-Reset Value: 0x0000_0000
-
-Detailed:
-
-+-------+-------------+------------------------------------------------------------------+
-| Bit#  | R/W         | Description                                                      |
-+=======+=============+==================================================================+
-| 31:0  | WARL (0x0)  | Hardwired to 0.                                                  |
-+-------+-------------+------------------------------------------------------------------+
-
-Accessible in Debug Mode or M-Mode.
-|corev| does not support the features requiring this register. CSR is hardwired to 0.
-
 .. _csr-dcsr:
 
 Debug Control and Status (``dcsr``)
@@ -1397,7 +1508,7 @@ Detailed:
 +----------+--------------+-------------------------------------------------------------------------------------------------+
 |   Bit #  |   R/W        |   Description                                                                                   |
 +==========+==============+=================================================================================================+
-| 31:28    | R (0x4)      | **XDEBUGVER:** returns 4 - External debug support exists as it is described in [RISC-V-DEBUG]_. |
+| 31:28    | R (0x4)      | **XDEBUGVER**. returns 4 - External debug support exists as it is described in [RISC-V-DEBUG]_. |
 +----------+--------------+-------------------------------------------------------------------------------------------------+
 | 27:18    | WARL (0x0)   | Reserved                                                                                        |
 +----------+--------------+-------------------------------------------------------------------------------------------------+
@@ -1405,7 +1516,7 @@ Detailed:
 +----------+--------------+-------------------------------------------------------------------------------------------------+
 | 16       | WARL (0x0)   | **EBREAKVU**. Hardwired to 0.                                                                   |
 +----------+--------------+-------------------------------------------------------------------------------------------------+
-| 15       | RW           | **EBREAKM**: Set to enter debug mode on ebreak.                                                 |
+| 15       | RW           | **EBREAKM**. Set to enter debug mode on ebreak.                                                 |
 +----------+--------------+-------------------------------------------------------------------------------------------------+
 | 14       | WARL (0x0)   | Hardwired to 0.                                                                                 |
 +----------+--------------+-------------------------------------------------------------------------------------------------+
@@ -1419,7 +1530,7 @@ Detailed:
 +----------+--------------+-------------------------------------------------------------------------------------------------+
 | 9        | WARL (0x0)   | **STOPTIME**. Hardwired to 0.                                                                   |
 +----------+--------------+-------------------------------------------------------------------------------------------------+
-| 8:6      | R            | **CAUSE**: Return the cause of debug entry.                                                     |
+| 8:6      | R            | **CAUSE**. Return the cause of debug entry.                                                     |
 +----------+--------------+-------------------------------------------------------------------------------------------------+
 | 5        | WARL (0x0)   | **V**. Hardwired to 0.                                                                          |
 +----------+--------------+-------------------------------------------------------------------------------------------------+
@@ -1427,9 +1538,9 @@ Detailed:
 +----------+--------------+-------------------------------------------------------------------------------------------------+
 | 3        | R            | **NMIP**. If set, an NMI is pending                                                             |
 +----------+--------------+-------------------------------------------------------------------------------------------------+
-| 2        | RW           | **STEP**: Set to enable single stepping.                                                        |
+| 2        | RW           | **STEP**. Set to enable single stepping.                                                        |
 +----------+--------------+-------------------------------------------------------------------------------------------------+
-| 1:0      | WARL (0x3)   | **PRV:** Returns the priviledge mode before debug entry.                                        |
+| 1:0      | WARL (0x3)   | **PRV**. Returns the priviledge mode before debug entry.                                        |
 +----------+--------------+-------------------------------------------------------------------------------------------------+
 
 .. _csr-dpc:
@@ -1684,11 +1795,11 @@ Detailed:
   +------+-------------+-----------------------------------------------------------------------------------------------------------------------------------+
   | 7:3  | WPRI (0x0)  | Hardwired to 0.                                                                                                                   |
   +------+-------------+-----------------------------------------------------------------------------------------------------------------------------------+
-  | 2    | RW          | **RLB**. Rule Locking Bypass.                                                                                                     |
+  | 2    | WARL        | **RLB**. Rule Locking Bypass.                                                                                                     |
   +------+-------------+-----------------------------------------------------------------------------------------------------------------------------------+
-  | 1    | RW          | **MMWP**. Machine Mode Whitelist Policy. This is a sticky bit and once set can only be unset due to ``rst_ni`` assertion.         |
+  | 1    | WARL        | **MMWP**. Machine Mode Whitelist Policy. This is a sticky bit and once set can only be unset due to ``rst_ni`` assertion.         |
   +------+-------------+-----------------------------------------------------------------------------------------------------------------------------------+
-  | 0    | RW          | **MML**. Machine Mode Lockdown. This is a sticky bit and once set can only be unset due to ``rst_ni`` assertion.                  |
+  | 0    | WARL        | **MML**. Machine Mode Lockdown. This is a sticky bit and once set can only be unset due to ``rst_ni`` assertion.                  |
   +------+-------------+-----------------------------------------------------------------------------------------------------------------------------------+
 
   Machine Security Configuration (``mseccfgh``)
@@ -1715,62 +1826,60 @@ Detailed:
 
   Detailed ``pmpcfg0``:
 
-  +-------+-----------------+---------------------------------------------------------------------------------------------------------------+
-  | Bit#  |  R/W            | Definition                                                                                                    |
-  +=======+=================+===============================================================================================================+
-  | 31:24 | RW              | PMP3CFG                                                                                                       |
-  +-------+-----------------+---------------------------------------------------------------------------------------------------------------+
-  | 23:16 | RW              | PMP2CFG                                                                                                       |
-  +-------+-----------------+---------------------------------------------------------------------------------------------------------------+
-  | 15:8  | RW              | PMP1CFG                                                                                                       |
-  +-------+-----------------+---------------------------------------------------------------------------------------------------------------+
-  | 7:0   | RW              | PMP0CFG                                                                                                       |
-  +-------+-----------------+---------------------------------------------------------------------------------------------------------------+
+  +-------+---------------+
+  | Bit#  | Definition    |
+  +=======+===============+
+  | 31:24 | PMP3CFG       |
+  +-------+---------------+
+  | 23:16 | PMP2CFG       |
+  +-------+---------------+
+  | 15:8  | PMP1CFG       |
+  +-------+---------------+
+  | 7:0   | PMP0CFG       |
+  +-------+---------------+
 
   Detailed ``pmpcfg1``:
 
-  +-------+------------------+---------------------------------------------------------------------------------------------------------------+
-  | Bit#  |  R/W             | Definition                                                                                                    |
-  +=======+==================+===============================================================================================================+
-  | 31:24 | RW               | PMP7CFG                                                                                                       |
-  +-------+------------------+---------------------------------------------------------------------------------------------------------------+
-  | 23:16 | RW               | PMP6CFG                                                                                                       |
-  +-------+------------------+---------------------------------------------------------------------------------------------------------------+
-  | 15:8  | RW               | PMP5CFG                                                                                                       |
-  +-------+------------------+---------------------------------------------------------------------------------------------------------------+
-  | 7:0   | RW               | PMP4CFG                                                                                                       |
-  +-------+------------------+---------------------------------------------------------------------------------------------------------------+
+  +-------+---------------+
+  | Bit#  | Definition    |
+  +=======+===============+
+  | 31:24 | PMP7CFG       |
+  +-------+---------------+
+  | 23:16 | PMP6CFG       |
+  +-------+---------------+
+  | 15:8  | PMP5CFG       |
+  +-------+---------------+
+  | 7:0   | PMP4CFG       |
+  +-------+---------------+
 
   ...
 
   Detailed ``pmpcfg15``:
 
-  +-------+------------------+---------------------------------------------------------------------------------------------------------------+
-  | Bit#  |  R/W             | Definition                                                                                                    |
-  +=======+==================+===============================================================================================================+
-  | 31:24 | RW               | PMP63CFG                                                                                                      |
-  +-------+------------------+---------------------------------------------------------------------------------------------------------------+
-  | 23:16 | RW               | PMP62CFG                                                                                                      |
-  +-------+------------------+---------------------------------------------------------------------------------------------------------------+
-  | 15:8  | RW               | PMP61CFG                                                                                                      |
-  +-------+------------------+---------------------------------------------------------------------------------------------------------------+
-  | 7:0   | RW               | PMP60CFG                                                                                                      |
-  +-------+------------------+---------------------------------------------------------------------------------------------------------------+
+  +-------+---------------+
+  | Bit#  | Definition    |
+  +=======+===============+
+  | 31:24 | PMP63CFG      |
+  +-------+---------------+
+  | 23:16 | PMP62CFG      |
+  +-------+---------------+
+  | 15:8  | PMP61CFG      |
+  +-------+---------------+
+  | 7:0   | PMP60CFG      |
+  +-------+---------------+
 
   The configuration fields for each ``pmpxcfg`` are as follows:
 
   +-------+------------------+---------------------------+
   | Bit#  |  R/W             |  Definition               |
   +=======+==================+===========================+
-  |    8  | WARL (0x0)       | Reserved                  |
-  +-------+------------------+---------------------------+
-  |    7  | RW               | **L**. Lock               |
+  |    7  | WARL             | **L**. Lock               |
   +-------+------------------+---------------------------+
   |  6:5  | WARL (0x0)       | Reserved                  |
   +-------+------------------+---------------------------+
-  |  4:3  | RW               | **A**. Mode               |
+  |  4:3  | WARL             | **A**. Mode               |
   +-------+------------------+---------------------------+
-  |    2  | RW /             | **X**. Execute permission |
+  |    2  | WARL /           | **X**. Execute permission |
   +-------+ WARL (0x0, 0x1,  +---------------------------+
   |    1  | 0x3, 0x4,        | **W**. Write permission   |
   +-------+ 0x5, 0x7)        +---------------------------+
@@ -1781,8 +1890,9 @@ Detailed:
      pmpxcfg is WARL (0x0) if x >= ``PMP_NUM_REGIONS``.
 
   .. note::
-     The **R**, **W** and **X**  together form a collective WARL field for which the combinations with **R** = 0 and **W** = 1 are reserved for future use
-     if **mseccfg.MML** = 0. The value of the collective  **R**, **W**, **X** bitfield will remain unchanged when attempting to write **R** = 0 and **W** = 1 while **mseccfg.MML** = 0.
+     If **mseccfg.MML** = 0, then the **R**, **W** and **X**  together form a collective WARL field for which the combinations with **R** = 0 and **W** = 1 are reserved for future use
+     The value of the collective  **R**, **W**, **X** bitfield will remain unchanged when attempting to write **R** = 0 and **W** = 1 while **mseccfg.MML** = 0.
+     If **mseccfg.MML** = 1, then the **R**, **W** and **X**  together form a collective WARL field in which all values are valid.
 
   PMP Address (``pmpaddr0`` - ``pmpaddr63``)
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1791,13 +1901,13 @@ Detailed:
 
   Reset Value: defined (based on ``PMP_PMPADDR_RV[]``)
 
-  +-------+------------------+---------------------------+
-  | Bit#  |  R/W             |  Definition               |
-  +=======+==================+===========================+
-  | 31:0  | RW / WARL (0x0)  | ADDRESS[33:2]             |
-  +-------+------------------+---------------------------+
+  +-------+-----------------------+---------------------------+
+  | Bit#  |  R/W                  |  Definition               |
+  +=======+=======================+===========================+
+  | 31:0  | WARL / WARL (0x0)     | ADDRESS[33:2]             |
+  +-------+-----------------------+---------------------------+
 
-  pmpaddrx is RW if x < ``PMP_NUM_REGIONS`` and WARL (0x0) otherwise.
+  pmpaddrx is WARL if x < ``PMP_NUM_REGIONS`` and WARL (0x0) otherwise.
 
 .. only:: ZICNTR
 

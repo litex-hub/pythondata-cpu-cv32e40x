@@ -31,7 +31,6 @@
 
 module cv32e40x_controller import cv32e40x_pkg::*;
 #(
-  parameter bit          USE_DEPRECATED_FEATURE_SET = 1, // todo: remove once related features are supported by iss
   parameter bit          X_EXT                  = 0,
   parameter int unsigned REGFILE_NUM_READ_PORTS = 2,
   parameter bit          SMCLIC                 = 0,
@@ -51,12 +50,12 @@ module cv32e40x_controller import cv32e40x_pkg::*;
 
   // from IF/ID pipeline
   input  if_id_pipe_t if_id_pipe_i,
-  input  logic        alu_en_raw_id_i,
   input  logic        alu_jmp_id_i,               // Jump (JAL, JALR)
   input  logic        alu_jmpr_id_i,              // Jump register (JALR)
+  input  logic        alu_en_id_i,
   input  logic        sys_en_id_i,
   input  logic        sys_mret_id_i,
-  input  logic        csr_en_id_i,
+  input  logic        csr_en_raw_id_i,
   input  csr_opcode_e csr_op_id_i,
 
   input  id_ex_pipe_t id_ex_pipe_i,
@@ -89,6 +88,7 @@ module cv32e40x_controller import cv32e40x_pkg::*;
 
   // CSR raddr in ex
   input  logic        csr_counter_read_i,         // A performance counter is read in CSR (EX)
+  input  logic        csr_mnxti_read_i,           // MNXTI is read in CSR (EX)
 
   input logic [REGFILE_NUM_READ_PORTS-1:0] rf_re_id_i,
   input rf_addr_t     rf_raddr_id_i[REGFILE_NUM_READ_PORTS],
@@ -119,7 +119,6 @@ module cv32e40x_controller import cv32e40x_pkg::*;
   // Main FSM and debug FSM
   cv32e40x_controller_fsm
   #(
-    .USE_DEPRECATED_FEATURE_SET  (USE_DEPRECATED_FEATURE_SET),
     .X_EXT                       ( X_EXT                    ),
     .SMCLIC                      ( SMCLIC                   ),
     .SMCLIC_ID_WIDTH             ( SMCLIC_ID_WIDTH          )
@@ -142,10 +141,10 @@ module cv32e40x_controller import cv32e40x_pkg::*;
     .if_id_pipe_i                ( if_id_pipe_i             ),
     .id_ready_i                  ( id_ready_i               ),
     .id_valid_i                  ( id_valid_i               ),
-    .alu_en_raw_id_i             ( alu_en_raw_id_i          ),
     .alu_jmp_id_i                ( alu_jmp_id_i             ),
-    .sys_en_id_i                 ( sys_en_id_i              ),
     .sys_mret_id_i               ( sys_mret_id_i            ),
+    .alu_en_id_i                 ( alu_en_id_i              ),
+    .sys_en_id_i                 ( sys_en_id_i              ),
 
     // From EX stage
     .id_ex_pipe_i                ( id_ex_pipe_i             ),
@@ -210,15 +209,14 @@ module cv32e40x_controller import cv32e40x_pkg::*;
     // From ID
     .rf_re_id_i                 ( rf_re_id_i               ),
     .rf_raddr_id_i              ( rf_raddr_id_i            ),
-    .alu_en_raw_id_i            ( alu_en_raw_id_i          ),
     .alu_jmpr_id_i              ( alu_jmpr_id_i            ),
-    .sys_en_id_i                ( sys_en_id_i              ),
     .sys_mret_id_i              ( sys_mret_id_i            ),
-    .csr_en_id_i                ( csr_en_id_i              ),
+    .csr_en_raw_id_i            ( csr_en_raw_id_i          ),
     .csr_op_id_i                ( csr_op_id_i              ),
 
     // From EX
     .csr_counter_read_i         ( csr_counter_read_i       ),
+    .csr_mnxti_read_i           ( csr_mnxti_read_i         ),
 
     // From WB
     .wb_ready_i                 ( wb_ready_i               ),
@@ -227,4 +225,4 @@ module cv32e40x_controller import cv32e40x_pkg::*;
     .ctrl_byp_o                 ( ctrl_byp_o               )
   );
 
-endmodule // cv32e40x_controller
+endmodule

@@ -38,8 +38,7 @@ module cv32e40x_rvfi
    input logic                                id_valid_i,
    input logic                                id_ready_i,
    input logic [ 1:0]                         rf_re_id_i,
-   input logic                                sys_en_id_i,
-   input logic                                sys_mret_insn_id_i,
+   input logic                                sys_mret_id_i,
    input logic                                jump_in_id_i,
    input logic [31:0]                         jump_target_id_i,
    input logic                                is_compressed_id_i,
@@ -79,6 +78,7 @@ module cv32e40x_rvfi
    input logic [31:0]                         instr_rdata_wb_i,
    input logic                                csr_en_wb_i,
    input logic                                sys_wfi_insn_wb_i,
+   input logic                                sys_en_wb_i,
    // Register writes
    input logic                                rf_we_wb_i,
    input logic [4:0]                          rf_addr_wb_i,
@@ -641,7 +641,7 @@ module cv32e40x_rvfi
 
   // WFI instructions retire when their wake-up condition is present. 
   // The wake-up condition is only checked in the SLEEP state of the controller FSM.
-  assign wb_valid_adjusted = sys_wfi_insn_wb_i ? (ctrl_fsm_cs_i == SLEEP) && (ctrl_fsm_ns_i == FUNCTIONAL) : wb_valid_i;
+  assign wb_valid_adjusted = (sys_en_wb_i && sys_wfi_insn_wb_i) ? (ctrl_fsm_cs_i == SLEEP) && (ctrl_fsm_ns_i == FUNCTIONAL) : wb_valid_i;
 
   // Pipeline stage model //
 
@@ -737,12 +737,12 @@ module cv32e40x_rvfi
       end
 
       //// ID Stage ////
-      if(id_valid_i && ex_ready_i) begin
+      if (id_valid_i && ex_ready_i) begin
 
         if (jump_in_id_i) begin
           // Predicting mret/jump explicitly instead of using branch_addr_n to
-          // avoid including asynchronous traps and debug reqs in prediction
-          pc_wdata [STAGE_EX] <= (sys_en_id_i && sys_mret_insn_id_i) ? csr_mepc_q_i : jump_target_id_i;
+          // avoid including asynchronous traps and debug reqs in prediction.
+          pc_wdata [STAGE_EX] <= sys_mret_id_i ? csr_mepc_q_i : jump_target_id_i;
         end else begin
           pc_wdata [STAGE_EX] <= is_compressed_id_i ?  pc_id_i + 2 : pc_id_i + 4;
         end
@@ -986,9 +986,9 @@ module cv32e40x_rvfi
   // MIP is read in EX by CSR instructions, evaluated combinatorically in WB by the WFI instruction,
   // and is evaluated in WB for all other instructions
   assign ex_csr_rdata_d.mip                  = csr_mip_q_i;
-  assign rvfi_csr_rdata_d.mip                = csr_en_wb_i       ? ex_csr_rdata.mip :
-                                               sys_wfi_insn_wb_i ?            irq_i :
-                                                                        csr_mip_q_i;
+  assign rvfi_csr_rdata_d.mip                = csr_en_wb_i                        ? ex_csr_rdata.mip :
+                                               (sys_en_wb_i && sys_wfi_insn_wb_i) ?            irq_i :
+                                                                                          csr_mip_q_i;
   assign rvfi_csr_wdata_d.mip                = csr_mip_n_i;
   assign rvfi_csr_wmask_d.mip                = csr_mip_we_i ? '1 : '0;
 

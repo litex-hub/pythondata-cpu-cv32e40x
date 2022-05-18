@@ -124,10 +124,12 @@ typedef enum logic [ALU_OP_WIDTH-1:0]
  ALU_B_CTZ    = 6'b101000, // (funct3 = 001)
  ALU_B_CPOP   = 6'b100011, // (funct3 = 001)
 
- ALU_B_SEXT_B = 6'b110000, // (funct3 = 001)
- ALU_B_SEXT_H = 6'b111000, // (funct3 = 001)
-
- ALU_B_ZEXT_H = 6'b110011, // (funct3 = 100)
+ // The following three alu opcodes are shared between B and ZC.
+ // Setting bit5==0 allows synth to optimize away most B logic
+ // in the ALU in case only ZC_EXT is enabled.
+ ALU_B_SEXT_B = 6'b010010,
+ ALU_B_SEXT_H = 6'b010100,
+ ALU_B_ZEXT_H = 6'b010101,
 
  ALU_B_REV8   = 6'b110100, // (funct3 = 101)
  ALU_B_ORC_B  = 6'b110010, // (funct3 = 101)
@@ -276,8 +278,6 @@ typedef enum logic[11:0] {
   CSR_TDATA3         = 12'h7A3,
   CSR_TINFO          = 12'h7A4,
   CSR_TCONTROL       = 12'h7A5,
-  CSR_MCONTEXT       = 12'h7A8,
-  CSR_MSCONTEXT      = 12'h7AA,
 
   // Debug/trace
   CSR_DCSR           = 12'h7B0,
@@ -711,11 +711,13 @@ typedef enum logic[1:0] {
                     } alu_op_b_mux_e;
 
 // Immediate b selection
-typedef enum logic[1:0] {
-                         IMMB_I      = 2'b00,
-                         IMMB_S      = 2'b01,
-                         IMMB_U      = 2'b10,
-                         IMMB_PCINCR = 2'b11
+typedef enum logic[2:0] {
+                         IMMB_I      = 3'b000,
+                         IMMB_S      = 3'b001,
+                         IMMB_U      = 3'b010,
+                         IMMB_PCINCR = 3'b011,
+                         IMMB_CIW    = 3'b100,
+                         IMMB_CL    = 3'b101
                          } imm_b_mux_e;
 
 // Operand c selection
@@ -841,7 +843,7 @@ typedef enum logic[3:0] {
   PC_TRAP_DBE = 4'b1011,
   PC_TRAP_NMI = 4'b1100,
   PC_TRAP_CLICV = 4'b1101,
-  PC_TRAP_CLICV_TGT = 4'b1110
+  PC_POINTER    = 4'b1110
 } pc_mux_e;
 
 // Exception Cause
@@ -855,10 +857,6 @@ parameter EXC_CAUSE_INSTR_BUS_FAULT = 11'h30;
 
 parameter INT_CAUSE_LSU_LOAD_FAULT  = 11'h400;
 parameter INT_CAUSE_LSU_STORE_FAULT = 11'h401;
-
-// todo: remove once 11bit cause is supported by iss
-parameter DEPRECATED_INT_CAUSE_LSU_LOAD_FAULT  = 11'h80;
-parameter DEPRECATED_INT_CAUSE_LSU_STORE_FAULT = 11'h81;
 
 // Interrupt mask
 parameter IRQ_MASK = 32'hFFFF0888;
@@ -1036,7 +1034,9 @@ typedef struct packed {
   logic [15:0] compressed_instr;
   logic        illegal_c_insn;
   logic        trigger_match;
-  logic [31:0] xif_id;  // ID of offloaded instruction
+  logic [31:0] xif_id;           // ID of offloaded instruction
+  logic [31:0] ptr;              // Flops to hold 32-bit pointer
+  logic        last_op;          // Last part of multi operation instruction
 } if_id_pipe_t;
 
 // ID/EX pipeline
@@ -1103,6 +1103,8 @@ typedef struct packed {
   logic         xif_en;           // Instruction has been offloaded via eXtension interface
   xif_meta_t    xif_meta;         // xif meta struct
 
+  logic         last_op;
+
 } id_ex_pipe_t;
 
 // EX/WB pipeline
@@ -1121,6 +1123,7 @@ typedef struct packed {
   csr_opcode_e  csr_op;
   logic [11:0]  csr_addr;
   logic [31:0]  csr_wdata;
+  logic         csr_mnxti_access;
 
   // LSU
   logic         lsu_en;
@@ -1146,6 +1149,8 @@ typedef struct packed {
   // eXtension interface
   logic         xif_en;           // Instruction has been offloaded via eXtension interface
   xif_meta_t    xif_meta;         // xif meta struct
+
+  logic         last_op;
 } ex_wb_pipe_t;
 
 // Performance counter events
@@ -1177,6 +1182,7 @@ typedef struct packed {
   logic         load_stall;             // Stall due to load operation
   logic         csr_stall;
   logic         wfi_stall;
+  logic         mnxti_stall;            // Stall due to mnxti CSR access in EX
   logic         minstret_stall;         // Stall due to minstret/h read in EX
   logic         deassert_we;            // Deassert write enable and special insn bits
   logic         xif_exception_stall;    // Stall (EX) if xif insn in WB can cause an exception

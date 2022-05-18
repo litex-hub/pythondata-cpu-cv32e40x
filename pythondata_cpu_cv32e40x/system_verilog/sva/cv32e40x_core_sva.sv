@@ -35,18 +35,31 @@ module cv32e40x_core_sva
   input logic        rst_ni,
 
   input ctrl_fsm_t   ctrl_fsm,
-  input logic [4:0]  exc_cause,
+  input logic [10:0] exc_cause,
   input logic [31:0] mie,
   input logic [31:0] mip,
   input dcsr_t       dcsr,
   input              if_id_pipe_t if_id_pipe,
+  input id_ex_pipe_t id_ex_pipe,
   input              id_stage_multi_cycle_id_stall,
   input logic        id_stage_id_valid,
   input logic        ex_ready,
   input logic        irq_ack, // irq ack output
+  input logic        irq_clic_shv, // ack'ed irq is a CLIC SHV
   input ex_wb_pipe_t ex_wb_pipe,
   input logic        wb_valid,
   input logic        branch_taken_in_ex,
+
+  input alu_op_a_mux_e alu_op_a_mux_sel_id_i,
+  input alu_op_b_mux_e alu_op_b_mux_sel_id_i,
+  input logic [31:0]   operand_a_id_i,
+  input logic [31:0]   operand_b_id_i,
+  input logic [31:0]   jalr_fw_id_i,
+  input logic [31:0]   rf_wdata_wb,
+  input logic          rf_we_wb,
+
+  input logic        alu_jmpr_id_i,
+  input logic        alu_en_id_i,
 
   // probed OBI signals
   input logic [1:0]  instr_memtype_o,
@@ -60,6 +73,7 @@ module cv32e40x_core_sva
   input logic        ctrl_pending_debug,
   input logic        ctrl_debug_allowed,
   input              ctrl_state_e ctrl_fsm_ns,
+  input ctrl_byp_t   ctrl_byp,
    // probed cs_registers signals
   input logic [31:0] cs_registers_mie_q,
   input logic [31:0] cs_registers_mepc_n,
@@ -90,7 +104,7 @@ end else begin
   property p_irq_enabled_0;
     @(posedge clk) disable iff (!rst_ni)
     (ctrl_fsm.pc_set && (ctrl_fsm.pc_mux == PC_TRAP_IRQ)) |->
-    (mie[exc_cause] && cs_registers_mstatus_q.mie);
+    (mie[exc_cause[4:0]] && cs_registers_mstatus_q.mie && (exc_cause[10:5] == 6'b0));
   endproperty
 
   a_irq_enabled_0 : assert property(p_irq_enabled_0) else `uvm_error("core", "Assertion a_irq_enabled_0 failed")
@@ -171,8 +185,10 @@ always_ff @(posedge clk , negedge rst_ni)
         expected_instr_err_mepc <= ex_wb_pipe.pc;
       end
 
+      // CLIC pointers generate data errors, exluding to avoid cause mismatch. todo: make separate asserts for clicptr exceptions.
+      // todo: if CLIC spec changes from data to instruction fetch for pointer, this must change again.
       if (!first_instr_mpuerr_found && ex_wb_pipe.instr_valid && !irq_ack && !(ctrl_pending_debug && ctrl_debug_allowed) &&
-         !(ctrl_fsm.pc_mux == PC_TRAP_NMI) &&
+         !(ctrl_fsm.pc_mux == PC_TRAP_NMI) && !(ex_wb_pipe.instr_meta.clic_ptr) &&
           (ex_wb_pipe.instr.mpu_status != MPU_OK) && !ctrl_debug_mode_n) begin
         first_instr_mpuerr_found   <= 1'b1;
         expected_instr_mpuerr_mepc <= ex_wb_pipe.pc;
@@ -312,6 +328,33 @@ always_ff @(posedge clk , negedge rst_ni)
                      |-> (ctrl_fsm.debug_mode && dcsr.step))
       else `uvm_error("core", "Assertion a_single_step_no_irq failed")
 
+if (SMCLIC) begin
+  // Non-SHV interrupt taken during single stepping.
+  // If this happens, no instructions should retire until the core is in debug mode.
+  // irq_ack is asserted during FUNCTIONAL state. debug_mode_n will be set during
+  // DEBUG_TAKEN one cycle later
+  a_single_step_with_irq_nonshv :
+    assert property (@(posedge clk) disable iff (!rst_ni)
+                      (dcsr.step && !ctrl_fsm.debug_mode && irq_ack && !irq_clic_shv)
+                      |->
+                      !wb_valid ##1 (!wb_valid && ctrl_debug_mode_n && dcsr.step))
+      else `uvm_error("core", "Assertion a_single_step_with_irq_nonshv failed")
+
+  // An SHV CLIC interrupt will first do one fetch to get a function pointer,
+  // then a second fetch to the actual interrupt handler. If this second fetch has
+  // no faults, debug is entered with dpc pointing to the handler entry.
+  // Otherwise, if the pointer fetch failed, we will eventually end up in debug mode
+  // with dpc pointing to the respective exception/NMI handler.
+  // In any way, wb_valid shall remain low until we retire the first instruction in debug mode.
+  a_single_step_with_irq_shv :
+    assert property (@(posedge clk) disable iff (!rst_ni)
+                      (dcsr.step && !ctrl_fsm.debug_mode && irq_ack && irq_clic_shv)
+                      |->
+                      !wb_valid until (wb_valid && ctrl_fsm.debug_mode && dcsr.step))
+      else `uvm_error("core", "Assertion a_single_step_with_irq_shv failed")
+
+
+end else begin
   // Interrupt taken during single stepping.
   // If this happens, no intstructions should retire until the core is in debug mode.
   // irq_ack is asserted during FUNCTIONAL state. debug_mode_n will be set during
@@ -322,7 +365,7 @@ always_ff @(posedge clk , negedge rst_ni)
                       |->
                       !wb_valid ##1 (!wb_valid && ctrl_debug_mode_n && dcsr.step))
       else `uvm_error("core", "Assertion a_single_step_with_irq failed")
-
+end
   // Check that only a single instruction can retire during single step
   a_single_step_retire :
     assert property (@(posedge clk) disable iff (!rst_ni)
@@ -361,6 +404,58 @@ always_ff @(posedge clk , negedge rst_ni)
   endgenerate
 
 
+  // Check that operand_a data forwarded from EX to ID actually is written to RF in WB
+  property p_opa_fwd_ex;
+    logic [31:0] opa;
+    @(posedge clk) disable iff (!rst_ni)
+    (id_stage_id_valid && ex_ready && (alu_op_a_mux_sel_id_i == OP_A_REGA_OR_FWD) && (ctrl_byp.operand_a_fw_mux_sel == SEL_FW_EX), opa=operand_a_id_i)
+    |=> (opa == rf_wdata_wb) && (rf_we_wb || (ctrl_fsm.kill_ex || ctrl_fsm.halt_ex));
+  endproperty
+
+  a_opa_fwd_ex: assert property (p_opa_fwd_ex)
+    else `uvm_error("core", "Forwarded data (operand_a) from EX not written to RF the following cycle")
+
+  // Check that operand_a data forwarded from WB to ID actually is written to RF in WB
+  property p_opa_fwd_wb;
+    @(posedge clk) disable iff (!rst_ni)
+    (id_stage_id_valid && ex_ready && (alu_op_a_mux_sel_id_i == OP_A_REGA_OR_FWD) && (ctrl_byp.operand_a_fw_mux_sel == SEL_FW_WB))
+    |-> (operand_a_id_i == rf_wdata_wb) && rf_we_wb;
+  endproperty
+
+  a_opa_fwd_wb: assert property (p_opa_fwd_wb)
+    else `uvm_error("core", "Forwarded data (operand_a) from WB not written to RF in the same cycle")
+
+  // Check that operand_b data forwarded from EX to ID actually is written to RF in WB
+  property p_opb_fwd_ex;
+    logic [31:0] opb;
+    @(posedge clk) disable iff (!rst_ni)
+    (id_stage_id_valid && ex_ready && (alu_op_b_mux_sel_id_i == OP_B_REGB_OR_FWD) && (ctrl_byp.operand_b_fw_mux_sel == SEL_FW_EX), opb=operand_b_id_i)
+    |=> (opb == rf_wdata_wb) && (rf_we_wb || (ctrl_fsm.kill_ex || ctrl_fsm.halt_ex));
+  endproperty
+
+  a_opb_fwd_ex: assert property (p_opb_fwd_ex)
+    else `uvm_error("core", "Forwarded data (operand_b) from EX not written to RF the following cycle")
+
+  // Check that operand_b data forwarded from WB to ID actually is written to RF in WB
+  property p_opb_fwd_wb;
+    @(posedge clk) disable iff (!rst_ni)
+    (id_stage_id_valid && ex_ready && (alu_op_b_mux_sel_id_i == OP_B_REGB_OR_FWD) && (ctrl_byp.operand_b_fw_mux_sel == SEL_FW_WB))
+    |-> (operand_b_id_i == rf_wdata_wb) && rf_we_wb;
+  endproperty
+
+  a_opb_fwd_wb: assert property (p_opb_fwd_wb)
+    else `uvm_error("core", "Forwarded data (operand_b) from WB not written to RF in the same cycle")
+
+  // Check that data forwarded from WB to a JALR instruction in ID is actully written to the RF
+  property p_jalr_fwd;
+    @(posedge clk) disable iff (!rst_ni)
+    (alu_jmpr_id_i && alu_en_id_i && if_id_pipe.instr_valid) && (ctrl_byp.jalr_fw_mux_sel == SELJ_FW_WB) && !ctrl_byp.jalr_stall
+    |->
+    (jalr_fw_id_i == rf_wdata_wb) && (rf_we_wb || (ctrl_fsm.kill_id || ctrl_fsm.halt_id));
+  endproperty
+
+  a_jalr_fwd: assert property(p_jalr_fwd)
+    else `uvm_error("core", "Forwarded jalr data from WB to ID not written to RF")
 
 endmodule // cv32e40x_core_sva
 

@@ -31,105 +31,102 @@
 
 module cv32e40x_core import cv32e40x_pkg::*;
 #(
-  parameter              LIB                          = 0,
-  parameter rv32_e       RV32                         = RV32I, // todo: Add support for RV32E
-  parameter bit          A_EXT                        = 0,
-  parameter b_ext_e      B_EXT                        = B_NONE,
-  parameter m_ext_e      M_EXT                        = M,
-  parameter bit          X_EXT                        = 0,
-  parameter int          X_NUM_RS                     = 2,
-  parameter int          X_ID_WIDTH                   = 4,
-  parameter int          X_MEM_WIDTH                  = 32,
-  parameter int          X_RFR_WIDTH                  = 32,
-  parameter int          X_RFW_WIDTH                  = 32,
-  parameter logic [31:0] X_MISA                       = 32'h00000000,
-  parameter logic [1:0]  X_ECS_XS                     = 2'b00,
-  parameter bit          ZC_EXT                       = 0, // todo: remove once fully implemented
-  parameter bit          USE_DEPRECATED_FEATURE_SET   = 1, // todo: remove once related features are supported by iss
-  parameter int          NUM_MHPMCOUNTERS             = 1,
-  parameter bit          SMCLIC                       = 0,
-  parameter int          SMCLIC_ID_WIDTH              = 5,
-  parameter int          DBG_NUM_TRIGGERS             = 1,
-  parameter int          PMA_NUM_REGIONS              = 0,
-  parameter pma_cfg_t    PMA_CFG[PMA_NUM_REGIONS-1:0] = '{default:PMA_R_DEFAULT}
+  parameter                             LIB                                     = 0,
+  parameter rv32_e                      RV32                                    = RV32I, // todo: Add support for RV32E
+  parameter bit                         A_EXT                                   = 0,
+  parameter b_ext_e                     B_EXT                                   = B_NONE,
+  parameter m_ext_e                     M_EXT                                   = M,
+  parameter int                         DBG_NUM_TRIGGERS                        = 1,
+  parameter int                         PMA_NUM_REGIONS                         = 0,
+  parameter pma_cfg_t                   PMA_CFG[PMA_NUM_REGIONS-1:0]            = '{default:PMA_R_DEFAULT},
+  parameter bit                         SMCLIC                                  = 0,
+  parameter int                         SMCLIC_ID_WIDTH                         = 5,
+  parameter bit                         X_EXT                                   = 0,
+  parameter int                         X_NUM_RS                                = 2,
+  parameter int                         X_ID_WIDTH                              = 4,
+  parameter int                         X_MEM_WIDTH                             = 32,
+  parameter int                         X_RFR_WIDTH                             = 32,
+  parameter int                         X_RFW_WIDTH                             = 32,
+  parameter logic [31:0]                X_MISA                                  = 32'h00000000,
+  parameter logic [1:0]                 X_ECS_XS                                = 2'b00,
+  parameter bit                         ZC_EXT                                  = 0, // todo: remove once fully implemented
+  parameter int                         NUM_MHPMCOUNTERS                        = 1
 )
 (
-  // Clock and Reset
-  input  logic        clk_i,
-  input  logic        rst_ni,
+  // Clock and reset
+  input  logic                          clk_i,
+  input  logic                          rst_ni,
+  input  logic                          scan_cg_en_i,   // Enable all clock gates for testing
 
-  input  logic        scan_cg_en_i,                     // Enable all clock gates for testing
-
-  // Core ID, Cluster ID, debug mode halt address and boot address are considered more or less static
-  input  logic [31:0] boot_addr_i,
-  input  logic [31:0] mtvec_addr_i,
-  input  logic [31:0] dm_halt_addr_i,
-  input  logic [31:0] mhartid_i,
-  input  logic  [3:0] mimpid_patch_i,
-  input  logic [31:0] dm_exception_addr_i,
-  input  logic [31:0] nmi_addr_i, // todo: remove once supported by verification
+  // Static configuration
+  input  logic [31:0]                   boot_addr_i,
+  input  logic [31:0]                   dm_exception_addr_i,
+  input  logic [31:0]                   dm_halt_addr_i,
+  input  logic [31:0]                   mhartid_i,
+  input  logic  [3:0]                   mimpid_patch_i,
+  input  logic [31:0]                   mtvec_addr_i,
 
   // Instruction memory interface
-  output logic        instr_req_o,
-  input  logic        instr_gnt_i,
-  input  logic        instr_rvalid_i,
-  output logic [31:0] instr_addr_o,
-  output logic [1:0]  instr_memtype_o,
-  output logic [2:0]  instr_prot_o,
-  output logic        instr_dbg_o,
-  input  logic [31:0] instr_rdata_i,
-  input  logic        instr_err_i,
+  output logic                          instr_req_o,
+  input  logic                          instr_gnt_i,
+  input  logic                          instr_rvalid_i,
+  output logic [31:0]                   instr_addr_o,
+  output logic [1:0]                    instr_memtype_o,
+  output logic [2:0]                    instr_prot_o,
+  output logic                          instr_dbg_o,
+  input  logic [31:0]                   instr_rdata_i,
+  input  logic                          instr_err_i,
 
   // Data memory interface
-  output logic        data_req_o,
-  input  logic        data_gnt_i,
-  input  logic        data_rvalid_i,
-  output logic        data_we_o,
-  output logic [3:0]  data_be_o,
-  output logic [31:0] data_addr_o,
-  output logic [1:0]  data_memtype_o,
-  output logic [2:0]  data_prot_o,
-  output logic        data_dbg_o,
-  output logic [31:0] data_wdata_o,
-  input  logic [31:0] data_rdata_i,
-  input  logic        data_err_i,
-  output logic [5:0]  data_atop_o,
-  input  logic        data_exokay_i,
+  output logic                          data_req_o,
+  input  logic                          data_gnt_i,
+  input  logic                          data_rvalid_i,
+  output logic [31:0]                   data_addr_o,
+  output logic [3:0]                    data_be_o,
+  output logic                          data_we_o,
+  output logic [31:0]                   data_wdata_o,
+  output logic [1:0]                    data_memtype_o,
+  output logic [2:0]                    data_prot_o,
+  output logic                          data_dbg_o,
+  output logic [5:0]                    data_atop_o,
+  input  logic [31:0]                   data_rdata_i,
+  input  logic                          data_err_i,
+  input  logic                          data_exokay_i,
 
-  // Cycle Count
-  output logic [63:0] mcycle_o,
+  // Cycle count
+  output logic [63:0]                   mcycle_o,
 
   // eXtension interface
-  if_xif.cpu_compressed xif_compressed_if,
-  if_xif.cpu_issue      xif_issue_if,
-  if_xif.cpu_commit     xif_commit_if,
-  if_xif.cpu_mem        xif_mem_if,
-  if_xif.cpu_mem_result xif_mem_result_if,
-  if_xif.cpu_result     xif_result_if,
+  if_xif.cpu_compressed                 xif_compressed_if,
+  if_xif.cpu_issue                      xif_issue_if,
+  if_xif.cpu_commit                     xif_commit_if,
+  if_xif.cpu_mem                        xif_mem_if,
+  if_xif.cpu_mem_result                 xif_mem_result_if,
+  if_xif.cpu_result                     xif_result_if,
 
-  // Interrupt inputs
-  input  logic [31:0] irq_i,                    // CLINT interrupts + CLINT extension interrupts
+  // Basic interrupt architecture
+  input  logic [31:0]                   irq_i,
 
-  // CLIC Interface
-  input  logic                       clic_irq_i,
-  input  logic [SMCLIC_ID_WIDTH-1:0] clic_irq_id_i,
-  input  logic [ 7:0]                clic_irq_level_i,
-  input  logic [ 1:0]                clic_irq_priv_i,
-  input  logic                       clic_irq_shv_i,
+  // Smclic interrupt architecture
+  input  logic                          clic_irq_i,
+  input  logic [SMCLIC_ID_WIDTH-1:0]    clic_irq_id_i,
+  input  logic [ 7:0]                   clic_irq_level_i,
+  input  logic [ 1:0]                   clic_irq_priv_i,
+  input  logic                          clic_irq_shv_i,
 
-  // Fencei flush handshake
-  output logic        fencei_flush_req_o,
-  input logic         fencei_flush_ack_i,
+  // Fence.i flush handshake
+  output logic                          fencei_flush_req_o,
+  input  logic                          fencei_flush_ack_i,
 
-  // Debug Interface
-  input  logic        debug_req_i,
-  output logic        debug_havereset_o,
-  output logic        debug_running_o,
-  output logic        debug_halted_o,
+  // Debug interface
+  input  logic                          debug_req_i,
+  output logic                          debug_havereset_o,
+  output logic                          debug_running_o,
+  output logic                          debug_halted_o,
 
-  // CPU Control Signals
-  input  logic        fetch_enable_i,
-  output logic        core_sleep_o
+  // CPU control signals
+  input  logic                          fetch_enable_i,
+  output logic                          core_sleep_o
 );
 
   // Number of register file read ports
@@ -143,6 +140,7 @@ module cv32e40x_core import cv32e40x_pkg::*;
   localparam int unsigned MTVT_ADDR_WIDTH = 32 - MTVT_LSB;
 
   logic [31:0]       pc_if;             // Program counter in IF stage
+  logic              ptr_in_if;         // IF stage contains a pointer
 
   // Jump and branch target and decision (EX->IF)
   logic [31:0] jump_target_id;
@@ -201,6 +199,7 @@ module cv32e40x_core import cv32e40x_pkg::*;
 
   logic [31:0] csr_rdata;
   logic csr_counter_read;
+  logic csr_mnxti_read;
 
   // CLIC signals for returning pointer addresses
   // when mnxti is accessed
@@ -253,12 +252,12 @@ module cv32e40x_core import cv32e40x_pkg::*;
   logic        trigger_match_if;
 
   // Controller <-> decoder
-  logic        alu_en_raw_id;
   logic        alu_jmp_id;
   logic        alu_jmpr_id;
+  logic        alu_en_id;
   logic        sys_en_id;
   logic        sys_mret_insn_id;
-  logic        csr_en_id;
+  logic        csr_en_raw_id;
   csr_opcode_e csr_op_id;
   logic        csr_illegal;
 
@@ -376,14 +375,16 @@ module cv32e40x_core import cv32e40x_pkg::*;
   //////////////////////////////////////////////////
   cv32e40x_if_stage
   #(
-    .USE_DEPRECATED_FEATURE_SET (USE_DEPRECATED_FEATURE_SET),
     .A_EXT               ( A_EXT                    ),
     .X_EXT               ( X_EXT                    ),
     .X_ID_WIDTH          ( X_ID_WIDTH               ),
     .PMA_NUM_REGIONS     ( PMA_NUM_REGIONS          ),
     .PMA_CFG             ( PMA_CFG                  ),
     .MTVT_ADDR_WIDTH     ( MTVT_ADDR_WIDTH          ),
-    .SMCLIC_ID_WIDTH     ( SMCLIC_ID_WIDTH          )
+    .SMCLIC              ( SMCLIC                   ),
+    .SMCLIC_ID_WIDTH     ( SMCLIC_ID_WIDTH          ),
+    .ZC_EXT              ( ZC_EXT                   ),
+    .M_EXT               ( M_EXT                    )
   )
   if_stage_i
   (
@@ -398,7 +399,6 @@ module cv32e40x_core import cv32e40x_pkg::*;
     .jump_target_id_i    ( jump_target_id           ), // Jump target address
     .mepc_i              ( mepc                     ), // Exception PC (restore upon return from exception/interrupt)
     .mtvec_addr_i        ( mtvec_addr               ), // Exception/interrupt address (MSBs only)
-    .nmi_addr_i          ( nmi_addr_i               ), // NMI address
     .mtvt_addr_i         ( mtvt_addr                ), // CLIC vector base
 
     .m_c_obi_instr_if    ( m_c_obi_instr_if         ), // Instruction bus interface
@@ -411,6 +411,7 @@ module cv32e40x_core import cv32e40x_pkg::*;
     .pc_if_o             ( pc_if                    ),
     .csr_mtvec_init_o    ( csr_mtvec_init_if        ),
     .if_busy_o           ( if_busy                  ),
+    .ptr_in_if_o         ( ptr_in_if                ),
 
     // Pipeline handshakes
     .if_valid_o          ( if_valid                 ),
@@ -435,6 +436,7 @@ module cv32e40x_core import cv32e40x_pkg::*;
     .B_EXT                        ( B_EXT                     ),
     .M_EXT                        ( M_EXT                     ),
     .X_EXT                        ( X_EXT                     ),
+    .ZC_EXT                       ( ZC_EXT                    ),
     .REGFILE_NUM_READ_PORTS       ( REGFILE_NUM_READ_PORTS    )
   )
   id_stage_i
@@ -462,13 +464,13 @@ module cv32e40x_core import cv32e40x_pkg::*;
     .rf_wdata_ex_i                ( rf_wdata_ex               ),
     .rf_wdata_wb_i                ( rf_wdata_wb               ),
 
-    .alu_en_raw_o                 ( alu_en_raw_id             ),
     .alu_jmp_o                    ( alu_jmp_id                ),
     .alu_jmpr_o                   ( alu_jmpr_id               ),
-    .sys_en_o                     ( sys_en_id                 ),
     .sys_mret_insn_o              ( sys_mret_insn_id          ),
-    .csr_en_o                     ( csr_en_id                 ),
+    .csr_en_raw_o                 ( csr_en_raw_id             ),
     .csr_op_o                     ( csr_op_id                 ),
+    .alu_en_o                     ( alu_en_id                 ),
+    .sys_en_o                     ( sys_en_id                 ),
 
     .rf_re_o                      ( rf_re_id                  ),
     .rf_raddr_o                   ( rf_raddr_id               ),
@@ -515,6 +517,7 @@ module cv32e40x_core import cv32e40x_pkg::*;
     // CSR interface
     .csr_rdata_i                ( csr_rdata                    ),
     .csr_illegal_i              ( csr_illegal                  ),
+    .csr_mnxti_read_i           ( csr_mnxti_read               ),
 
     // Branch decision
     .branch_decision_o          ( branch_decision_ex           ),
@@ -655,7 +658,6 @@ module cv32e40x_core import cv32e40x_pkg::*;
 
   cv32e40x_cs_registers
   #(
-    .USE_DEPRECATED_FEATURE_SET (USE_DEPRECATED_FEATURE_SET),
     .A_EXT                      ( A_EXT                  ),
     .M_EXT                      ( M_EXT                  ),
     .X_EXT                      ( X_EXT                  ),
@@ -705,6 +707,7 @@ module cv32e40x_core import cv32e40x_pkg::*;
 
     // Raddr from first stage (EX)
     .csr_counter_read_o         ( csr_counter_read       ),
+    .csr_mnxti_read_o           ( csr_mnxti_read         ),
 
     // Interrupt related control signals
     .mie_o                      ( mie                    ),
@@ -725,7 +728,8 @@ module cv32e40x_core import cv32e40x_pkg::*;
     .dcsr_o                     ( dcsr                   ),
     .trigger_match_o            ( trigger_match_if       ),
 
-    .pc_if_i                    ( pc_if                  )
+    .pc_if_i                    ( pc_if                  ),
+    .ptr_in_if_i                ( ptr_in_if              )
   );
 
   ////////////////////////////////////////////////////////////////////
@@ -738,7 +742,6 @@ module cv32e40x_core import cv32e40x_pkg::*;
   ////////////////////////////////////////////////////////////////////
   cv32e40x_controller
   #(
-    .USE_DEPRECATED_FEATURE_SET     (USE_DEPRECATED_FEATURE_SET),
     .X_EXT                          ( X_EXT                  ),
     .REGFILE_NUM_READ_PORTS         ( REGFILE_NUM_READ_PORTS ),
     .SMCLIC                         ( SMCLIC                 ),
@@ -756,6 +759,7 @@ module cv32e40x_core import cv32e40x_pkg::*;
     .id_ex_pipe_i                   ( id_ex_pipe             ),
 
     .csr_counter_read_i             ( csr_counter_read       ),
+    .csr_mnxti_read_i               ( csr_mnxti_read         ),
 
     // From EX/WB pipeline
     .ex_wb_pipe_i                   ( ex_wb_pipe             ),
@@ -765,12 +769,12 @@ module cv32e40x_core import cv32e40x_pkg::*;
     // from IF/ID pipeline
     .if_id_pipe_i                   ( if_id_pipe             ),
 
-    .alu_en_raw_id_i                ( alu_en_raw_id          ),
     .alu_jmp_id_i                   ( alu_jmp_id             ),
     .alu_jmpr_id_i                  ( alu_jmpr_id            ),
+    .alu_en_id_i                    ( alu_en_id              ),
     .sys_en_id_i                    ( sys_en_id              ),
     .sys_mret_id_i                  ( sys_mret_insn_id       ),
-    .csr_en_id_i                    ( csr_en_id              ),
+    .csr_en_raw_id_i                ( csr_en_raw_id          ),
     .csr_op_id_i                    ( csr_op_id              ),
 
     // LSU
@@ -854,20 +858,20 @@ module cv32e40x_core import cv32e40x_pkg::*;
         .clic_irq_priv_i      ( clic_irq_priv_i    ),
         .clic_irq_shv_i       ( clic_irq_shv_i     ),
 
-        // To cv32e40x_controller
+        // To controller
         .irq_req_ctrl_o       ( irq_req_ctrl       ),
         .irq_id_ctrl_o        ( irq_id_ctrl        ),
         .irq_wu_ctrl_o        ( irq_wu_ctrl        ),
         .irq_clic_shv_o       ( irq_clic_shv       ),
         .irq_clic_level_o     ( irq_clic_level     ),
 
-        // From cv32e40x_cs_registers
+        // From cs_registers
         .m_ie_i               ( m_irq_enable       ),
         .mintthresh_i         ( mintthresh         ),
         .mintstatus_i         ( mintstatus         ),
         .mcause_i             ( mcause             ),
 
-        // To cv32e40x_cs_registers
+        // To cs_registers
         .mnxti_irq_pending_o  ( mnxti_irq_pending  ),
         .mnxti_irq_id_o       ( mnxti_irq_id       ),
         .mnxti_irq_level_o    ( mnxti_irq_level    )
@@ -882,12 +886,12 @@ module cv32e40x_core import cv32e40x_pkg::*;
         // External interrupt lines
         .irq_i                ( irq_i              ),
 
-        // To cv32e40x_controller
+        // To controller
         .irq_req_ctrl_o       ( irq_req_ctrl       ),
         .irq_id_ctrl_o        ( irq_id_ctrl[4:0]   ),
         .irq_wu_ctrl_o        ( irq_wu_ctrl        ),
 
-        // To/from with cv32e40x_cs_registers
+        // To/from with cs_registers
         .mie_i                ( mie                ),
         .mip_o                ( mip                ),
         .m_ie_i               ( m_irq_enable       )
@@ -899,6 +903,11 @@ module cv32e40x_core import cv32e40x_pkg::*;
       // CLIC shv not used in basic mode
       assign irq_clic_shv = 1'b0;
       assign irq_clic_level = 8'h00;
+
+      // CLIC mnxti not used in basic mode
+      assign mnxti_irq_pending = 1'b0;
+      assign mnxti_irq_id      = '0;
+      assign mnxti_irq_level   = '0;
     end
   endgenerate
 

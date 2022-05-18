@@ -20,6 +20,9 @@
 
 module cv32e40x_prefetch_unit_sva import cv32e40x_pkg::*;
   import uvm_pkg::*;
+  #(
+        parameter SMCLIC = 1'b0
+  )
   (
    input logic        clk,
    input logic        rst_n,
@@ -29,7 +32,7 @@ module cv32e40x_prefetch_unit_sva import cv32e40x_pkg::*;
    input logic        prefetch_ready_i,
    input logic        trans_valid_o,
    input logic        trans_ready_i,
-   input logic        trans_data_access_o
+   input logic        fetch_ptr_resp
 
   );
 
@@ -50,18 +53,20 @@ module cv32e40x_prefetch_unit_sva import cv32e40x_pkg::*;
   a_branch_implies_req : assert property(p_branch_implies_req)
     else `uvm_error("prefetch_buffer", "Assertion a_branch_implies_req failed")
 
+
+if (SMCLIC) begin
   // Shall not fetch anything between pointer fetch and the actual instruction fetch
   // based on the pointer.
   property p_single_ptr_fetch;
     @(posedge clk) disable iff (!rst_n)
-    (trans_valid_o && trans_ready_i && trans_data_access_o) |=> !trans_valid_o until ctrl_fsm_i.pc_set;
+    (trans_valid_o && trans_ready_i && fetch_ptr_resp) |=> !trans_valid_o until ctrl_fsm_i.pc_set;
   endproperty
 
   a_single_ptr_fetch:
     assert property(p_single_ptr_fetch)
     else
       `uvm_error("Alignment buffer SVA", "Multiple fetches for CLIC/Zc pointer")
-
+end // SMCLIC
 
 
 endmodule // cv32e40x_prefetch_unit

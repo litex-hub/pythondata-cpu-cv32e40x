@@ -30,7 +30,6 @@
 
 module cv32e40x_cs_registers import cv32e40x_pkg::*;
 #(
-  parameter bit          USE_DEPRECATED_FEATURE_SET = 1, // todo: remove once related features are supported by iss
   parameter bit          A_EXT            = 0,
   parameter m_ext_e      M_EXT            = M,
   parameter bit          X_EXT            = 0,
@@ -77,6 +76,7 @@ module cv32e40x_cs_registers import cv32e40x_pkg::*;
 
   // To controller bypass logic
   output logic            csr_counter_read_o,
+  output logic            csr_mnxti_read_o,
 
   // Interface to registers (SRAM like)
   output logic [31:0]     csr_rdata_o,
@@ -107,7 +107,8 @@ module cv32e40x_cs_registers import cv32e40x_pkg::*;
   output dcsr_t           dcsr_o,
   output logic            trigger_match_o,
 
-  input  logic [31:0]     pc_if_i
+  input  logic [31:0]     pc_if_i,
+  input  logic            ptr_in_if_i
 );
 
   localparam logic [31:0] CORE_MISA =
@@ -275,8 +276,9 @@ module cv32e40x_cs_registers import cv32e40x_pkg::*;
   // read logic
   always_comb
   begin
-    illegal_csr_read = 1'b0;
+    illegal_csr_read   = 1'b0;
     csr_counter_read_o = 1'b0;
+    csr_mnxti_read_o   = 1'b0;
 
     case (csr_raddr)
       // jvt: Jump vector table
@@ -361,6 +363,7 @@ module cv32e40x_cs_registers import cv32e40x_pkg::*;
           // For mnxti, this is actually mstatus. The value written back to the GPR will be the address of
           // the function pointer to the interrupt handler. This is muxed in the WB stage.
           csr_rdata_int = mstatus_q;
+          csr_mnxti_read_o = 1'b1;
         end else begin
           csr_rdata_int    = '0;
           illegal_csr_read = 1'b1;
@@ -438,8 +441,6 @@ module cv32e40x_cs_registers import cv32e40x_pkg::*;
 
       CSR_TSELECT,
         CSR_TDATA3,
-        CSR_MCONTEXT,
-        CSR_MSCONTEXT,
         CSR_TCONTROL:
               csr_rdata_int = 'b0; // Always read 0
       CSR_TDATA1:
@@ -580,10 +581,6 @@ module cv32e40x_cs_registers import cv32e40x_pkg::*;
     mstatus_we               = 1'b0;
 
     mtvec_n.addr             = csr_mtvec_init_i ? mtvec_addr_i[31:7] : csr_wdata_int[31:7];
-    if (USE_DEPRECATED_FEATURE_SET) begin
-      mtvec_n.addr[7]        = 1'b0; // todo : remove
-    end
-
     mtvec_n.zero0            = mtvec_q.zero0;
     mtvec_we                 = csr_mtvec_init_i;
 
@@ -1247,7 +1244,8 @@ module cv32e40x_cs_registers import cv32e40x_pkg::*;
   //   Thus we do not have an issue where a write to the tdata2 CSR immediately before the matched instruction
   //   could be missed since we must write in debug mode, then dret to machine mode (kills pipeline) before
   //   returning to dpc.
-  assign trigger_match_o = tmatch_control_q[2] && !ctrl_fsm_i.debug_mode &&
+  //   Todo: There is no CLIC spec for trigger matches for pointers.
+  assign trigger_match_o = tmatch_control_q[2] && !ctrl_fsm_i.debug_mode && !ptr_in_if_i &&
                            (pc_if_i[31:0] == tmatch_value_q[31:0]);
 
 
@@ -1498,7 +1496,7 @@ module cv32e40x_cs_registers import cv32e40x_pkg::*;
     end
   endgenerate
 
-  //  Inhibit Regsiter: mcountinhibit_q
+  //  Inhibit Register: mcountinhibit_q
   //  Note: implemented counters are disabled out of reset to save power
   always_ff @(posedge clk, negedge rst_n) begin
     if (!rst_n) begin
@@ -1508,4 +1506,4 @@ module cv32e40x_cs_registers import cv32e40x_pkg::*;
     end
   end
 
-endmodule // cv32e40x_cs_registers
+endmodule

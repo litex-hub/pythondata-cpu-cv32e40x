@@ -80,7 +80,6 @@ module cv32e40x_wrapper
   input  logic [31:0] mhartid_i,
   input  logic  [3:0] mimpid_patch_i,
   input  logic [31:0] dm_exception_addr_i,
-  input  logic [31:0] nmi_addr_i,
 
   // Instruction memory interface
   output logic        instr_req_o,
@@ -219,7 +218,10 @@ module cv32e40x_wrapper
       .*);
 
   bind cv32e40x_prefetch_unit:
-    core_i.if_stage_i.prefetch_unit_i cv32e40x_prefetch_unit_sva prefetch_unit_sva (.*);
+    core_i.if_stage_i.prefetch_unit_i
+      cv32e40x_prefetch_unit_sva
+      #(.SMCLIC(SMCLIC))
+      prefetch_unit_sva (.*);
 
   generate
     if(M_EXT == M) begin: div_sva
@@ -236,6 +238,7 @@ module cv32e40x_wrapper
   bind cv32e40x_prefetcher:
     core_i.if_stage_i.prefetch_unit_i.prefetcher_i
       cv32e40x_prefetcher_sva
+        #(.SMCLIC(SMCLIC))
         prefetcher_sva (.*);
 
   bind cv32e40x_core:
@@ -259,6 +262,13 @@ module cv32e40x_wrapper
                 .id_stage_multi_cycle_id_stall    (core_i.id_stage_i.multi_cycle_id_stall),
 
                 .id_stage_id_valid                (core_i.id_stage_i.id_valid_o),
+                .alu_op_a_mux_sel_id_i            (core_i.id_stage_i.alu_op_a_mux_sel),
+                .alu_op_b_mux_sel_id_i            (core_i.id_stage_i.alu_op_b_mux_sel),
+                .operand_a_id_i                   (core_i.id_stage_i.operand_a),
+                .operand_b_id_i                   (core_i.id_stage_i.operand_b),
+                .jalr_fw_id_i                     (core_i.id_stage_i.jalr_fw),
+                .alu_en_id_i                      (core_i.id_stage_i.alu_en),
+                .alu_jmpr_id_i                    (core_i.alu_jmpr_id),
                 .irq_ack                          (core_i.irq_ack),
                 .*);
 
@@ -338,7 +348,7 @@ module cv32e40x_wrapper
       rvfi_sva(.irq_ack(core_i.irq_ack),
                .dbg_ack(core_i.dbg_ack),
                .ebreak_in_wb_i(core_i.controller_i.controller_fsm_i.ebreak_in_wb),
-               .nmi_addr_i(core_i.nmi_addr_i),
+               .mtvec_addr_i(core_i.mtvec_addr),
                .*);
 
 `endif //  `ifndef COREV_ASSERT_OFF
@@ -369,6 +379,7 @@ module cv32e40x_wrapper
          .csr_en_wb_i              ( core_i.wb_stage_i.ex_wb_pipe_i.csr_en                                ),
          .sys_wfi_insn_wb_i        ( core_i.wb_stage_i.ex_wb_pipe_i.sys_wfi_insn                          ),
          .ebreak_in_wb_i           ( core_i.controller_i.controller_fsm_i.ebreak_in_wb                    ),
+         .sys_en_wb_i              ( core_i.wb_stage_i.ex_wb_pipe_i.sys_en                                ),
 
          .rs1_addr_id_i            ( core_i.register_file_wrapper_i.raddr_i[0]                            ),
          .rs2_addr_id_i            ( core_i.register_file_wrapper_i.raddr_i[1]                            ),
@@ -378,8 +389,7 @@ module cv32e40x_wrapper
          .pc_if_i                  ( core_i.if_stage_i.pc_if_o                                            ),
          .pc_id_i                  ( core_i.id_stage_i.if_id_pipe_i.pc                                    ),
          .pc_wb_i                  ( core_i.wb_stage_i.ex_wb_pipe_i.pc                                    ),
-         .sys_en_id_i              ( core_i.id_stage_i.sys_en_o                                           ),
-         .sys_mret_insn_id_i       ( core_i.id_stage_i.sys_mret_insn_o                                    ),
+         .sys_mret_id_i            ( core_i.controller_i.controller_fsm_i.sys_mret_id_i                   ),
          .jump_in_id_i             ( core_i.controller_i.controller_fsm_i.jump_in_id                      ),
          .jump_target_id_i         ( core_i.id_stage_i.jmp_target_o                                       ),
          .is_compressed_id_i       ( core_i.id_stage_i.if_id_pipe_i.instr_meta.compressed                 ),
@@ -470,8 +480,8 @@ module cv32e40x_wrapper
          .csr_mip_q_i              ( core_i.cs_registers_i.mip_i                                          ),
          .csr_mip_we_i             ( core_i.cs_registers_i.csr_we_int &&
                                      (core_i.cs_registers_i.csr_waddr == CSR_MIP)                         ),
-         .csr_mnxti_n_i            ( core_i.cs_registers_i.mnxti_n                                        ),
-         .csr_mnxti_q_i            ( core_i.cs_registers_i.mnxti_q                                        ),
+         .csr_mnxti_n_i            ( '0/*todo: handle mnxti and rvfi*/                                    ),
+         .csr_mnxti_q_i            ( '0/*todo: handle mnxti and rvfi*/                                    ),
          .csr_mnxti_we_i           ( core_i.cs_registers_i.mnxti_we                                       ),
          .csr_mintstatus_n_i       ( core_i.cs_registers_i.mintstatus_n                                   ),
          .csr_mintstatus_q_i       ( core_i.cs_registers_i.mintstatus_q                                   ),

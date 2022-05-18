@@ -31,7 +31,6 @@
 
 module cv32e40x_controller_fsm import cv32e40x_pkg::*;
 #(
-  parameter bit       USE_DEPRECATED_FEATURE_SET = 1, // todo: remove once related features are supported by iss
   parameter bit       X_EXT           = 0,
   parameter bit       SMCLIC          = 0,
   parameter int       SMCLIC_ID_WIDTH = 5
@@ -52,10 +51,10 @@ module cv32e40x_controller_fsm import cv32e40x_pkg::*;
 
   // From ID stage
   input  if_id_pipe_t if_id_pipe_i,
-  input  logic        alu_en_raw_id_i,            // ALU enable (not gated with deassert)
-  input  logic        alu_jmp_id_i,               // ALU jump
-  input  logic        sys_en_id_i,
-  input  logic        sys_mret_id_i,              // mret in ID stage
+  input  logic        alu_jmp_id_i,               // Jump in ID
+  input  logic        sys_mret_id_i,              // mret in ID
+  input  logic        alu_en_id_i,                // alu_en qualifier for jumps
+  input  logic        sys_en_id_i,                // sys_en qualifier for mret
 
   // From EX stage
   input  id_ex_pipe_t id_ex_pipe_i,
@@ -134,19 +133,20 @@ module cv32e40x_controller_fsm import cv32e40x_pkg::*;
   logic single_step_halt_if_n;
   logic single_step_halt_if_q; // Halting IF after issuing one insn in single step mode
 
-
-  // Events in ID
+  // ID signals
+  logic sys_mret_id;             // MRET in ID
+  logic jmp_id;                  // JAL, JALR in ID
   logic jump_in_id;
   logic jump_taken_id;
 
-  // Events in EX
+  // EX signals
   logic branch_in_ex;
   logic branch_taken_ex;
 
   logic branch_taken_n;
   logic branch_taken_q;
 
-  // Events in WB
+  // WB signals
   logic exception_in_wb;
   logic [10:0] exception_cause_wb;
   logic wfi_in_wb;
@@ -162,16 +162,15 @@ module cv32e40x_controller_fsm import cv32e40x_pkg::*;
   logic pending_clic_nmi;
   logic pending_debug;
   logic pending_single_step;
+  logic pending_single_step_ptr;
   logic pending_interrupt;
-
 
   // Flags for allowing interrupt and debug
   logic exception_allowed;
   logic interrupt_allowed;
+  logic nmi_allowed;
   logic debug_allowed;
   logic single_step_allowed;
-
-
 
   // Flag indicating there is a 'live' CLIC pointer in the pipeline
   // Used to block debug until pointer
@@ -179,6 +178,10 @@ module cv32e40x_controller_fsm import cv32e40x_pkg::*;
 
   // Flag for checking if we can to a CLIC pointer fetch
   logic wbuf_irq_ok;
+
+  // Internal irq_ack for use when a (clic) pointer reaches ID stage and
+  // we have single stepping enabled.
+  logic non_shv_irq_ack;
 
   // Flops for debug cause
   logic [2:0] debug_cause_n;
@@ -218,19 +221,24 @@ module cv32e40x_controller_fsm import cv32e40x_pkg::*;
 
 
   ////////////////////////////////////////////////////////////////////
-
-
   // ID stage
+
   // A jump is taken in ID for jump instructions, and also for mret instructions
-  // Checking validity of jump instruction or mret with if_id_pipe_i.instr_valid.
+  // Checking validity of jump/mret instruction with if_id_pipe_i.instr_valid and the respective alu_en/sys_en.
   // Using the ID stage local instr_valid would bring halt_id and kill_id into the equation
-  // causing a path from data_rvalid to instr_addr_o/instr_req_o/instr_memtype_o via the jumps pc_set=1
-  assign jump_in_id = ((alu_jmp_id_i && alu_en_raw_id_i && !ctrl_byp_i.jalr_stall) || // todo: study area and functional impact of using alu_en_id_i instead
-                       (sys_en_id_i && sys_mret_id_i && !ctrl_byp_i.csr_stall)) &&
-                         if_id_pipe_i.instr_valid;
+  // causing a path from data_rvalid to instr_addr_o/instr_req_o/instr_memtype_o via pc_set.
+
+
+
+  assign sys_mret_id = sys_en_id_i && sys_mret_id_i && if_id_pipe_i.instr_valid;
+  assign jmp_id      = alu_en_id_i && alu_jmp_id_i  && if_id_pipe_i.instr_valid;
+
+  assign jump_in_id = (jmp_id && !ctrl_byp_i.jalr_stall) || (sys_mret_id && !ctrl_byp_i.csr_stall);
 
   // Blocking on branch_taken_q, as a jump has already been taken
-  assign jump_taken_id = jump_in_id && !branch_taken_q; // todo: RVFI does not use jump_taken_id (which is not in itself an issue); we should have an assertion showing that the target address remains constant during jump_in_id; same remark for branches
+  assign jump_taken_id = jump_in_id && !branch_taken_q;
+
+ // todo: RVFI does not use jump_taken_id (which is not in itself an issue); we should have an assertion showing that the target address remains constant during jump_in_id; same remark for branches
 
   // EX stage
   // Branch taken for valid branch instructions in EX with valid decision
@@ -340,7 +348,13 @@ module cv32e40x_controller_fsm import cv32e40x_pkg::*;
   we are not allowed to take interrupts, and we will re-enter debug mode after finishing the LSU.
   Interrupt will then be taken when we enter the next step.
   */
-  assign pending_single_step = (!debug_mode_q && dcsr_i.step && (wb_valid_i || ctrl_fsm_o.irq_ack)) && !pending_debug;
+
+  assign non_shv_irq_ack = ctrl_fsm_o.irq_ack && !irq_clic_shv_i;
+
+  assign pending_single_step = (!debug_mode_q && dcsr_i.step && (wb_valid_i || non_shv_irq_ack)) && !pending_debug;
+
+  // Separate flag for pending single step when doing CLIC SHV, evaluated while in POINTER_FETCH stage
+  assign pending_single_step_ptr = !debug_mode_q && dcsr_i.step && (wb_valid_i || 1'b1) && !pending_debug;
 
 
   // Detect if there is a live CLIC pointer in the pipeline
@@ -372,6 +386,7 @@ module cv32e40x_controller_fsm import cv32e40x_pkg::*;
   // pending_single_step may only happen if no other causes for debug are true.
   // The flopped version of this is checked during DEBUG_TAKEN state (one cycle delay)
   assign debug_cause_n = pending_single_step ? DBG_CAUSE_STEP :
+                         pending_single_step_ptr ? DBG_CAUSE_STEP :
                          trigger_match_in_wb ? DBG_CAUSE_TRIGGER :
                          (ebreak_in_wb && dcsr_i.ebreakm && !debug_mode_q) ? DBG_CAUSE_EBREAK :
                          DBG_CAUSE_HALTREQ;
@@ -469,7 +484,7 @@ module cv32e40x_controller_fsm import cv32e40x_pkg::*;
     // ID stage is halted for regular stalls (i.e. stalls for which the instruction
     // currently in ID is not ready to be issued yet). Also halted if interrupt or debug pending
     // but not allowed to be taken. This is to create an interruptible bubble in WB.
-    ctrl_fsm_o.halt_id = ctrl_byp_i.jalr_stall || ctrl_byp_i.load_stall || ctrl_byp_i.csr_stall || ctrl_byp_i.wfi_stall ||
+    ctrl_fsm_o.halt_id = ctrl_byp_i.jalr_stall || ctrl_byp_i.load_stall || ctrl_byp_i.csr_stall || ctrl_byp_i.wfi_stall || ctrl_byp_i.mnxti_stall ||
                          (pending_interrupt && !interrupt_allowed) ||
                          (pending_debug && !debug_allowed) ||
                          (pending_nmi && !nmi_allowed) ||
@@ -536,11 +551,7 @@ module cv32e40x_controller_fsm import cv32e40x_pkg::*;
 
           ctrl_fsm_o.csr_save_cause  = 1'b1;
           ctrl_fsm_o.csr_cause.irq = 1'b1;
-          if (USE_DEPRECATED_FEATURE_SET) begin
-            ctrl_fsm_o.csr_cause.exception_code = nmi_is_store_q ? DEPRECATED_INT_CAUSE_LSU_STORE_FAULT : DEPRECATED_INT_CAUSE_LSU_LOAD_FAULT;
-          end else begin
-            ctrl_fsm_o.csr_cause.exception_code = nmi_is_store_q ? INT_CAUSE_LSU_STORE_FAULT : INT_CAUSE_LSU_LOAD_FAULT;
-          end
+          ctrl_fsm_o.csr_cause.exception_code = nmi_is_store_q ? INT_CAUSE_LSU_STORE_FAULT : INT_CAUSE_LSU_LOAD_FAULT;
 
           // Save pc from oldest valid instruction
           if (ex_wb_pipe_i.instr_valid) begin
@@ -694,11 +705,12 @@ module cv32e40x_controller_fsm import cv32e40x_pkg::*;
             branch_taken_n     = 1'b1;
 
           end else if (jump_taken_id) begin
+            // Jumps in ID (JAL, JALR, mret)
+
             // kill_if
             ctrl_fsm_o.kill_if = 1'b1;
 
-            // Jumps in ID (JAL, JALR, mret)
-            if (sys_en_id_i && sys_mret_id_i) begin
+            if (sys_mret_id) begin
               ctrl_fsm_o.pc_mux = debug_mode_q ? PC_TRAP_DBE : PC_MRET;
               ctrl_fsm_o.pc_set = 1'b1;
               // Todo: if mcause.minhv
@@ -812,14 +824,25 @@ module cv32e40x_controller_fsm import cv32e40x_pkg::*;
           // todo: deal with integrity related faults for E40S.
           if(!((if_id_pipe_i.instr.mpu_status != MPU_OK) || if_id_pipe_i.instr.bus_resp.err)) begin
             ctrl_fsm_o.pc_set = 1'b1;
-            ctrl_fsm_o.pc_mux = PC_TRAP_CLICV_TGT;
+            ctrl_fsm_o.pc_mux = PC_POINTER;
             ctrl_fsm_o.kill_if = 1'b1;
             ctrl_fsm_o.csr_clear_minhv = 1'b1;
+
+            // Jump to debug taken in case of a pending single step.
+            // We should enter debug without executing any instruction, and let dpc
+            // point to the first instruction in the handler
+            ctrl_fsm_ns = pending_single_step_ptr ? DEBUG_TAKEN : FUNCTIONAL;
+          end else begin
+            // If the pointer fetch faulted, we don't jump to the target and return to FUNCTIONAL.
+            // Any pending single step will not be taken (the irq handler instruction fetch faulted),
+            // and the associated exception or NMI will be taken in FUNCTIONAL along with the single step once
+            // the pointer reaches WB. Dpc will then point to the first instruction in the exception/NMI handler.
+            ctrl_fsm_ns = FUNCTIONAL;
           end
           // Note: If the pointer fetch faulted (pma/pmp/bus error), an exception or NMI will
           // be taken once the pointer fetch reachces WB (two cycles after the current)
           // The FSM must be in the FUNCTIONAL state to take the exception or NMI.
-          ctrl_fsm_ns = FUNCTIONAL;
+          // A faulted pointer (in ID) should not cause debug entry either,
         end
       end
       default: begin
@@ -1065,4 +1088,4 @@ module cv32e40x_controller_fsm import cv32e40x_pkg::*;
     end
   endgenerate
 
-endmodule //cv32e40x_controller_fsm
+endmodule

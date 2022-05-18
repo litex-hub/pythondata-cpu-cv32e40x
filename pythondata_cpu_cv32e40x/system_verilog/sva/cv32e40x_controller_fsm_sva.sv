@@ -28,7 +28,9 @@
 module cv32e40x_controller_fsm_sva
   import uvm_pkg::*;
   import cv32e40x_pkg::*;
-  #(  parameter bit X_EXT     = 1'b0)
+  #(  parameter bit X_EXT     = 1'b0,
+      parameter bit SMCLIC    = 1'b0
+  )
 (
   input logic           clk,
   input logic           rst_n,
@@ -430,7 +432,7 @@ endgenerate
       retire_at_error <= 1'b0;
     end else begin
       // Req, no rvalid
-      if( (m_c_obi_data_if.s_req && m_c_obi_data_if.s_gnt) && !m_c_obi_data_if.s_rvalid) begin
+      if( (m_c_obi_data_if.s_req.req && m_c_obi_data_if.s_gnt.gnt) && !m_c_obi_data_if.s_rvalid.rvalid) begin
         // Increase outstanding counter
         outstanding_count <= outstanding_count + 2'b01;
 
@@ -444,12 +446,12 @@ endgenerate
         end
 
       // rvalid, no req
-      end else if (!(m_c_obi_data_if.s_req && m_c_obi_data_if.s_gnt) && m_c_obi_data_if.s_rvalid) begin
+      end else if (!(m_c_obi_data_if.s_req.req && m_c_obi_data_if.s_gnt.gnt) && m_c_obi_data_if.s_rvalid.rvalid) begin
         // Decrease outstanding counter
         outstanding_count <= outstanding_count - 2'b01;
 
       // req and rvalid
-      end else if ((m_c_obi_data_if.s_req && m_c_obi_data_if.s_gnt) && m_c_obi_data_if.s_rvalid) begin
+      end else if ((m_c_obi_data_if.s_req.req && m_c_obi_data_if.s_gnt.gnt) && m_c_obi_data_if.s_rvalid.rvalid) begin
         if (outstanding_count == 2'b10) begin
           // Two outstanding, shift and replace index 0
           outstanding_type[1] <= outstanding_type[0];
@@ -461,7 +463,7 @@ endgenerate
       end
 
 
-      if(m_c_obi_data_if.s_rvalid && m_c_obi_data_if.resp_payload.err && !bus_error_latched) begin
+      if(m_c_obi_data_if.s_rvalid.rvalid && m_c_obi_data_if.resp_payload.err && !bus_error_latched) begin
         bus_error_is_write <= outstanding_count == 2'b01 ? outstanding_type[0] : outstanding_type[1];
         bus_error_latched <= 1'b1;
         retire_at_error <= wb_valid_i;
@@ -476,7 +478,7 @@ endgenerate
   // Check that controller latches correct type for bus error
   a_latched_bus_error:
     assert property (@(posedge clk) disable iff (!rst_n)
-                      (m_c_obi_data_if.s_rvalid && m_c_obi_data_if.resp_payload.err && !bus_error_latched)
+                      (m_c_obi_data_if.s_rvalid.rvalid && m_c_obi_data_if.resp_payload.err && !bus_error_latched)
                       |=> (nmi_is_store_q == bus_error_is_write) &&
                           (nmi_pending_q == bus_error_latched) && bus_error_latched)
       else `uvm_error("controller", "Wrong type for LSU bus error")
@@ -491,7 +493,7 @@ endgenerate
     end else begin
       if(bus_error_latched) begin
         if(wb_valid_i && !ctrl_fsm_o.debug_mode && !(dcsr_i.step && !dcsr_i.stepie)) begin
-          valid_cnt <= valid_cnt + 1;
+          valid_cnt <= valid_cnt + 1'b1;
         end
       end else begin
         valid_cnt <= '0;
@@ -511,11 +513,25 @@ endgenerate
                     (valid_cnt < (retire_at_error ? 2'b10 : 2'b11)))
     else `uvm_error("controller", "NMI handler not taken within two instruction retirements")
 
-
+if (SMCLIC) begin
   // When a CLIC SHV interrupt is taken, the write buffer must be empty
   a_clic_shv_wbuf_empty:
   assert property (@(posedge clk) disable iff (!rst_n)
                   (irq_clic_shv_i && ctrl_fsm_o.irq_ack) |-> lsu_write_buffer_empty_i)
     else `uvm_error("controller", "LSU write buffer not empty when fetching CLIC pointer")
+
+  // After a pc_set to PC_TRAP_CLICV, only the following jump targets are allowed:
+  // PC_POINTER : Normal execution, the pointer target is being fetched
+  // PC_TRAP_EXC: The pointer fetch has a synchronous exception
+  // PC_TRAP_NMI: The pointer fetch has a bus error. Todo: Change if CLIC spec stops using data access for pointer fetch.
+  a_clicv_next_pc_set:
+  assert property (@(posedge clk) disable iff (!rst_n)
+                  (ctrl_fsm_o.pc_set && (ctrl_fsm_o.pc_mux == PC_TRAP_CLICV))
+                  |=> !ctrl_fsm_o.pc_set until (ctrl_fsm_o.pc_set && ((ctrl_fsm_o.pc_mux == PC_POINTER)        ||
+                                                                      (ctrl_fsm_o.pc_mux == PC_TRAP_EXC)       ||
+                                                                      (ctrl_fsm_o.pc_mux == PC_TRAP_NMI))))
+    else `uvm_error("controller", "Illegal pc_mux after pointer fetch")
+
+end // SMCLIC
 endmodule // cv32e40x_controller_fsm_sva
 
