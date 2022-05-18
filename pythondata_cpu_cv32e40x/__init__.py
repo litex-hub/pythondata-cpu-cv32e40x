@@ -4,42 +4,42 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.3.0.post153"
-version_tuple = (0, 3, 0, 153)
+version_str = "0.3.0.post237"
+version_tuple = (0, 3, 0, 237)
 try:
     from packaging.version import Version as V
-    pversion = V("0.3.0.post153")
+    pversion = V("0.3.0.post237")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.3.0.post27"
-data_version_tuple = (0, 3, 0, 27)
+data_version_str = "0.3.0.post109"
+data_version_tuple = (0, 3, 0, 109)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.3.0.post27")
+    pdata_version = V("0.3.0.post109")
 except ImportError:
     pass
-data_git_hash = "f9e7cb6e712a4ceff369de8099f85b62b0c2ad4c"
-data_git_describe = "0.3.0-27-gf9e7cb6e"
+data_git_hash = "63985640f2d11aebe183a53655b3f226fde17bfd"
+data_git_describe = "0.3.0-109-g63985640"
 data_git_msg = """\
-commit f9e7cb6e712a4ceff369de8099f85b62b0c2ad4c
-Merge: 27524327 2a97802e
+commit 63985640f2d11aebe183a53655b3f226fde17bfd
+Merge: 2183a8f5 81617bb7
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Mon Apr 11 09:56:07 2022 +0200
+Date:   Wed May 18 10:44:29 2022 +0200
 
-    Merge pull request #506 from silabs-oysteink/silabs-oysteink_clic-mnxti
+    Merge pull request #542 from silabs-oysteink/silabs-oysteink_lastop
     
-    Implementation of mnxti
+    Introduced "last_op" to alle pipeline stages. Needed for Zc* instruct…
 
 """
 
 # Tool version info
-tool_version_str = "0.0.post126"
-tool_version_tuple = (0, 0, 126)
+tool_version_str = "0.0.post128"
+tool_version_tuple = (0, 0, 128)
 try:
     from packaging.version import Version as V
-    ptool_version = V("0.0.post126")
+    ptool_version = V("0.0.post128")
 except ImportError:
     pass
 
