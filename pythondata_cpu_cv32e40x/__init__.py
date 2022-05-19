@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.3.0.post237"
-version_tuple = (0, 3, 0, 237)
+version_str = "0.3.0.post241"
+version_tuple = (0, 3, 0, 241)
 try:
     from packaging.version import Version as V
-    pversion = V("0.3.0.post237")
+    pversion = V("0.3.0.post241")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.3.0.post109"
-data_version_tuple = (0, 3, 0, 109)
+data_version_str = "0.3.0.post113"
+data_version_tuple = (0, 3, 0, 113)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.3.0.post109")
+    pdata_version = V("0.3.0.post113")
 except ImportError:
     pass
-data_git_hash = "63985640f2d11aebe183a53655b3f226fde17bfd"
-data_git_describe = "0.3.0-109-g63985640"
+data_git_hash = "22cf89493f0cfa86ad1fbf471086928da7a36e01"
+data_git_describe = "0.3.0-113-g22cf8949"
 data_git_msg = """\
-commit 63985640f2d11aebe183a53655b3f226fde17bfd
-Merge: 2183a8f5 81617bb7
-Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Wed May 18 10:44:29 2022 +0200
+commit 22cf89493f0cfa86ad1fbf471086928da7a36e01
+Merge: d7d8298e 7f79e521
+Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
+Date:   Thu May 19 11:50:01 2022 +0200
 
-    Merge pull request #542 from silabs-oysteink/silabs-oysteink_lastop
+    Merge pull request #544 from Silabs-ArjanB/ArjanB_irqr
     
-    Introduced "last_op" to alle pipeline stages. Needed for Zc* instruct…
+    Reordered content in exceptions and interrupts chapter for clarity
 
 """
 
