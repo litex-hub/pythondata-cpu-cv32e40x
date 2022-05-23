@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.3.0.post243"
-version_tuple = (0, 3, 0, 243)
+version_str = "0.3.0.post246"
+version_tuple = (0, 3, 0, 246)
 try:
     from packaging.version import Version as V
-    pversion = V("0.3.0.post243")
+    pversion = V("0.3.0.post246")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.3.0.post115"
-data_version_tuple = (0, 3, 0, 115)
+data_version_str = "0.3.0.post118"
+data_version_tuple = (0, 3, 0, 118)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.3.0.post115")
+    pdata_version = V("0.3.0.post118")
 except ImportError:
     pass
-data_git_hash = "90e95bd90d897ab57542066e99a382a1bb2e77d0"
-data_git_describe = "0.3.0-115-g90e95bd9"
+data_git_hash = "b160272140cf79c80ff85dfb7412ced8361e7863"
+data_git_describe = "0.3.0-118-gb1602721"
 data_git_msg = """\
-commit 90e95bd90d897ab57542066e99a382a1bb2e77d0
-Merge: 22cf8949 f6225350
-Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Thu May 19 13:30:55 2022 +0200
+commit b160272140cf79c80ff85dfb7412ced8361e7863
+Merge: 90e95bd9 c2b13bbb
+Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
+Date:   Mon May 23 08:56:57 2022 +0200
 
-    Merge pull request #545 from Silabs-ArjanB/ArjanB_bitma
+    Merge pull request #548 from silabs-oysteink/silabs-oysteink_clic-data-remove-1
     
-    Fixed dependency between Zc and Zbb
+    Further removal of CLIC pointers using data access.
 
 """
 
