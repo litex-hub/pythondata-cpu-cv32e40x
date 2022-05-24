@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.3.0.post246"
-version_tuple = (0, 3, 0, 246)
+version_str = "0.3.0.post248"
+version_tuple = (0, 3, 0, 248)
 try:
     from packaging.version import Version as V
-    pversion = V("0.3.0.post246")
+    pversion = V("0.3.0.post248")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.3.0.post118"
-data_version_tuple = (0, 3, 0, 118)
+data_version_str = "0.3.0.post120"
+data_version_tuple = (0, 3, 0, 120)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.3.0.post118")
+    pdata_version = V("0.3.0.post120")
 except ImportError:
     pass
-data_git_hash = "b160272140cf79c80ff85dfb7412ced8361e7863"
-data_git_describe = "0.3.0-118-gb1602721"
+data_git_hash = "ac7535894b072a4ec988b66d5c7d5a7987101a52"
+data_git_describe = "0.3.0-120-gac753589"
 data_git_msg = """\
-commit b160272140cf79c80ff85dfb7412ced8361e7863
-Merge: 90e95bd9 c2b13bbb
-Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Mon May 23 08:56:57 2022 +0200
+commit ac7535894b072a4ec988b66d5c7d5a7987101a52
+Merge: b1602721 c5985939
+Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
+Date:   Tue May 24 07:45:23 2022 +0200
 
-    Merge pull request #548 from silabs-oysteink/silabs-oysteink_clic-data-remove-1
+    Merge pull request #550 from Silabs-ArjanB/ArjanB_549
     
-    Further removal of CLIC pointers using data access.
+    Fixed mcause reset value for SMCLIC=1 configuration
 
 """
 
