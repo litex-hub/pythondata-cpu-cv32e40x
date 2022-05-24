@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.3.0.post248"
-version_tuple = (0, 3, 0, 248)
+version_str = "0.3.0.post252"
+version_tuple = (0, 3, 0, 252)
 try:
     from packaging.version import Version as V
-    pversion = V("0.3.0.post248")
+    pversion = V("0.3.0.post252")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.3.0.post120"
-data_version_tuple = (0, 3, 0, 120)
+data_version_str = "0.3.0.post124"
+data_version_tuple = (0, 3, 0, 124)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.3.0.post120")
+    pdata_version = V("0.3.0.post124")
 except ImportError:
     pass
-data_git_hash = "ac7535894b072a4ec988b66d5c7d5a7987101a52"
-data_git_describe = "0.3.0-120-gac753589"
+data_git_hash = "285a5ad2baadd44a7c552c54060164c4cb6197ef"
+data_git_describe = "0.3.0-124-g285a5ad2"
 data_git_msg = """\
-commit ac7535894b072a4ec988b66d5c7d5a7987101a52
-Merge: b1602721 c5985939
-Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Tue May 24 07:45:23 2022 +0200
+commit 285a5ad2baadd44a7c552c54060164c4cb6197ef
+Merge: ac753589 e4efbdd2
+Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
+Date:   Tue May 24 11:55:27 2022 +0200
 
-    Merge pull request #550 from Silabs-ArjanB/ArjanB_549
+    Merge pull request #551 from silabs-oysteink/silabs-oysteink_wb-valid-last
     
-    Fixed mcause reset value for SMCLIC=1 configuration
+    wb_valid for all suboperations
 
 """
 
