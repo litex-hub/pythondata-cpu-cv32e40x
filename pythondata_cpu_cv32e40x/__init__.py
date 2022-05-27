@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.3.0.post277"
-version_tuple = (0, 3, 0, 277)
+version_str = "0.3.0.post279"
+version_tuple = (0, 3, 0, 279)
 try:
     from packaging.version import Version as V
-    pversion = V("0.3.0.post277")
+    pversion = V("0.3.0.post279")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.3.0.post137"
-data_version_tuple = (0, 3, 0, 137)
+data_version_str = "0.3.0.post139"
+data_version_tuple = (0, 3, 0, 139)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.3.0.post137")
+    pdata_version = V("0.3.0.post139")
 except ImportError:
     pass
-data_git_hash = "3a3aecea53f0944e6d84b0eff165740becd018a6"
-data_git_describe = "0.3.0-137-g3a3aecea"
+data_git_hash = "66b8050d43850e419960df7e9822e56c3cfd58f1"
+data_git_describe = "0.3.0-139-g66b8050d"
 data_git_msg = """\
-commit 3a3aecea53f0944e6d84b0eff165740becd018a6
-Merge: d0e922da bdffac6d
+commit 66b8050d43850e419960df7e9822e56c3cfd58f1
+Merge: 3a3aecea 3d5ed615
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Fri May 27 08:53:57 2022 +0200
+Date:   Fri May 27 13:38:24 2022 +0200
 
-    Merge pull request #552 from silabs-oysteink/silabs-oysteink_zc-tbl-1
+    Merge pull request #556 from silabs-oysteink/silabs-oysteink_jvt-stall
     
-    Zc* table jumps
+    Table jump stall
 
 """
 
