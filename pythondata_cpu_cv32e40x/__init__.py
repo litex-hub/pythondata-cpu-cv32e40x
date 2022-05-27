@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.3.0.post279"
-version_tuple = (0, 3, 0, 279)
+version_str = "0.3.0.post282"
+version_tuple = (0, 3, 0, 282)
 try:
     from packaging.version import Version as V
-    pversion = V("0.3.0.post279")
+    pversion = V("0.3.0.post282")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.3.0.post139"
-data_version_tuple = (0, 3, 0, 139)
+data_version_str = "0.3.0.post142"
+data_version_tuple = (0, 3, 0, 142)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.3.0.post139")
+    pdata_version = V("0.3.0.post142")
 except ImportError:
     pass
-data_git_hash = "66b8050d43850e419960df7e9822e56c3cfd58f1"
-data_git_describe = "0.3.0-139-g66b8050d"
+data_git_hash = "c27b73db52f54bab836a91d157115d85122640ec"
+data_git_describe = "0.3.0-142-gc27b73db"
 data_git_msg = """\
-commit 66b8050d43850e419960df7e9822e56c3cfd58f1
-Merge: 3a3aecea 3d5ed615
-Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Fri May 27 13:38:24 2022 +0200
+commit c27b73db52f54bab836a91d157115d85122640ec
+Merge: 66b8050d 075f9a34
+Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
+Date:   Fri May 27 15:43:57 2022 +0200
 
-    Merge pull request #556 from silabs-oysteink/silabs-oysteink_jvt-stall
+    Merge pull request #555 from Silabs-ArjanB/ArjanB_549
     
-    Table jump stall
+    Fix for issue #549. Clean up CS registers syntax. Tie RVFI to RTL ins…
 
 """
 
