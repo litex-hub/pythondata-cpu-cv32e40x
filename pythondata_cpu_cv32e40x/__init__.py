@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.3.0.post287"
-version_tuple = (0, 3, 0, 287)
+version_str = "0.3.0.post297"
+version_tuple = (0, 3, 0, 297)
 try:
     from packaging.version import Version as V
-    pversion = V("0.3.0.post287")
+    pversion = V("0.3.0.post297")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.3.0.post145"
-data_version_tuple = (0, 3, 0, 145)
+data_version_str = "0.3.0.post155"
+data_version_tuple = (0, 3, 0, 155)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.3.0.post145")
+    pdata_version = V("0.3.0.post155")
 except ImportError:
     pass
-data_git_hash = "f1c1500f126f6cdc5fa60c047bd46e9fd73ac1c7"
-data_git_describe = "0.3.0-145-gf1c1500f"
+data_git_hash = "4beb70ada629eddb2ad5f0f959765f847bbbd4a6"
+data_git_describe = "0.3.0-155-g4beb70ad"
 data_git_msg = """\
-commit f1c1500f126f6cdc5fa60c047bd46e9fd73ac1c7
-Merge: c27b73db c081b107
+commit 4beb70ada629eddb2ad5f0f959765f847bbbd4a6
+Merge: dc582f90 be14aef7
 Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Mon May 30 07:41:49 2022 +0200
+Date:   Thu Jun 2 08:07:18 2022 +0200
 
-    Merge pull request #557 from Silabs-ArjanB/ArjanB_ae
+    Merge pull request #562 from Silabs-ArjanB/ArjanB_instralign
     
-    Documented Atomics extension
+    Moved instruction address word alignment to core boundary
 
 """
 
