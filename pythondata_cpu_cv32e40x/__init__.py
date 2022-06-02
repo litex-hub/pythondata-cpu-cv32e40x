@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.3.0.post297"
-version_tuple = (0, 3, 0, 297)
+version_str = "0.4.0.post142"
+version_tuple = (0, 4, 0, 142)
 try:
     from packaging.version import Version as V
-    pversion = V("0.3.0.post297")
+    pversion = V("0.4.0.post142")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.3.0.post155"
-data_version_tuple = (0, 3, 0, 155)
+data_version_str = "0.4.0.post0"
+data_version_tuple = (0, 4, 0, 0)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.3.0.post155")
+    pdata_version = V("0.4.0.post0")
 except ImportError:
     pass
-data_git_hash = "4beb70ada629eddb2ad5f0f959765f847bbbd4a6"
-data_git_describe = "0.3.0-155-g4beb70ad"
+data_git_hash = "df030b15727e5d3f7070bec9257bf6c539275244"
+data_git_describe = "0.4.0-0-gdf030b15"
 data_git_msg = """\
-commit 4beb70ada629eddb2ad5f0f959765f847bbbd4a6
-Merge: dc582f90 be14aef7
-Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Thu Jun 2 08:07:18 2022 +0200
+commit df030b15727e5d3f7070bec9257bf6c539275244
+Merge: 728ef777 ca2cca8f
+Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
+Date:   Thu Jun 2 12:38:00 2022 +0200
 
-    Merge pull request #562 from Silabs-ArjanB/ArjanB_instralign
+    Merge pull request #564 from Silabs-ArjanB/ArjanB_dcsrt
     
-    Moved instruction address word alignment to core boundary
+    Fixed comment related to dcsr.mprven value
 
 """
 
