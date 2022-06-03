@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post149"
-version_tuple = (0, 4, 0, 149)
+version_str = "0.4.0.post151"
+version_tuple = (0, 4, 0, 151)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post149")
+    pversion = V("0.4.0.post151")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post7"
-data_version_tuple = (0, 4, 0, 7)
+data_version_str = "0.4.0.post9"
+data_version_tuple = (0, 4, 0, 9)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post7")
+    pdata_version = V("0.4.0.post9")
 except ImportError:
     pass
-data_git_hash = "f45ed637d34d817e04a8be5612f9f4ce2dd6c396"
-data_git_describe = "0.4.0-7-gf45ed637"
+data_git_hash = "6fba6467323b663ba9d0e90c4efc0964da299e9b"
+data_git_describe = "0.4.0-9-g6fba6467"
 data_git_msg = """\
-commit f45ed637d34d817e04a8be5612f9f4ce2dd6c396
-Merge: ef654068 a7132365
+commit 6fba6467323b663ba9d0e90c4efc0964da299e9b
+Merge: f45ed637 9b53b77f
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Fri Jun 3 13:19:44 2022 +0200
+Date:   Fri Jun 3 15:10:30 2022 +0200
 
-    Merge pull request #567 from silabs-oysteink/silabs-oysteink_mret-dbg-exc
+    Merge pull request #568 from silabs-oysteink/silabs-oysteik_mstateen3
     
-    Fix for issue #558
+    Added mstateen3/3h which was previously forgotten.
 
 """
 
