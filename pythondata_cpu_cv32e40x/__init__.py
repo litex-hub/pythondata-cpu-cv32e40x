@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post144"
-version_tuple = (0, 4, 0, 144)
+version_str = "0.4.0.post146"
+version_tuple = (0, 4, 0, 146)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post144")
+    pversion = V("0.4.0.post146")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post2"
-data_version_tuple = (0, 4, 0, 2)
+data_version_str = "0.4.0.post4"
+data_version_tuple = (0, 4, 0, 4)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post2")
+    pdata_version = V("0.4.0.post4")
 except ImportError:
     pass
-data_git_hash = "cbb63d0c475bc93ce545e0fc9e74715d80fefaa4"
-data_git_describe = "0.4.0-2-gcbb63d0c"
+data_git_hash = "ef6540683b9fcba91411368adeaafd16468f4f7d"
+data_git_describe = "0.4.0-4-gef654068"
 data_git_msg = """\
-commit cbb63d0c475bc93ce545e0fc9e74715d80fefaa4
-Merge: df030b15 bfa9300b
-Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Fri Jun 3 10:46:07 2022 +0200
+commit ef6540683b9fcba91411368adeaafd16468f4f7d
+Merge: cbb63d0c 3a3d619f
+Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
+Date:   Fri Jun 3 11:26:17 2022 +0200
 
-    Merge pull request #565 from silabs-oysteink/silabs-oysteink_rvfi-csr-stateen
+    Merge pull request #566 from Silabs-ArjanB/ArjanB_clicu1
     
-    Added Smstateen CSRs to RVFI (only supported in cv32e40s)
+    Unifying interrupt controllers; aligning cs registers syntax with cor…
 
 """
 
