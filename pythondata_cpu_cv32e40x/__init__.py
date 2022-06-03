@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post146"
-version_tuple = (0, 4, 0, 146)
+version_str = "0.4.0.post149"
+version_tuple = (0, 4, 0, 149)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post146")
+    pversion = V("0.4.0.post149")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post4"
-data_version_tuple = (0, 4, 0, 4)
+data_version_str = "0.4.0.post7"
+data_version_tuple = (0, 4, 0, 7)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post4")
+    pdata_version = V("0.4.0.post7")
 except ImportError:
     pass
-data_git_hash = "ef6540683b9fcba91411368adeaafd16468f4f7d"
-data_git_describe = "0.4.0-4-gef654068"
+data_git_hash = "f45ed637d34d817e04a8be5612f9f4ce2dd6c396"
+data_git_describe = "0.4.0-7-gf45ed637"
 data_git_msg = """\
-commit ef6540683b9fcba91411368adeaafd16468f4f7d
-Merge: cbb63d0c 3a3d619f
-Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Fri Jun 3 11:26:17 2022 +0200
+commit f45ed637d34d817e04a8be5612f9f4ce2dd6c396
+Merge: ef654068 a7132365
+Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
+Date:   Fri Jun 3 13:19:44 2022 +0200
 
-    Merge pull request #566 from Silabs-ArjanB/ArjanB_clicu1
+    Merge pull request #567 from silabs-oysteink/silabs-oysteink_mret-dbg-exc
     
-    Unifying interrupt controllers; aligning cs registers syntax with cor…
+    Fix for issue #558
 
 """
 
