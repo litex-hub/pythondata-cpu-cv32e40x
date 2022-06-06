@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post151"
-version_tuple = (0, 4, 0, 151)
+version_str = "0.4.0.post155"
+version_tuple = (0, 4, 0, 155)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post151")
+    pversion = V("0.4.0.post155")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post9"
-data_version_tuple = (0, 4, 0, 9)
+data_version_str = "0.4.0.post13"
+data_version_tuple = (0, 4, 0, 13)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post9")
+    pdata_version = V("0.4.0.post13")
 except ImportError:
     pass
-data_git_hash = "6fba6467323b663ba9d0e90c4efc0964da299e9b"
-data_git_describe = "0.4.0-9-g6fba6467"
+data_git_hash = "ae6c75027e13475a21a72d70a1213b65b6c44742"
+data_git_describe = "0.4.0-13-gae6c7502"
 data_git_msg = """\
-commit 6fba6467323b663ba9d0e90c4efc0964da299e9b
-Merge: f45ed637 9b53b77f
+commit ae6c75027e13475a21a72d70a1213b65b6c44742
+Merge: 0d842126 942f7c85
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Fri Jun 3 15:10:30 2022 +0200
+Date:   Mon Jun 6 18:28:59 2022 +0200
 
-    Merge pull request #568 from silabs-oysteink/silabs-oysteik_mstateen3
+    Merge pull request #571 from spersvold/spersvold_fix_illegal_enum_assign
     
-    Added mstateen3/3h which was previously forgotten.
+    Fix Warning-[ENUMASSIGN] for Synopsys VCS
 
 """
 
