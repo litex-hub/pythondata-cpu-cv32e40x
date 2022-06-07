@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post157"
-version_tuple = (0, 4, 0, 157)
+version_str = "0.4.0.post142"
+version_tuple = (0, 4, 0, 142)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post157")
+    pversion = V("0.4.0.post142")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post15"
-data_version_tuple = (0, 4, 0, 15)
+data_version_str = "0.4.0.post0"
+data_version_tuple = (0, 4, 0, 0)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post15")
+    pdata_version = V("0.4.0.post0")
 except ImportError:
     pass
-data_git_hash = "7882d20efe4ef6992b5411468a79625df7f715dd"
-data_git_describe = "0.4.0-15-g7882d20e"
+data_git_hash = "7d0e140f056bbba71db62a4996f66c02232db3fc"
+data_git_describe = "0.4.0-0-g7d0e140f"
 data_git_msg = """\
-commit 7882d20efe4ef6992b5411468a79625df7f715dd
-Merge: ae6c7502 6dfaea37
+commit 7d0e140f056bbba71db62a4996f66c02232db3fc
+Merge: 7882d20e a7fc7ca5
 Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Tue Jun 7 09:58:29 2022 +0200
+Date:   Tue Jun 7 13:33:32 2022 +0200
 
-    Merge pull request #573 from Silabs-ArjanB/ArjanB_docd
+    Merge pull request #574 from Silabs-ArjanB/ArjanB_table2
     
-    Prevented table scrollbars
+    Table width fixes
 
 """
 
