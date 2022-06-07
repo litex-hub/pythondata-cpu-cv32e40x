@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post155"
-version_tuple = (0, 4, 0, 155)
+version_str = "0.4.0.post157"
+version_tuple = (0, 4, 0, 157)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post155")
+    pversion = V("0.4.0.post157")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post13"
-data_version_tuple = (0, 4, 0, 13)
+data_version_str = "0.4.0.post15"
+data_version_tuple = (0, 4, 0, 15)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post13")
+    pdata_version = V("0.4.0.post15")
 except ImportError:
     pass
-data_git_hash = "ae6c75027e13475a21a72d70a1213b65b6c44742"
-data_git_describe = "0.4.0-13-gae6c7502"
+data_git_hash = "7882d20efe4ef6992b5411468a79625df7f715dd"
+data_git_describe = "0.4.0-15-g7882d20e"
 data_git_msg = """\
-commit ae6c75027e13475a21a72d70a1213b65b6c44742
-Merge: 0d842126 942f7c85
-Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Mon Jun 6 18:28:59 2022 +0200
+commit 7882d20efe4ef6992b5411468a79625df7f715dd
+Merge: ae6c7502 6dfaea37
+Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
+Date:   Tue Jun 7 09:58:29 2022 +0200
 
-    Merge pull request #571 from spersvold/spersvold_fix_illegal_enum_assign
+    Merge pull request #573 from Silabs-ArjanB/ArjanB_docd
     
-    Fix Warning-[ENUMASSIGN] for Synopsys VCS
+    Prevented table scrollbars
 
 """
 
