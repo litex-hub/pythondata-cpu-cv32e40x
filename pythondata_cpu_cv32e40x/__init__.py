@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post151"
-version_tuple = (0, 4, 0, 151)
+version_str = "0.4.0.post155"
+version_tuple = (0, 4, 0, 155)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post151")
+    pversion = V("0.4.0.post155")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post9"
-data_version_tuple = (0, 4, 0, 9)
+data_version_str = "0.4.0.post13"
+data_version_tuple = (0, 4, 0, 13)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post9")
+    pdata_version = V("0.4.0.post13")
 except ImportError:
     pass
-data_git_hash = "cace6ec2f19537db0771f0d38a02f58ef4ef04b4"
-data_git_describe = "0.4.0-9-gcace6ec2"
+data_git_hash = "c3dd4246a461a0db2de58b9387ffbbdc7a07917d"
+data_git_describe = "0.4.0-13-gc3dd4246"
 data_git_msg = """\
-commit cace6ec2f19537db0771f0d38a02f58ef4ef04b4
-Merge: cee7c0f4 0964f569
+commit c3dd4246a461a0db2de58b9387ffbbdc7a07917d
+Merge: fa6c9645 2c8ca3b3
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Wed Jun 8 09:49:30 2022 +0200
+Date:   Wed Jun 8 12:01:47 2022 +0200
 
-    Merge pull request #577 from openhwgroup/revert-576-ArjanB_t0
+    Merge pull request #579 from Silabs-ArjanB/ArjanB_t2
     
-    Revert "Table experiment 0"
+    Table width change
 
 """
 
