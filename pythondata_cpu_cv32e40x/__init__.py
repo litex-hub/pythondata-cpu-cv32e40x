@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post155"
-version_tuple = (0, 4, 0, 155)
+version_str = "0.4.0.post157"
+version_tuple = (0, 4, 0, 157)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post155")
+    pversion = V("0.4.0.post157")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post13"
-data_version_tuple = (0, 4, 0, 13)
+data_version_str = "0.4.0.post15"
+data_version_tuple = (0, 4, 0, 15)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post13")
+    pdata_version = V("0.4.0.post15")
 except ImportError:
     pass
-data_git_hash = "c3dd4246a461a0db2de58b9387ffbbdc7a07917d"
-data_git_describe = "0.4.0-13-gc3dd4246"
+data_git_hash = "c2cd76dd48328bd912e8b3e607dc8226ff081496"
+data_git_describe = "0.4.0-15-gc2cd76dd"
 data_git_msg = """\
-commit c3dd4246a461a0db2de58b9387ffbbdc7a07917d
-Merge: fa6c9645 2c8ca3b3
-Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Wed Jun 8 12:01:47 2022 +0200
+commit c2cd76dd48328bd912e8b3e607dc8226ff081496
+Merge: c3dd4246 99e21c78
+Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
+Date:   Mon Jun 13 13:11:36 2022 +0200
 
-    Merge pull request #579 from Silabs-ArjanB/ArjanB_t2
+    Merge pull request #581 from Silabs-ArjanB/ArjanB_obit
     
-    Table width change
+    Temporarily removing RVFI alignment buffer tracking assertions until …
 
 """
 
