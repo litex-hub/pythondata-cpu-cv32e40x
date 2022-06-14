@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post157"
-version_tuple = (0, 4, 0, 157)
+version_str = "0.4.0.post159"
+version_tuple = (0, 4, 0, 159)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post157")
+    pversion = V("0.4.0.post159")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post15"
-data_version_tuple = (0, 4, 0, 15)
+data_version_str = "0.4.0.post17"
+data_version_tuple = (0, 4, 0, 17)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post15")
+    pdata_version = V("0.4.0.post17")
 except ImportError:
     pass
-data_git_hash = "c2cd76dd48328bd912e8b3e607dc8226ff081496"
-data_git_describe = "0.4.0-15-gc2cd76dd"
+data_git_hash = "d5ed77f70b924886ebc280b35df24053d5d78cee"
+data_git_describe = "0.4.0-17-gd5ed77f7"
 data_git_msg = """\
-commit c2cd76dd48328bd912e8b3e607dc8226ff081496
-Merge: c3dd4246 99e21c78
+commit d5ed77f70b924886ebc280b35df24053d5d78cee
+Merge: c2cd76dd 4195cd70
 Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Mon Jun 13 13:11:36 2022 +0200
+Date:   Tue Jun 14 11:08:03 2022 +0200
 
-    Merge pull request #581 from Silabs-ArjanB/ArjanB_obit
+    Merge pull request #582 from Silabs-ArjanB/ArjanB_mctrl6
     
-    Temporarily removing RVFI alignment buffer tracking assertions until …
+    Typos, style
 
 """
 
