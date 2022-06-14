@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post159"
-version_tuple = (0, 4, 0, 159)
+version_str = "0.4.0.post161"
+version_tuple = (0, 4, 0, 161)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post159")
+    pversion = V("0.4.0.post161")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post17"
-data_version_tuple = (0, 4, 0, 17)
+data_version_str = "0.4.0.post19"
+data_version_tuple = (0, 4, 0, 19)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post17")
+    pdata_version = V("0.4.0.post19")
 except ImportError:
     pass
-data_git_hash = "d5ed77f70b924886ebc280b35df24053d5d78cee"
-data_git_describe = "0.4.0-17-gd5ed77f7"
+data_git_hash = "e36832a5de2f05077829d82c8a3f1181b73ae0af"
+data_git_describe = "0.4.0-19-ge36832a5"
 data_git_msg = """\
-commit d5ed77f70b924886ebc280b35df24053d5d78cee
-Merge: c2cd76dd 4195cd70
+commit e36832a5de2f05077829d82c8a3f1181b73ae0af
+Merge: d5ed77f7 84e32533
 Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Tue Jun 14 11:08:03 2022 +0200
+Date:   Tue Jun 14 12:42:45 2022 +0200
 
-    Merge pull request #582 from Silabs-ArjanB/ArjanB_mctrl6
+    Merge pull request #583 from Silabs-ArjanB/ArjanB_ctrl6b
     
-    Typos, style
+    Changed reset value of tdata1. Removed reset values for mcontrol6 and…
 
 """
 
