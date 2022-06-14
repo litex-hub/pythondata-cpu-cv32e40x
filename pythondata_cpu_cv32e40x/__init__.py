@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post163"
-version_tuple = (0, 4, 0, 163)
+version_str = "0.4.0.post165"
+version_tuple = (0, 4, 0, 165)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post163")
+    pversion = V("0.4.0.post165")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post21"
-data_version_tuple = (0, 4, 0, 21)
+data_version_str = "0.4.0.post23"
+data_version_tuple = (0, 4, 0, 23)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post21")
+    pdata_version = V("0.4.0.post23")
 except ImportError:
     pass
-data_git_hash = "d01b22ca894152467faaaa56a3084683ab0abb8a"
-data_git_describe = "0.4.0-21-gd01b22ca"
+data_git_hash = "b58b7f77b166bc69116f2ead9edf03fbeeb8820a"
+data_git_describe = "0.4.0-23-gb58b7f77"
 data_git_msg = """\
-commit d01b22ca894152467faaaa56a3084683ab0abb8a
-Merge: e36832a5 a0edb6a9
+commit b58b7f77b166bc69116f2ead9edf03fbeeb8820a
+Merge: d01b22ca 3c77dac6
 Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Tue Jun 14 15:54:15 2022 +0200
+Date:   Tue Jun 14 16:26:05 2022 +0200
 
-    Merge pull request #584 from Silabs-ArjanB/ArjanB_dbgg0
+    Merge pull request #585 from Silabs-ArjanB/ArjanB_dbgg1
     
-    Made dcsr.EBREAKM descriptions specific to machine mode. Expanded ins…
+    Explained which addresses are used as compare values for execute/load…
 
 """
 
