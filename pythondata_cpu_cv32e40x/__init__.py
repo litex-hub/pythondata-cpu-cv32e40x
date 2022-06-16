@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post165"
-version_tuple = (0, 4, 0, 165)
+version_str = "0.4.0.post167"
+version_tuple = (0, 4, 0, 167)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post165")
+    pversion = V("0.4.0.post167")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post23"
-data_version_tuple = (0, 4, 0, 23)
+data_version_str = "0.4.0.post25"
+data_version_tuple = (0, 4, 0, 25)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post23")
+    pdata_version = V("0.4.0.post25")
 except ImportError:
     pass
-data_git_hash = "b58b7f77b166bc69116f2ead9edf03fbeeb8820a"
-data_git_describe = "0.4.0-23-gb58b7f77"
+data_git_hash = "32c31a07f84beba70b2afd0afa7b6738771bed9f"
+data_git_describe = "0.4.0-25-g32c31a07"
 data_git_msg = """\
-commit b58b7f77b166bc69116f2ead9edf03fbeeb8820a
-Merge: d01b22ca 3c77dac6
+commit 32c31a07f84beba70b2afd0afa7b6738771bed9f
+Merge: b58b7f77 1eff907e
 Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Tue Jun 14 16:26:05 2022 +0200
+Date:   Thu Jun 16 12:38:22 2022 +0200
 
-    Merge pull request #585 from Silabs-ArjanB/ArjanB_dbgg1
+    Merge pull request #587 from Silabs-ArjanB/ArjanB_dbgx
     
-    Explained which addresses are used as compare values for execute/load…
+    Made mseccfg hardwired to 0x0 if PMP_NUM_REGIONS = 0. Added note that…
 
 """
 
