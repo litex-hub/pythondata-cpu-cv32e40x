@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post177"
-version_tuple = (0, 4, 0, 177)
+version_str = "0.4.0.post179"
+version_tuple = (0, 4, 0, 179)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post177")
+    pversion = V("0.4.0.post179")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post35"
-data_version_tuple = (0, 4, 0, 35)
+data_version_str = "0.4.0.post37"
+data_version_tuple = (0, 4, 0, 37)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post35")
+    pdata_version = V("0.4.0.post37")
 except ImportError:
     pass
-data_git_hash = "8aef8f3daf10271891654afdc34f0a6b58db637c"
-data_git_describe = "0.4.0-35-g8aef8f3d"
+data_git_hash = "cc78743386f34a8790d0c12919b4e23d66f36cbd"
+data_git_describe = "0.4.0-37-gcc787433"
 data_git_msg = """\
-commit 8aef8f3daf10271891654afdc34f0a6b58db637c
-Merge: 967e2063 40449531
+commit cc78743386f34a8790d0c12919b4e23d66f36cbd
+Merge: 8aef8f3d 1ba572b2
 Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Fri Jun 24 12:40:20 2022 +0200
+Date:   Fri Jun 24 14:28:45 2022 +0200
 
-    Merge pull request #593 from Silabs-ArjanB/ArjanB_Zce1
+    Merge pull request #594 from Silabs-ArjanB/ArjanB_irqackc
     
-    Removed ZC_EXT as top level parameter. ZC_EXT is now a localparam, al…
+    Added CLIC signals to irq_ack mechanism
 
 """
 
