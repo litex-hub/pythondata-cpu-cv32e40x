@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post179"
-version_tuple = (0, 4, 0, 179)
+version_str = "0.4.0.post181"
+version_tuple = (0, 4, 0, 181)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post179")
+    pversion = V("0.4.0.post181")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post37"
-data_version_tuple = (0, 4, 0, 37)
+data_version_str = "0.4.0.post39"
+data_version_tuple = (0, 4, 0, 39)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post37")
+    pdata_version = V("0.4.0.post39")
 except ImportError:
     pass
-data_git_hash = "cc78743386f34a8790d0c12919b4e23d66f36cbd"
-data_git_describe = "0.4.0-37-gcc787433"
+data_git_hash = "4000e8ead724fd1391ccea7af4389020b8daa60b"
+data_git_describe = "0.4.0-39-g4000e8ea"
 data_git_msg = """\
-commit cc78743386f34a8790d0c12919b4e23d66f36cbd
-Merge: 8aef8f3d 1ba572b2
-Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Fri Jun 24 14:28:45 2022 +0200
+commit 4000e8ead724fd1391ccea7af4389020b8daa60b
+Merge: cc787433 c0e8ccce
+Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
+Date:   Fri Jun 24 17:21:47 2022 +0200
 
-    Merge pull request #594 from Silabs-ArjanB/ArjanB_irqackc
+    Merge pull request #592 from Silabs-ArjanB/ArjanB_docrvfii
     
-    Added CLIC signals to irq_ack mechanism
+    Corrected and clarified rvfi_intr, rvfi_dbg table. Fixes https://gith…
 
 """
 
