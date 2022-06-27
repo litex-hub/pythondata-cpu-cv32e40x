@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post181"
-version_tuple = (0, 4, 0, 181)
+version_str = "0.4.0.post183"
+version_tuple = (0, 4, 0, 183)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post181")
+    pversion = V("0.4.0.post183")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post39"
-data_version_tuple = (0, 4, 0, 39)
+data_version_str = "0.4.0.post41"
+data_version_tuple = (0, 4, 0, 41)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post39")
+    pdata_version = V("0.4.0.post41")
 except ImportError:
     pass
-data_git_hash = "4000e8ead724fd1391ccea7af4389020b8daa60b"
-data_git_describe = "0.4.0-39-g4000e8ea"
+data_git_hash = "25cda141e3f86c8d82a4920b6644eb455b0f57da"
+data_git_describe = "0.4.0-41-g25cda141"
 data_git_msg = """\
-commit 4000e8ead724fd1391ccea7af4389020b8daa60b
-Merge: cc787433 c0e8ccce
-Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Fri Jun 24 17:21:47 2022 +0200
+commit 25cda141e3f86c8d82a4920b6644eb455b0f57da
+Merge: 4000e8ea 352226ab
+Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
+Date:   Mon Jun 27 08:02:21 2022 +0200
 
-    Merge pull request #592 from Silabs-ArjanB/ArjanB_docrvfii
+    Merge pull request #595 from Silabs-ArjanB/ArjanB_csru
     
-    Corrected and clarified rvfi_intr, rvfi_dbg table. Fixes https://gith…
+    Fix mstatush_n for RVFI hookup
 
 """
 
