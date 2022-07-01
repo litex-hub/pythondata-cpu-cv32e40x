@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post186"
-version_tuple = (0, 4, 0, 186)
+version_str = "0.4.0.post189"
+version_tuple = (0, 4, 0, 189)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post186")
+    pversion = V("0.4.0.post189")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post44"
-data_version_tuple = (0, 4, 0, 44)
+data_version_str = "0.4.0.post47"
+data_version_tuple = (0, 4, 0, 47)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post44")
+    pdata_version = V("0.4.0.post47")
 except ImportError:
     pass
-data_git_hash = "f9cab8b9c2e2524b646baf85dae4fca34dd94c4d"
-data_git_describe = "0.4.0-44-gf9cab8b9"
+data_git_hash = "47d4a57b9e27363ff152c364324bdbbf91a06367"
+data_git_describe = "0.4.0-47-g47d4a57b"
 data_git_msg = """\
-commit f9cab8b9c2e2524b646baf85dae4fca34dd94c4d
-Merge: 25cda141 d78d0116
+commit 47d4a57b9e27363ff152c364324bdbbf91a06367
+Merge: f9cab8b9 9f803823
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Tue Jun 28 16:08:22 2022 +0200
+Date:   Fri Jul 1 10:03:42 2022 +0200
 
-    Merge pull request #597 from silabs-oysteink/silabs-oysteink_misc-w26
+    Merge pull request #605 from silabs-oysteink/silabs-oysteink_first_op
     
-    Temporarily set localparam ZC_EXT to 0
+    Added a 'first_op' to track the first operation of multi operation in…
 
 """
 
