@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post189"
-version_tuple = (0, 4, 0, 189)
+version_str = "0.4.0.post191"
+version_tuple = (0, 4, 0, 191)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post189")
+    pversion = V("0.4.0.post191")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post47"
-data_version_tuple = (0, 4, 0, 47)
+data_version_str = "0.4.0.post49"
+data_version_tuple = (0, 4, 0, 49)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post47")
+    pdata_version = V("0.4.0.post49")
 except ImportError:
     pass
-data_git_hash = "47d4a57b9e27363ff152c364324bdbbf91a06367"
-data_git_describe = "0.4.0-47-g47d4a57b"
+data_git_hash = "faa52330cf49ed313f2237199cfec1f69f05ad36"
+data_git_describe = "0.4.0-49-gfaa52330"
 data_git_msg = """\
-commit 47d4a57b9e27363ff152c364324bdbbf91a06367
-Merge: f9cab8b9 9f803823
+commit faa52330cf49ed313f2237199cfec1f69f05ad36
+Merge: 47d4a57b 3de84645
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Fri Jul 1 10:03:42 2022 +0200
+Date:   Fri Jul 1 15:08:05 2022 +0200
 
-    Merge pull request #605 from silabs-oysteink/silabs-oysteink_first_op
+    Merge pull request #606 from silabs-oysteink/silabs-oysteink_allowed-refactor
     
-    Added a 'first_op' to track the first operation of multi operation in…
+    Refactored interrupt_allowed and halt_id logic.
 
 """
 
