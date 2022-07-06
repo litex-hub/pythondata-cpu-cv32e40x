@@ -4,34 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post197"
-version_tuple = (0, 4, 0, 197)
+version_str = "0.4.0.post199"
+version_tuple = (0, 4, 0, 199)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post197")
+    pversion = V("0.4.0.post199")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post55"
-data_version_tuple = (0, 4, 0, 55)
+data_version_str = "0.4.0.post57"
+data_version_tuple = (0, 4, 0, 57)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post55")
+    pdata_version = V("0.4.0.post57")
 except ImportError:
     pass
-data_git_hash = "e9dba5ebb74b031712b052302c7672ca1bd45ea4"
-data_git_describe = "0.4.0-55-ge9dba5eb"
+data_git_hash = "8c859523520d6d25d167bf2a98871f5ec39e0ffb"
+data_git_describe = "0.4.0-57-g8c859523"
 data_git_msg = """\
-commit e9dba5ebb74b031712b052302c7672ca1bd45ea4
-Merge: faa52330 09f3655f
+commit 8c859523520d6d25d167bf2a98871f5ec39e0ffb
+Merge: e9dba5eb 8c8af41b
 Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Wed Jul 6 11:09:29 2022 +0200
+Date:   Wed Jul 6 11:21:58 2022 +0200
 
-    Merge pull request #607 from silabs-oysteink/silabs-oysteink_zc-seq-ctrl
+    Merge pull request #609 from davideschiavone/fix608
     
-    Sequencer integration
-    Self merging as agreed to enable merging to CV32E40X and continue on needed RVFI updates. Will revisit some feedback elements after the vacation season.
+    fix #608
 
 """
 
