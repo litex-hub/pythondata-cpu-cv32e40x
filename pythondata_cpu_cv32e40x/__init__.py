@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post199"
-version_tuple = (0, 4, 0, 199)
+version_str = "0.4.0.post201"
+version_tuple = (0, 4, 0, 201)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post199")
+    pversion = V("0.4.0.post201")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post57"
-data_version_tuple = (0, 4, 0, 57)
+data_version_str = "0.4.0.post59"
+data_version_tuple = (0, 4, 0, 59)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post57")
+    pdata_version = V("0.4.0.post59")
 except ImportError:
     pass
-data_git_hash = "8c859523520d6d25d167bf2a98871f5ec39e0ffb"
-data_git_describe = "0.4.0-57-g8c859523"
+data_git_hash = "be24e5c3b8addaf4c3bfd7453b17176284fbcda1"
+data_git_describe = "0.4.0-59-gbe24e5c3"
 data_git_msg = """\
-commit 8c859523520d6d25d167bf2a98871f5ec39e0ffb
-Merge: e9dba5eb 8c8af41b
+commit be24e5c3b8addaf4c3bfd7453b17176284fbcda1
+Merge: 8c859523 d81a16d8
 Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Wed Jul 6 11:21:58 2022 +0200
+Date:   Thu Jul 7 10:46:19 2022 +0200
 
-    Merge pull request #609 from davideschiavone/fix608
+    Merge pull request #612 from silabs-oysteink/silabs-oysteink_zc-fix1
     
-    fix #608
+    Updates to Zc handling in IF stage
 
 """
 
