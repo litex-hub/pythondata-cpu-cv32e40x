@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post201"
-version_tuple = (0, 4, 0, 201)
+version_str = "0.4.0.post205"
+version_tuple = (0, 4, 0, 205)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post201")
+    pversion = V("0.4.0.post205")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post59"
-data_version_tuple = (0, 4, 0, 59)
+data_version_str = "0.4.0.post63"
+data_version_tuple = (0, 4, 0, 63)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post59")
+    pdata_version = V("0.4.0.post63")
 except ImportError:
     pass
-data_git_hash = "be24e5c3b8addaf4c3bfd7453b17176284fbcda1"
-data_git_describe = "0.4.0-59-gbe24e5c3"
+data_git_hash = "f9193da05ca3faed7bc4472ff1c5a65a737d7a0e"
+data_git_describe = "0.4.0-63-gf9193da0"
 data_git_msg = """\
-commit be24e5c3b8addaf4c3bfd7453b17176284fbcda1
-Merge: 8c859523 d81a16d8
+commit f9193da05ca3faed7bc4472ff1c5a65a737d7a0e
+Merge: be24e5c3 79160b48
 Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Thu Jul 7 10:46:19 2022 +0200
+Date:   Fri Jul 8 09:54:17 2022 +0200
 
-    Merge pull request #612 from silabs-oysteink/silabs-oysteink_zc-fix1
+    Merge pull request #613 from silabs-oysteink/silabs-oysteink_rvfi-zc
     
-    Updates to Zc handling in IF stage
+    Self merging due to vacation season. Should be reviewed later.
 
 """
 
