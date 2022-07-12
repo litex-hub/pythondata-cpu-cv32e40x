@@ -4,33 +4,35 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post205"
-version_tuple = (0, 4, 0, 205)
+version_str = "0.4.0.post207"
+version_tuple = (0, 4, 0, 207)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post205")
+    pversion = V("0.4.0.post207")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post63"
-data_version_tuple = (0, 4, 0, 63)
+data_version_str = "0.4.0.post65"
+data_version_tuple = (0, 4, 0, 65)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post63")
+    pdata_version = V("0.4.0.post65")
 except ImportError:
     pass
-data_git_hash = "f9193da05ca3faed7bc4472ff1c5a65a737d7a0e"
-data_git_describe = "0.4.0-63-gf9193da0"
+data_git_hash = "fa22670c7b0e83ffb4cc16aa72df020e37ed4078"
+data_git_describe = "0.4.0-65-gfa22670c"
 data_git_msg = """\
-commit f9193da05ca3faed7bc4472ff1c5a65a737d7a0e
-Merge: be24e5c3 79160b48
-Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Fri Jul 8 09:54:17 2022 +0200
+commit fa22670c7b0e83ffb4cc16aa72df020e37ed4078
+Merge: f9193da0 c34a8fb4
+Author: Henrik Fegran <henrik.fegran@silabs.com>
+Date:   Tue Jul 12 09:34:27 2022 +0200
 
-    Merge pull request #613 from silabs-oysteink/silabs-oysteink_rvfi-zc
+    Merge pull request #614 from silabs-hfegran/dev_hf_itrace_param
     
-    Self merging due to vacation season. Should be reviewed later.
+    Added parameter to disable itrace
+    
+    Merge OK'ed by @silabs-oysteink
 
 """
 
