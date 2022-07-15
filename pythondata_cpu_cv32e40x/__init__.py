@@ -4,35 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post207"
-version_tuple = (0, 4, 0, 207)
+version_str = "0.4.0.post209"
+version_tuple = (0, 4, 0, 209)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post207")
+    pversion = V("0.4.0.post209")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post65"
-data_version_tuple = (0, 4, 0, 65)
+data_version_str = "0.4.0.post67"
+data_version_tuple = (0, 4, 0, 67)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post65")
+    pdata_version = V("0.4.0.post67")
 except ImportError:
     pass
-data_git_hash = "fa22670c7b0e83ffb4cc16aa72df020e37ed4078"
-data_git_describe = "0.4.0-65-gfa22670c"
+data_git_hash = "86d27d7984f4075727b34177f6917bd76e6c8242"
+data_git_describe = "0.4.0-67-g86d27d79"
 data_git_msg = """\
-commit fa22670c7b0e83ffb4cc16aa72df020e37ed4078
-Merge: f9193da0 c34a8fb4
-Author: Henrik Fegran <henrik.fegran@silabs.com>
-Date:   Tue Jul 12 09:34:27 2022 +0200
+commit 86d27d7984f4075727b34177f6917bd76e6c8242
+Merge: fa22670c 83699c4a
+Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
+Date:   Fri Jul 15 08:15:04 2022 +0200
 
-    Merge pull request #614 from silabs-hfegran/dev_hf_itrace_param
+    Merge pull request #620 from Silabs-ArjanB/ArjanB_todofl
     
-    Added parameter to disable itrace
-    
-    Merge OK'ed by @silabs-oysteink
+    Added todos related to recent PRs
 
 """
 
