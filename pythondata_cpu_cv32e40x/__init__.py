@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post211"
-version_tuple = (0, 4, 0, 211)
+version_str = "0.4.0.post213"
+version_tuple = (0, 4, 0, 213)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post211")
+    pversion = V("0.4.0.post213")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post69"
-data_version_tuple = (0, 4, 0, 69)
+data_version_str = "0.4.0.post71"
+data_version_tuple = (0, 4, 0, 71)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post69")
+    pdata_version = V("0.4.0.post71")
 except ImportError:
     pass
-data_git_hash = "2f19bac0d9c4f35cd809b7d5ca2c61aeee7a3313"
-data_git_describe = "0.4.0-69-g2f19bac0"
+data_git_hash = "adfd1a1fe57c919e1de0018b50b8e99a7c0a5edb"
+data_git_describe = "0.4.0-71-gadfd1a1f"
 data_git_msg = """\
-commit 2f19bac0d9c4f35cd809b7d5ca2c61aeee7a3313
-Merge: 86d27d79 7f7ef5d9
+commit adfd1a1fe57c919e1de0018b50b8e99a7c0a5edb
+Merge: 2f19bac0 6fbbca6c
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Mon Jul 18 10:03:04 2022 +0200
+Date:   Mon Jul 18 13:51:03 2022 +0200
 
-    Merge pull request #621 from Silabs-ArjanB/ArjanB_dbg_dcsr
+    Merge pull request #622 from Silabs-ArjanB/ArjanB_mrv
     
-    Added further clarification on rvfi_dbg signal
+    Added reset value for rvfi_mode
 
 """
 
