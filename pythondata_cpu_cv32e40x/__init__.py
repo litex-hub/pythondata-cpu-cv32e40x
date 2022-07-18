@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post209"
-version_tuple = (0, 4, 0, 209)
+version_str = "0.4.0.post211"
+version_tuple = (0, 4, 0, 211)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post209")
+    pversion = V("0.4.0.post211")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post67"
-data_version_tuple = (0, 4, 0, 67)
+data_version_str = "0.4.0.post69"
+data_version_tuple = (0, 4, 0, 69)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post67")
+    pdata_version = V("0.4.0.post69")
 except ImportError:
     pass
-data_git_hash = "86d27d7984f4075727b34177f6917bd76e6c8242"
-data_git_describe = "0.4.0-67-g86d27d79"
+data_git_hash = "2f19bac0d9c4f35cd809b7d5ca2c61aeee7a3313"
+data_git_describe = "0.4.0-69-g2f19bac0"
 data_git_msg = """\
-commit 86d27d7984f4075727b34177f6917bd76e6c8242
-Merge: fa22670c 83699c4a
+commit 2f19bac0d9c4f35cd809b7d5ca2c61aeee7a3313
+Merge: 86d27d79 7f7ef5d9
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Fri Jul 15 08:15:04 2022 +0200
+Date:   Mon Jul 18 10:03:04 2022 +0200
 
-    Merge pull request #620 from Silabs-ArjanB/ArjanB_todofl
+    Merge pull request #621 from Silabs-ArjanB/ArjanB_dbg_dcsr
     
-    Added todos related to recent PRs
+    Added further clarification on rvfi_dbg signal
 
 """
 
