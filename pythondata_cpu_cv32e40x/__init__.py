@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post213"
-version_tuple = (0, 4, 0, 213)
+version_str = "0.4.0.post217"
+version_tuple = (0, 4, 0, 217)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post213")
+    pversion = V("0.4.0.post217")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post71"
-data_version_tuple = (0, 4, 0, 71)
+data_version_str = "0.4.0.post75"
+data_version_tuple = (0, 4, 0, 75)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post71")
+    pdata_version = V("0.4.0.post75")
 except ImportError:
     pass
-data_git_hash = "adfd1a1fe57c919e1de0018b50b8e99a7c0a5edb"
-data_git_describe = "0.4.0-71-gadfd1a1f"
+data_git_hash = "d542e41ced10c83c4389d5ae14ffc7f955dfb190"
+data_git_describe = "0.4.0-75-gd542e41c"
 data_git_msg = """\
-commit adfd1a1fe57c919e1de0018b50b8e99a7c0a5edb
-Merge: 2f19bac0 6fbbca6c
+commit d542e41ced10c83c4389d5ae14ffc7f955dfb190
+Merge: 9ff0705c a5fa4b54
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Mon Jul 18 13:51:03 2022 +0200
+Date:   Tue Jul 19 08:03:29 2022 +0200
 
-    Merge pull request #622 from Silabs-ArjanB/ArjanB_mrv
+    Merge pull request #624 from Silabs-ArjanB/ArjanB_obr
     
-    Added reset value for rvfi_mode
+    Removed obsolete RTL signal
 
 """
 
