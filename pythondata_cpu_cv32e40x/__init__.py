@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post217"
-version_tuple = (0, 4, 0, 217)
+version_str = "0.4.0.post219"
+version_tuple = (0, 4, 0, 219)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post217")
+    pversion = V("0.4.0.post219")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post75"
-data_version_tuple = (0, 4, 0, 75)
+data_version_str = "0.4.0.post77"
+data_version_tuple = (0, 4, 0, 77)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post75")
+    pdata_version = V("0.4.0.post77")
 except ImportError:
     pass
-data_git_hash = "d542e41ced10c83c4389d5ae14ffc7f955dfb190"
-data_git_describe = "0.4.0-75-gd542e41c"
+data_git_hash = "b4963169df0a7480e1130a4265e1be97ace5c12d"
+data_git_describe = "0.4.0-77-gb4963169"
 data_git_msg = """\
-commit d542e41ced10c83c4389d5ae14ffc7f955dfb190
-Merge: 9ff0705c a5fa4b54
+commit b4963169df0a7480e1130a4265e1be97ace5c12d
+Merge: d542e41c dc11672f
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Tue Jul 19 08:03:29 2022 +0200
+Date:   Wed Jul 20 18:53:43 2022 +0200
 
-    Merge pull request #624 from Silabs-ArjanB/ArjanB_obr
+    Merge pull request #625 from Silabs-ArjanB/ArjanB_zc705
     
-    Removed obsolete RTL signal
+    Updated Zc extension version to v0.70.5
 
 """
 
