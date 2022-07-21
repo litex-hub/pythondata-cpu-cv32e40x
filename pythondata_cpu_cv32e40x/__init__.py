@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post219"
-version_tuple = (0, 4, 0, 219)
+version_str = "0.4.0.post224"
+version_tuple = (0, 4, 0, 224)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post219")
+    pversion = V("0.4.0.post224")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post77"
-data_version_tuple = (0, 4, 0, 77)
+data_version_str = "0.4.0.post82"
+data_version_tuple = (0, 4, 0, 82)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post77")
+    pdata_version = V("0.4.0.post82")
 except ImportError:
     pass
-data_git_hash = "b4963169df0a7480e1130a4265e1be97ace5c12d"
-data_git_describe = "0.4.0-77-gb4963169"
+data_git_hash = "5ecb42b7caf94c157c90fe71d2ffc9b60c78bb44"
+data_git_describe = "0.4.0-82-g5ecb42b7"
 data_git_msg = """\
-commit b4963169df0a7480e1130a4265e1be97ace5c12d
-Merge: d542e41c dc11672f
+commit 5ecb42b7caf94c157c90fe71d2ffc9b60c78bb44
+Merge: b4963169 7de0e27f
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Wed Jul 20 18:53:43 2022 +0200
+Date:   Thu Jul 21 13:56:07 2022 +0200
 
-    Merge pull request #625 from Silabs-ArjanB/ArjanB_zc705
+    Merge pull request #580 from michael-platzer/xif_update
     
-    Updated Zc extension version to v0.70.5
+    Update XIF interface
 
 """
 
