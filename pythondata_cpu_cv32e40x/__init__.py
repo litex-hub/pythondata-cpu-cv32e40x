@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post224"
-version_tuple = (0, 4, 0, 224)
+version_str = "0.4.0.post226"
+version_tuple = (0, 4, 0, 226)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post224")
+    pversion = V("0.4.0.post226")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post82"
-data_version_tuple = (0, 4, 0, 82)
+data_version_str = "0.4.0.post84"
+data_version_tuple = (0, 4, 0, 84)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post82")
+    pdata_version = V("0.4.0.post84")
 except ImportError:
     pass
-data_git_hash = "5ecb42b7caf94c157c90fe71d2ffc9b60c78bb44"
-data_git_describe = "0.4.0-82-g5ecb42b7"
+data_git_hash = "263b2093b90ad48f81efba8b0a9221da9cf9f7b8"
+data_git_describe = "0.4.0-84-g263b2093"
 data_git_msg = """\
-commit 5ecb42b7caf94c157c90fe71d2ffc9b60c78bb44
-Merge: b4963169 7de0e27f
+commit 263b2093b90ad48f81efba8b0a9221da9cf9f7b8
+Merge: 5ecb42b7 48d60fee
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Thu Jul 21 13:56:07 2022 +0200
+Date:   Tue Jul 26 11:54:49 2022 +0200
 
-    Merge pull request #580 from michael-platzer/xif_update
+    Merge pull request #626 from Silabs-ArjanB/ArjanB_u1
     
-    Update XIF interface
+    Unifying code with CV32E40S
 
 """
 
