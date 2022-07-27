@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post228"
-version_tuple = (0, 4, 0, 228)
+version_str = "0.4.0.post230"
+version_tuple = (0, 4, 0, 230)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post228")
+    pversion = V("0.4.0.post230")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post86"
-data_version_tuple = (0, 4, 0, 86)
+data_version_str = "0.4.0.post88"
+data_version_tuple = (0, 4, 0, 88)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post86")
+    pdata_version = V("0.4.0.post88")
 except ImportError:
     pass
-data_git_hash = "d0fa78738c2e2dced07e3969db2edef6b211313c"
-data_git_describe = "0.4.0-86-gd0fa7873"
+data_git_hash = "4f7a8d912091bb4f54cbd3e25761f495c27a7aaa"
+data_git_describe = "0.4.0-88-g4f7a8d91"
 data_git_msg = """\
-commit d0fa78738c2e2dced07e3969db2edef6b211313c
-Merge: 263b2093 fc5301d1
+commit 4f7a8d912091bb4f54cbd3e25761f495c27a7aaa
+Merge: d0fa7873 19d836f3
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Tue Jul 26 14:11:57 2022 +0200
+Date:   Wed Jul 27 11:14:33 2022 +0200
 
-    Merge pull request #627 from Silabs-ArjanB/ArjanB_235
+    Merge pull request #631 from Silabs-ArjanB/ArjanB_clicbm
     
-    Updated exception code for Instruction Bus Fault
+    Fixed bitfield description in mtvec CSR for CLIC
 
 """
 
