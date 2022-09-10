@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.4.0.post232"
-version_tuple = (0, 4, 0, 232)
+version_str = "0.5.0.post167"
+version_tuple = (0, 5, 0, 167)
 try:
     from packaging.version import Version as V
-    pversion = V("0.4.0.post232")
+    pversion = V("0.5.0.post167")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.4.0.post90"
-data_version_tuple = (0, 4, 0, 90)
+data_version_str = "0.5.0.post25"
+data_version_tuple = (0, 5, 0, 25)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.4.0.post90")
+    pdata_version = V("0.5.0.post25")
 except ImportError:
     pass
-data_git_hash = "4349cdc69b4f3cf45ddb12a092e76fa074ce8504"
-data_git_describe = "0.4.0-90-g4349cdc6"
+data_git_hash = "9acceb8d1dbe799fb3890bb7aa6bea1a453c0ba1"
+data_git_describe = "0.5.0-25-g9acceb8d"
 data_git_msg = """\
-commit 4349cdc69b4f3cf45ddb12a092e76fa074ce8504
-Merge: 4f7a8d91 5c32cd85
-Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Fri Jul 29 12:27:11 2022 +0200
+commit 9acceb8d1dbe799fb3890bb7aa6bea1a453c0ba1
+Merge: d21637e4 8b32238a
+Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
+Date:   Thu Sep 8 11:16:34 2022 +0200
 
-    Merge pull request #632 from Silabs-ArjanB/ArjanB_obi15
+    Merge pull request #664 from silabs-oivind/clic_ptr_fetch_mret_wb_fix
     
-    Updated OBI to version 1.5.0
+    Fix issue related to CLIC pointer fetch while MRET in WB
 
 """
 
