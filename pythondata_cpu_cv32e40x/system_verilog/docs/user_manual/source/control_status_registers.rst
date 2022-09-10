@@ -164,9 +164,13 @@ instruction exception.
     +---------------+-------------------+-----------+---------------------+---------------------------------------------------------+
     | 0xC00         | ``cycle``         | URO       |                     | Cycle Counter                                           |
     +---------------+-------------------+-----------+---------------------+---------------------------------------------------------+
+    | 0xC01         | ``time``          | URO       |                     | Time                                                    |
+    +---------------+-------------------+-----------+---------------------+---------------------------------------------------------+
     | 0xC02         | ``instret``       | URO       |                     | Instructions-Retired Counter                            |
     +---------------+-------------------+-----------+---------------------+---------------------------------------------------------+
     | 0xC80         | ``cycleh``        | URO       |                     | Upper 32 Cycle Counter                                  |
+    +---------------+-------------------+-----------+---------------------+---------------------------------------------------------+
+    | 0xC81         | ``timeh``         | URO       |                     | Upper 32 Time                                           |
     +---------------+-------------------+-----------+---------------------+---------------------------------------------------------+
     | 0xC82         | ``instreth``      | URO       |                     | Upper 32 Instructions-Retired Counter                   |
     +---------------+-------------------+-----------+---------------------+---------------------------------------------------------+
@@ -507,7 +511,7 @@ Detailed:
   +-------------+------------+------------------------------------------------------------------------+
   | 24          | WARL (0x0) | **Y** (Reserved).                                                      |
   +-------------+------------+------------------------------------------------------------------------+
-  | 23          | WARL       | **X** (Non-standard extensions present).                               |
+  | 23          | WARL (0x1) | **X** (Non-standard extensions present).                               |
   +-------------+------------+------------------------------------------------------------------------+
   | 22          | WARL (0x0) | **W** (Reserved).                                                      |
   +-------------+------------+------------------------------------------------------------------------+
@@ -565,6 +569,7 @@ All bitfields in the ``misa`` CSR read as 0 except for the following:
 * **E** = 1 if ``RV32`` == RV32E
 * **M** = 1 if ``M_EXT`` == M
 * **MXL** = 1 (i.e. XLEN = 32)
+* **X** = 1
 * If ``X_EXT`` == 1, then the value of ``X_MISA`` is ORed into the ``misa`` CSR.
 
 .. note::
@@ -667,10 +672,14 @@ Detailed:
 The initial value of ``mtvec`` is equal to {**mtvec_addr_i[31:7]**, 5'b0, 2'b01}.
 
 When an exception or an interrupt is encountered, the core jumps to the corresponding
-handler using the content of the ``mtvec[31:7]`` as base address. Both direct mode and vectored mode
+handler using the content of the ``mtvec[31:7]`` as base address. Both non-vectored basic mode and vectored basic mode 
 are supported.
 
-The NMI vector location is at index 15 of the machine trap vector table for both direct mode and vectored mode (i.e. at {**mtvec[31:7]**, 5'hF, 2'b00}).
+Upon an NMI in non-vectored basic mode the core jumps to **mtvec[31:7]**, 5'h0, 2'b00} (i.e. index 0).
+Upon an NMI in vectored basic mode the core jumps to **mtvec[31:7]**, 5'hF, 2'b00} (i.e. index 15).
+
+.. note::
+   For NMIs the exception codes in the ``mcause`` CSR do not match the table index as for regular interrupts.
 
 .. note::
    Memory writes to the ``mtvec`` based vector table require an instruction barrier (``fence.i``) to guarantee that they are visible to the instruction fetch (see :ref:`fencei` and [RISC-V-UNPRIV]_).
@@ -701,6 +710,8 @@ Detailed:
   +---------+------------------+---------------------------------------------------------------------------------------------------------------+
 
 The initial value of ``mtvec`` is equal to {**mtvec_addr_i[31:7]**, 1'b0, 6'b000011}.
+
+Upon an NMI in CLIC mode the core jumps to **mtvec[31:7]**, 5'h0, 2'b00} (i.e. index 0).
 
 .. note::
    Memory writes to the ``mtvec`` based vector table require an instruction barrier (``fence.i``) to guarantee that they are visible to the instruction fetch (see :ref:`fencei` and [RISC-V-UNPRIV]_).
@@ -1684,7 +1695,7 @@ Debug Control and Status (``dcsr``)
 
 CSR Address: 0x7B0
 
-Reset Value: 0x4000_0013
+Reset Value: 0x4000_0413
 
 Detailed:
 
@@ -1713,7 +1724,7 @@ Detailed:
   +----------+--------------+-------------------------------------------------------------------------------------------------+
   | 11       | WARL         | **STEPIE**. Set to enable interrupts during single stepping.                                    |
   +----------+--------------+-------------------------------------------------------------------------------------------------+
-  | 10       | WARL (0x0)   | **STOPCOUNT**. Hardwired to 0.                                                                  |
+  | 10       | WARL         | **STOPCOUNT**.                                                                                  |
   +----------+--------------+-------------------------------------------------------------------------------------------------+
   | 9        | WARL (0x0)   | **STOPTIME**. Hardwired to 0.                                                                   |
   +----------+--------------+-------------------------------------------------------------------------------------------------+
@@ -2187,6 +2198,30 @@ Detailed:
 
   Read-only unprivileged shadow of the lower 32 bits of the 64 bit machine mode cycle counter.
 
+  .. _csr-time:
+
+  Time (``time``)
+  ~~~~~~~~~~~~~~~
+
+  CSR Address: 0xC01
+
+  Reset Value: defined (based on ``time_i``)
+
+  Detailed:
+
+  .. table::
+    :widths: 10 20 70
+    :class: no-scrollbar-table
+
+    +-------+------+------------------------------------------------------------------+
+    | Bit#  | R/W  | Description                                                      |
+    +=======+======+==================================================================+
+    | 31:0  | R    |                                                                  |
+    +-------+------+------------------------------------------------------------------+
+
+  Read-only unprivileged shadow of the lower 32 bits of the 64 bit time counter. A
+  read of the ``time`` CSR value returns the value present on the ``time_i[31:0]`` pins.
+
   Instructions-Retired Counter (``instret``)
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -2254,6 +2289,30 @@ Detailed:
     +-------+------+------------------------------------------------------------------+
 
   Read-only unprivileged shadow of the upper 32 bits of the 64 bit machine mode cycle counter.
+
+  .. _csr-timeh:
+
+  Upper 32 Time (``timeh``)
+  ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  CSR Address: 0xC81
+
+  Reset Value: defined (based on ``time_i``)
+
+  Detailed:
+
+  .. table::
+    :widths: 10 20 70
+    :class: no-scrollbar-table
+
+    +-------+------+------------------------------------------------------------------+
+    | Bit#  | R/W  | Description                                                      |
+    +=======+======+==================================================================+
+    | 31:0  | R    |                                                                  |
+    +-------+------+------------------------------------------------------------------+
+
+  Read-only unprivileged shadow of the upper 32 bits of the 64 bit time counter. A
+  read of the ``time`` CSR value returns the value present on the ``time_i[63:32]`` pins.
 
   Upper 32 Instructions-Retired Counter (``instreth``)
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

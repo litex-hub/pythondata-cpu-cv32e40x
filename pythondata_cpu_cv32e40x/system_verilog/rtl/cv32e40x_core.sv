@@ -181,8 +181,14 @@ module cv32e40x_core import cv32e40x_pkg::*;
 
   // Detect last_op
   logic        last_op_if;
+  logic        last_op_id;
   logic        last_op_ex;
   logic        last_op_wb;
+
+  // Abort_op bits
+  logic        abort_op_if;
+  logic        abort_op_id;
+  logic        abort_op_wb;
 
   // First op bits
   logic        first_op_if;
@@ -218,6 +224,7 @@ module cv32e40x_core import cv32e40x_pkg::*;
   logic [31:0] csr_rdata;
   logic csr_counter_read;
   logic csr_wr_in_wb_flush;
+  logic csr_irq_enable_write;
 
   privlvl_t     priv_lvl;
 
@@ -445,6 +452,7 @@ module cv32e40x_core import cv32e40x_pkg::*;
 
     .first_op_o          ( first_op_if              ),
     .last_op_o           ( last_op_if               ),
+    .abort_op_o          ( abort_op_if              ),
 
     // Pipeline handshakes
     .if_valid_o          ( if_valid                 ),
@@ -506,6 +514,8 @@ module cv32e40x_core import cv32e40x_pkg::*;
     .sys_en_o                     ( sys_en_id                 ),
 
     .first_op_o                   ( first_op_id               ),
+    .last_op_o                    ( last_op_id                ),
+    .abort_op_o                   ( abort_op_id               ),
 
     .rf_re_o                      ( rf_re_id                  ),
     .rf_raddr_o                   ( rf_raddr_id               ),
@@ -685,7 +695,8 @@ module cv32e40x_core import cv32e40x_pkg::*;
     .clic_pa_valid_i            ( csr_clic_pa_valid            ),
     .clic_pa_i                  ( csr_clic_pa                  ),
 
-    .last_op_o                  ( last_op_wb                   )
+    .last_op_o                  ( last_op_wb                   ),
+    .abort_op_o                 ( abort_op_wb                  )
   );
 
   //////////////////////////////////////
@@ -753,6 +764,7 @@ module cv32e40x_core import cv32e40x_pkg::*;
     // To controller_bypass
     .csr_counter_read_o         ( csr_counter_read       ),
     .csr_mnxti_read_o           ( csr_mnxti_read         ),
+    .csr_irq_enable_write_o     ( csr_irq_enable_write   ),
 
     // Interface to CSRs (SRAM like)
     .csr_rdata_o                ( csr_rdata              ),
@@ -800,22 +812,27 @@ module cv32e40x_core import cv32e40x_pkg::*;
 
     // From ID/EX pipeline
     .id_ex_pipe_i                   ( id_ex_pipe             ),
-    .first_op_ex_i                  ( first_op_ex            ),
 
     .csr_counter_read_i             ( csr_counter_read       ),
     .csr_mnxti_read_i               ( csr_mnxti_read         ),
+    .csr_irq_enable_write_i         ( csr_irq_enable_write   ),
 
     // From EX/WB pipeline
     .ex_wb_pipe_i                   ( ex_wb_pipe             ),
 
     // last_op bits
+    .last_op_id_i                   ( last_op_id             ),
     .last_op_ex_i                   ( last_op_ex             ),
     .last_op_wb_i                   ( last_op_wb             ),
 
+    .abort_op_id_i                  ( abort_op_id            ),
+    .abort_op_wb_i                  ( abort_op_wb            ),
+
     .if_valid_i                     ( if_valid               ),
     .pc_if_i                        ( pc_if                  ),
-    .first_op_if_i                  ( first_op_if            ),
     .last_op_if_i                   ( last_op_if             ),
+    .abort_op_if_i                  ( abort_op_if            ),
+
     // from IF/ID pipeline
     .if_id_pipe_i                   ( if_id_pipe             ),
 
@@ -834,6 +851,7 @@ module cv32e40x_core import cv32e40x_pkg::*;
     .lsu_err_wb_i                   ( lsu_err_wb             ),
     .lsu_busy_i                     ( lsu_busy               ),
     .lsu_interruptible_i            ( lsu_interruptible      ),
+    .lsu_valid_wb_i                 ( lsu_valid_wb           ),
 
     // jump/branch control
     .branch_decision_ex_i           ( branch_decision_ex     ),
@@ -848,6 +866,7 @@ module cv32e40x_core import cv32e40x_pkg::*;
 
     // From CSR registers
     .mtvec_mode_i                   ( mtvec_mode             ),
+    .mcause_i                       ( mcause                 ),
 
     // CSR write strobes
     .csr_wr_in_wb_flush_i           ( csr_wr_in_wb_flush     ),

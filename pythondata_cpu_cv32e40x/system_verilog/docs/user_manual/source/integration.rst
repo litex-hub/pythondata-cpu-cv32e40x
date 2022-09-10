@@ -72,8 +72,9 @@ Instantiation Template
       .data_err_i               (),
       .data_exokay_i            (),
 
-      // Cycle Count
+      // Cycle, Time
       .mcycle_o                 (),
+      .time_i                   (),
 
       // eXtension interface
       .xif_compressed_if        (),
@@ -101,10 +102,13 @@ Instantiation Template
       .debug_havereset_o        (),
       .debug_running_o          (),
       .debug_halted_o           (),
+      .debug_pc_valid_o         (),
+      .debug_pc_o               (),
 
       // Special control signals
       .fetch_enable_i           (),
-      .core_sleep_o             ()
+      .core_sleep_o             (),
+      .wu_wfe_i                 ()
   );
 
 Parameters
@@ -156,7 +160,7 @@ Parameters
   +--------------------------------+----------------+---------------+--------------------------------------------------------------------+
   | ``X_MISA``                     | logic [31:0]   | 32'h0         | MISA extensions implemented on the eXtension interface,            |
   |                                |                |               | see :ref:`csr-misa`. X_MISA can only be used to set a subset of    |
-  |                                |                |               | the following: {P, V, F, X, M}.                                    |
+  |                                |                |               | the following: {P, V, F, M}.                                       |
   +--------------------------------+----------------+---------------+--------------------------------------------------------------------+
   | ``X_ECS_XS``                   | logic [1:0]    | 2'b0          | Default value for ``mstatus.XS`` if X_EXT = 1,                     |
   |                                |                |               | see :ref:`csr-mstatus`.                                            |
@@ -235,6 +239,8 @@ Interfaces
   +-------------------------+----------------------------------------------------------------------------+
   | ``mcycle_o``            | Cycle Counter Output                                                       |
   +-------------------------+----------------------------------------------------------------------------+
+  | ``time_i``              | Time input, see :ref:`csr-time` CSR and :ref:`csr-timeh` CSR               |
+  +-------------------------+----------------------------------------------------------------------------+
   | ``irq_*``               | Interrupt inputs, see :ref:`exceptions-interrupts`                         |
   +-------------------------+----------------------------------------------------------------------------+
   | ``clic_*_i``            | CLIC interface, see :ref:`exceptions-interrupts`                           |
@@ -251,6 +257,8 @@ Interfaces
   |                         |                         |     | ``fetch_enable_i`` is ignored.             |
   +-------------------------+-------------------------+-----+--------------------------------------------+
   | ``core_sleep_o``        | 1                       | out | Core is sleeping, see :ref:`sleep_unit`.   |
+  +-------------------------+-------------------------+-----+--------------------------------------------+
+  | ``wu_wfe_i``            | 1                       | in  | Wake-up for ``wfe``, see :ref:`sleep_unit`.|
   +-------------------------+-------------------------+-----+--------------------------------------------+
   | ``xif_compressed_if``   | eXtension compressed interface, see :ref:`x_compressed_if`                 |
   +-------------------------+----------------------------------------------------------------------------+

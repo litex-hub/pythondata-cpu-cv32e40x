@@ -47,8 +47,8 @@ module cv32e40x_controller import cv32e40x_pkg::*;
 
   // From IF stage
   input  logic [31:0] pc_if_i,
-  input  logic        first_op_if_i,
   input  logic        last_op_if_i,
+  input  logic        abort_op_if_i,
 
   // from IF/ID pipeline
   input  if_id_pipe_t if_id_pipe_i,
@@ -60,9 +60,10 @@ module cv32e40x_controller import cv32e40x_pkg::*;
   input  logic        csr_en_raw_id_i,
   input  csr_opcode_e csr_op_id_i,
   input  logic        first_op_id_i,
+  input  logic        last_op_id_i,
+  input  logic        abort_op_id_i,
 
   input  id_ex_pipe_t id_ex_pipe_i,
-  input  logic        first_op_ex_i,
 
   input  ex_wb_pipe_t ex_wb_pipe_i,
 
@@ -70,12 +71,15 @@ module cv32e40x_controller import cv32e40x_pkg::*;
   input  logic        last_op_ex_i,               // EX contains the last operation of an instruction
   input  logic        last_op_wb_i,               // WB contains the last operation of an instruction
 
+  input  logic        abort_op_wb_i,
+
   // LSU
   input  mpu_status_e lsu_mpu_status_wb_i,        // MPU status (WB stage)
   input  logic        data_stall_wb_i,            // WB stalled by LSU
   input  logic [1:0]  lsu_err_wb_i,               // LSU bus error in WB stage
   input  logic        lsu_busy_i,                 // LSU is busy with outstanding transfers
   input  logic        lsu_interruptible_i,        // LSU may be interrupted
+  input  logic        lsu_valid_wb_i,             // LSU is valid in WB (factors in rvalid from either OBI bus or write buffer)
 
   // jump/branch signals
   input  logic        branch_decision_ex_i,       // branch decision signal from EX ALU
@@ -89,6 +93,7 @@ module cv32e40x_controller import cv32e40x_pkg::*;
   input  logic [1:0]  irq_clic_priv_i,
 
   input logic  [1:0]  mtvec_mode_i,
+  input  mcause_t     mcause_i,
 
   input  logic        csr_wr_in_wb_flush_i,
 
@@ -96,9 +101,12 @@ module cv32e40x_controller import cv32e40x_pkg::*;
   input  logic        debug_req_i,
   input  dcsr_t       dcsr_i,
 
+
   // CSR raddr in ex
   input  logic        csr_counter_read_i,         // A performance counter is read in CSR (EX)
   input  logic        csr_mnxti_read_i,           // MNXTI is read in CSR (EX)
+
+  input  logic        csr_irq_enable_write_i,     // An interrupt may be enabled by a write (WB)
 
   input logic [REGFILE_NUM_READ_PORTS-1:0] rf_re_id_i,
   input rf_addr_t     rf_raddr_id_i[REGFILE_NUM_READ_PORTS],
@@ -146,8 +154,8 @@ module cv32e40x_controller import cv32e40x_pkg::*;
 
     .if_valid_i                  ( if_valid_i               ),
     .pc_if_i                     ( pc_if_i                  ),
-    .first_op_if_i               ( first_op_if_i            ),
     .last_op_if_i                ( last_op_if_i             ),
+    .abort_op_if_i               ( abort_op_if_i            ),
 
     // From ID stage
     .if_id_pipe_i                ( if_id_pipe_i             ),
@@ -158,6 +166,8 @@ module cv32e40x_controller import cv32e40x_pkg::*;
     .alu_en_id_i                 ( alu_en_id_i              ),
     .sys_en_id_i                 ( sys_en_id_i              ),
     .first_op_id_i               ( first_op_id_i            ),
+    .last_op_id_i                ( last_op_id_i             ),
+    .abort_op_id_i               ( abort_op_id_i            ),
 
     // From EX stage
     .id_ex_pipe_i                ( id_ex_pipe_i             ),
@@ -165,7 +175,6 @@ module cv32e40x_controller import cv32e40x_pkg::*;
     .ex_ready_i                  ( ex_ready_i               ),
     .ex_valid_i                  ( ex_valid_i               ),
     .last_op_ex_i                ( last_op_ex_i             ),
-    .first_op_ex_i               ( first_op_ex_i            ),
 
     // From WB stage
     .ex_wb_pipe_i                ( ex_wb_pipe_i             ),
@@ -175,6 +184,8 @@ module cv32e40x_controller import cv32e40x_pkg::*;
     .wb_ready_i                  ( wb_ready_i               ),
     .wb_valid_i                  ( wb_valid_i               ),
     .last_op_wb_i                ( last_op_wb_i             ),
+    .abort_op_wb_i               ( abort_op_wb_i            ),
+    .lsu_valid_wb_i              ( lsu_valid_wb_i           ),
 
     .lsu_interruptible_i         ( lsu_interruptible_i      ),
 
@@ -194,6 +205,7 @@ module cv32e40x_controller import cv32e40x_pkg::*;
     // Debug Signal
     .debug_req_i                 ( debug_req_i              ),
     .dcsr_i                      ( dcsr_i                   ),
+    .mcause_i                    ( mcause_i                 ),
 
     // Fencei flush handshake
     .fencei_flush_ack_i          ( fencei_flush_ack_i       ),
@@ -239,6 +251,7 @@ module cv32e40x_controller import cv32e40x_pkg::*;
 
     // From WB
     .wb_ready_i                 ( wb_ready_i               ),
+    .csr_irq_enable_write_i     ( csr_irq_enable_write_i   ),
 
     // Outputs
     .ctrl_byp_o                 ( ctrl_byp_o               )

@@ -480,6 +480,8 @@ parameter MSTATUS_MPP_BIT_LOW  = 11;
 parameter MSTATUS_MPP_BIT_HIGH = 12;
 
 parameter MCAUSE_MPIE_BIT      = 27;
+parameter MCAUSE_MPP_BIT_LOW   = 28;
+parameter MCAUSE_MPP_BIT_HIGH  = 29;
 
 // misa
 parameter logic [1:0] MXL = 2'd1; // M-XLEN: XLEN in M-Mode for RV32
@@ -1052,6 +1054,7 @@ typedef struct packed {
   logic [31:0] ptr;              // Flops to hold 32-bit pointer
   logic        first_op;         // First part of multi operation instruction
   logic        last_op;          // Last part of multi operation instruction
+  logic        abort_op;         // Instruction will be aborted due to known exceptions or trigger matches
 } if_id_pipe_t;
 
 // ID/EX pipeline
@@ -1120,6 +1123,7 @@ typedef struct packed {
 
   logic         first_op;         // First part of multi operation instruction
   logic         last_op;          // Last part of multi operation instruction
+  logic         abort_op;         // Instruction will be aborted due to known exceptions or trigger matches
 
 } id_ex_pipe_t;
 
@@ -1168,6 +1172,7 @@ typedef struct packed {
 
   logic         first_op;         // First part of multi operation instruction
   logic         last_op;          // Last part of multi operation instruction
+  logic         abort_op;         // Instruction will be aborted due to known exceptions or trigger matches
 } ex_wb_pipe_t;
 
 // Performance counter events
@@ -1199,10 +1204,13 @@ typedef struct packed {
   logic         load_stall;             // Stall due to load operation
   logic         csr_stall;
   logic         wfi_stall;
-  logic         mnxti_stall;            // Stall due to mnxti CSR access in EX
+  logic         mnxti_id_stall;         // Stall ID due to mnxti CSR access in EX
+  logic         mnxti_ex_stall;         // Stall EX due to LSU instruction in WB
   logic         minstret_stall;         // Stall due to minstret/h read in EX
   logic         deassert_we;            // Deassert write enable and special insn bits
+  logic         id_stage_abort;         // Same signal as deassert_we, with better name for use in the controller.
   logic         xif_exception_stall;    // Stall (EX) if xif insn in WB can cause an exception
+  logic         irq_enable_stall;       // Stall (EX) if an interrupt may be enabled by the instruction in WB.
 } ctrl_byp_t;
 
 // Controller FSM outputs
@@ -1270,6 +1278,9 @@ typedef struct packed {
 
   // Kill signal for xif_commit_if
   logic        kill_xif; // Kill (attempted) offloaded instruction
+
+  // Signal that an exception is in WB
+  logic        exception_in_wb;
 } ctrl_fsm_t;
 
   ////////////////////////////////////////
@@ -1344,7 +1355,8 @@ typedef struct packed {
     POPRET,
     POPRETZ,
     MVA01S,
-    MVSA01
+    MVSA01,
+    TBLJMP
   } seq_instr_e;
 
   typedef enum logic [3:0] {
