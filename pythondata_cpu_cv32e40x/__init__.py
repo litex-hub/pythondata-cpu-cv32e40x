@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.5.0.post167"
-version_tuple = (0, 5, 0, 167)
+version_str = "0.5.0.post170"
+version_tuple = (0, 5, 0, 170)
 try:
     from packaging.version import Version as V
-    pversion = V("0.5.0.post167")
+    pversion = V("0.5.0.post170")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.5.0.post25"
-data_version_tuple = (0, 5, 0, 25)
+data_version_str = "0.5.0.post28"
+data_version_tuple = (0, 5, 0, 28)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.5.0.post25")
+    pdata_version = V("0.5.0.post28")
 except ImportError:
     pass
-data_git_hash = "9acceb8d1dbe799fb3890bb7aa6bea1a453c0ba1"
-data_git_describe = "0.5.0-25-g9acceb8d"
+data_git_hash = "a1ca4fc1b69eb9c4f3cd269d160203153d7d51f1"
+data_git_describe = "0.5.0-28-ga1ca4fc1"
 data_git_msg = """\
-commit 9acceb8d1dbe799fb3890bb7aa6bea1a453c0ba1
-Merge: d21637e4 8b32238a
+commit a1ca4fc1b69eb9c4f3cd269d160203153d7d51f1
+Merge: 9acceb8d 1eb62f95
 Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Thu Sep 8 11:16:34 2022 +0200
+Date:   Thu Sep 22 11:58:21 2022 +0200
 
-    Merge pull request #664 from silabs-oivind/clic_ptr_fetch_mret_wb_fix
+    Merge pull request #667 from silabs-oysteink/silabs-oysteink_wfi-wb_valid
     
-    Fix issue related to CLIC pointer fetch while MRET in WB
+    Keeping WFI in WB until SLEEP mode is exited
 
 """
 
