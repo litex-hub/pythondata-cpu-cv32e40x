@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.5.0.post170"
-version_tuple = (0, 5, 0, 170)
+version_str = "0.5.0.post172"
+version_tuple = (0, 5, 0, 172)
 try:
     from packaging.version import Version as V
-    pversion = V("0.5.0.post170")
+    pversion = V("0.5.0.post172")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.5.0.post28"
-data_version_tuple = (0, 5, 0, 28)
+data_version_str = "0.5.0.post30"
+data_version_tuple = (0, 5, 0, 30)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.5.0.post28")
+    pdata_version = V("0.5.0.post30")
 except ImportError:
     pass
-data_git_hash = "a1ca4fc1b69eb9c4f3cd269d160203153d7d51f1"
-data_git_describe = "0.5.0-28-ga1ca4fc1"
+data_git_hash = "37b423b5c1591ab3493018eca31151b4e266949e"
+data_git_describe = "0.5.0-30-g37b423b5"
 data_git_msg = """\
-commit a1ca4fc1b69eb9c4f3cd269d160203153d7d51f1
-Merge: 9acceb8d 1eb62f95
-Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Thu Sep 22 11:58:21 2022 +0200
+commit 37b423b5c1591ab3493018eca31151b4e266949e
+Merge: a1ca4fc1 6243bd75
+Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
+Date:   Tue Sep 27 16:25:36 2022 +0200
 
-    Merge pull request #667 from silabs-oysteink/silabs-oysteink_wfi-wb_valid
+    Merge pull request #673 from silabs-oysteink/silabs-oysteink_wfi_timing_fix
     
-    Keeping WFI in WB until SLEEP mode is exited
+    Splitting halt_wb to fix timing issues when waking from SLEEP
 
 """
 
