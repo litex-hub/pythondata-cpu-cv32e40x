@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.5.0.post176"
-version_tuple = (0, 5, 0, 176)
+version_str = "0.5.0.post184"
+version_tuple = (0, 5, 0, 184)
 try:
     from packaging.version import Version as V
-    pversion = V("0.5.0.post176")
+    pversion = V("0.5.0.post184")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.5.0.post34"
-data_version_tuple = (0, 5, 0, 34)
+data_version_str = "0.5.0.post42"
+data_version_tuple = (0, 5, 0, 42)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.5.0.post34")
+    pdata_version = V("0.5.0.post42")
 except ImportError:
     pass
-data_git_hash = "9b33f911ca30927e18209a7eefc40884dd3c69c0"
-data_git_describe = "0.5.0-34-g9b33f911"
+data_git_hash = "707899d0ee31c6ae904c984dac3fa4a029e472b6"
+data_git_describe = "0.5.0-42-g707899d0"
 data_git_msg = """\
-commit 9b33f911ca30927e18209a7eefc40884dd3c69c0
-Merge: 35def5a2 f6cd2b72
-Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Wed Sep 28 08:34:14 2022 +0200
+commit 707899d0ee31c6ae904c984dac3fa4a029e472b6
+Merge: 9b33f911 4f7bd710
+Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
+Date:   Wed Sep 28 11:48:44 2022 +0200
 
-    Merge pull request #674 from Silabs-ArjanB/ArjanB_priondi
+    Merge pull request #669 from silabs-oysteink/silabs_oysteink_wfe
     
-    Clarified relative priority of NMIs, interrupts, debug, exceptions
+    Implemented custom WFE instruction
 
 """
 
