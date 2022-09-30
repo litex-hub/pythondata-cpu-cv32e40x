@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.5.0.post186"
-version_tuple = (0, 5, 0, 186)
+version_str = "0.5.0.post188"
+version_tuple = (0, 5, 0, 188)
 try:
     from packaging.version import Version as V
-    pversion = V("0.5.0.post186")
+    pversion = V("0.5.0.post188")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.5.0.post44"
-data_version_tuple = (0, 5, 0, 44)
+data_version_str = "0.5.0.post46"
+data_version_tuple = (0, 5, 0, 46)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.5.0.post44")
+    pdata_version = V("0.5.0.post46")
 except ImportError:
     pass
-data_git_hash = "771a63f8583d15b7b3b95a35a0432c77cb8c08cb"
-data_git_describe = "0.5.0-44-g771a63f8"
+data_git_hash = "689a1184bf013548305cf21cbf22460d73d67de0"
+data_git_describe = "0.5.0-46-g689a1184"
 data_git_msg = """\
-commit 771a63f8583d15b7b3b95a35a0432c77cb8c08cb
-Merge: 707899d0 ee44ba7c
-Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Thu Sep 29 09:25:39 2022 +0200
+commit 689a1184bf013548305cf21cbf22460d73d67de0
+Merge: 771a63f8 a87a94b7
+Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
+Date:   Fri Sep 30 12:15:20 2022 +0200
 
-    Merge pull request #677 from silabs-oivind/rvfi_trace_performance_fix
+    Merge pull request #678 from Silabs-ArjanB/ArjanB_sdexrt
     
-    Fix performance issue in rvfi_sim_trace and enable it by default.
+    Updated to latest RISC-V Debug specification. Added support for disab…
 
 """
 
