@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.5.0.post188"
-version_tuple = (0, 5, 0, 188)
+version_str = "0.5.0.post190"
+version_tuple = (0, 5, 0, 190)
 try:
     from packaging.version import Version as V
-    pversion = V("0.5.0.post188")
+    pversion = V("0.5.0.post190")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.5.0.post46"
-data_version_tuple = (0, 5, 0, 46)
+data_version_str = "0.5.0.post48"
+data_version_tuple = (0, 5, 0, 48)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.5.0.post46")
+    pdata_version = V("0.5.0.post48")
 except ImportError:
     pass
-data_git_hash = "689a1184bf013548305cf21cbf22460d73d67de0"
-data_git_describe = "0.5.0-46-g689a1184"
+data_git_hash = "b042f3b29d06735da1b60ea646c3f16cebe23a6b"
+data_git_describe = "0.5.0-48-gb042f3b2"
 data_git_msg = """\
-commit 689a1184bf013548305cf21cbf22460d73d67de0
-Merge: 771a63f8 a87a94b7
+commit b042f3b29d06735da1b60ea646c3f16cebe23a6b
+Merge: 689a1184 74921041
 Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Fri Sep 30 12:15:20 2022 +0200
+Date:   Mon Oct 3 14:17:56 2022 +0200
 
-    Merge pull request #678 from Silabs-ArjanB/ArjanB_sdexrt
+    Merge pull request #680 from Silabs-ArjanB/ArjanB_clic1
     
-    Updated to latest RISC-V Debug specification. Added support for disab…
+    Updates according to latest Smclic specification
 
 """
 
