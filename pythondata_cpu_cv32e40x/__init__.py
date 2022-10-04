@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.5.0.post196"
-version_tuple = (0, 5, 0, 196)
+version_str = "0.5.0.post198"
+version_tuple = (0, 5, 0, 198)
 try:
     from packaging.version import Version as V
-    pversion = V("0.5.0.post196")
+    pversion = V("0.5.0.post198")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.5.0.post54"
-data_version_tuple = (0, 5, 0, 54)
+data_version_str = "0.5.0.post56"
+data_version_tuple = (0, 5, 0, 56)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.5.0.post54")
+    pdata_version = V("0.5.0.post56")
 except ImportError:
     pass
-data_git_hash = "789a0c13941bb747bb13789e9be583daa635ece2"
-data_git_describe = "0.5.0-54-g789a0c13"
+data_git_hash = "c87e2a97cd55d269bf99d65c7c84ab866729bfc7"
+data_git_describe = "0.5.0-56-gc87e2a97"
 data_git_msg = """\
-commit 789a0c13941bb747bb13789e9be583daa635ece2
-Merge: ac236895 3bd95e88
+commit c87e2a97cd55d269bf99d65c7c84ab866729bfc7
+Merge: 789a0c13 2d0afd88
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Tue Oct 4 09:12:05 2022 +0200
+Date:   Tue Oct 4 10:13:51 2022 +0200
 
-    Merge pull request #682 from silabs-oysteink/silabs-oysteink_clic-ptr-wb_valid
+    Merge pull request #683 from silabs-oysteink/silabs-oysteink_rvfi-assert-fix
     
-    Fix for issue #497
+    Added missing clock and reset to rvfi assertion/property.
 
 """
 
