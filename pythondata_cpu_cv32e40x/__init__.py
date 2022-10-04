@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.5.0.post193"
-version_tuple = (0, 5, 0, 193)
+version_str = "0.5.0.post196"
+version_tuple = (0, 5, 0, 196)
 try:
     from packaging.version import Version as V
-    pversion = V("0.5.0.post193")
+    pversion = V("0.5.0.post196")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.5.0.post51"
-data_version_tuple = (0, 5, 0, 51)
+data_version_str = "0.5.0.post54"
+data_version_tuple = (0, 5, 0, 54)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.5.0.post51")
+    pdata_version = V("0.5.0.post54")
 except ImportError:
     pass
-data_git_hash = "ac236895bbea034dbd35857ffb01f96d42c5b321"
-data_git_describe = "0.5.0-51-gac236895"
+data_git_hash = "789a0c13941bb747bb13789e9be583daa635ece2"
+data_git_describe = "0.5.0-54-g789a0c13"
 data_git_msg = """\
-commit ac236895bbea034dbd35857ffb01f96d42c5b321
-Merge: b042f3b2 376d3164
+commit 789a0c13941bb747bb13789e9be583daa635ece2
+Merge: ac236895 3bd95e88
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Tue Oct 4 08:24:01 2022 +0200
+Date:   Tue Oct 4 09:12:05 2022 +0200
 
-    Merge pull request #679 from silabs-oysteink/silabs-oysteink_rvfi_intr_shv
+    Merge pull request #682 from silabs-oysteink/silabs-oysteink_clic-ptr-wb_valid
     
-    Fix for missing rvfi_intr on CLIC SHV interrupts.
+    Fix for issue #497
 
 """
 
