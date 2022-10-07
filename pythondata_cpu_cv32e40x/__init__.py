@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.5.0.post198"
-version_tuple = (0, 5, 0, 198)
+version_str = "0.5.0.post200"
+version_tuple = (0, 5, 0, 200)
 try:
     from packaging.version import Version as V
-    pversion = V("0.5.0.post198")
+    pversion = V("0.5.0.post200")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.5.0.post56"
-data_version_tuple = (0, 5, 0, 56)
+data_version_str = "0.5.0.post58"
+data_version_tuple = (0, 5, 0, 58)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.5.0.post56")
+    pdata_version = V("0.5.0.post58")
 except ImportError:
     pass
-data_git_hash = "c87e2a97cd55d269bf99d65c7c84ab866729bfc7"
-data_git_describe = "0.5.0-56-gc87e2a97"
+data_git_hash = "025c987917022f82b302f748586ab03324648c46"
+data_git_describe = "0.5.0-58-g025c9879"
 data_git_msg = """\
-commit c87e2a97cd55d269bf99d65c7c84ab866729bfc7
-Merge: 789a0c13 2d0afd88
-Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Tue Oct 4 10:13:51 2022 +0200
+commit 025c987917022f82b302f748586ab03324648c46
+Merge: c87e2a97 9f6e4daf
+Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
+Date:   Fri Oct 7 08:07:20 2022 +0200
 
-    Merge pull request #683 from silabs-oysteink/silabs-oysteink_rvfi-assert-fix
+    Merge pull request #684 from Silabs-ArjanB/ArjanB_pcs
     
-    Added missing clock and reset to rvfi assertion/property.
+    Simplified meaning of debug_pc_* interface
 
 """
 
