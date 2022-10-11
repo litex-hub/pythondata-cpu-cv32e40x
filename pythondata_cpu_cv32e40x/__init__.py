@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.5.0.post202"
-version_tuple = (0, 5, 0, 202)
+version_str = "0.5.0.post206"
+version_tuple = (0, 5, 0, 206)
 try:
     from packaging.version import Version as V
-    pversion = V("0.5.0.post202")
+    pversion = V("0.5.0.post206")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.5.0.post60"
-data_version_tuple = (0, 5, 0, 60)
+data_version_str = "0.5.0.post64"
+data_version_tuple = (0, 5, 0, 64)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.5.0.post60")
+    pdata_version = V("0.5.0.post64")
 except ImportError:
     pass
-data_git_hash = "f17b92ad4e5f20110f5fffa34a81dbbc9574296a"
-data_git_describe = "0.5.0-60-gf17b92ad"
+data_git_hash = "0159258bb9e4dec35b556136f3dc468cb244b69e"
+data_git_describe = "0.5.0-64-g0159258b"
 data_git_msg = """\
-commit f17b92ad4e5f20110f5fffa34a81dbbc9574296a
-Merge: 025c9879 2b364d9a
-Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Mon Oct 10 14:27:55 2022 +0200
+commit 0159258bb9e4dec35b556136f3dc468cb244b69e
+Merge: f17b92ad a91c67fe
+Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
+Date:   Tue Oct 11 15:03:08 2022 +0200
 
-    Merge pull request #685 from Silabs-ArjanB/ArjanB_etnmi
+    Merge pull request #686 from silabs-oysteink/mscratchcsw_illegal
     
-    Removed non-existing etrigger.nmi field
+    Restricting CSR access to mscratchcsw[l] to CSRRW with rd != x0
 
 """
 
