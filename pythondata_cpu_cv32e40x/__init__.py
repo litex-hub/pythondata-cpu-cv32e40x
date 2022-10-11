@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.5.0.post200"
-version_tuple = (0, 5, 0, 200)
+version_str = "0.5.0.post202"
+version_tuple = (0, 5, 0, 202)
 try:
     from packaging.version import Version as V
-    pversion = V("0.5.0.post200")
+    pversion = V("0.5.0.post202")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.5.0.post58"
-data_version_tuple = (0, 5, 0, 58)
+data_version_str = "0.5.0.post60"
+data_version_tuple = (0, 5, 0, 60)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.5.0.post58")
+    pdata_version = V("0.5.0.post60")
 except ImportError:
     pass
-data_git_hash = "025c987917022f82b302f748586ab03324648c46"
-data_git_describe = "0.5.0-58-g025c9879"
+data_git_hash = "f17b92ad4e5f20110f5fffa34a81dbbc9574296a"
+data_git_describe = "0.5.0-60-gf17b92ad"
 data_git_msg = """\
-commit 025c987917022f82b302f748586ab03324648c46
-Merge: c87e2a97 9f6e4daf
+commit f17b92ad4e5f20110f5fffa34a81dbbc9574296a
+Merge: 025c9879 2b364d9a
 Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Fri Oct 7 08:07:20 2022 +0200
+Date:   Mon Oct 10 14:27:55 2022 +0200
 
-    Merge pull request #684 from Silabs-ArjanB/ArjanB_pcs
+    Merge pull request #685 from Silabs-ArjanB/ArjanB_etnmi
     
-    Simplified meaning of debug_pc_* interface
+    Removed non-existing etrigger.nmi field
 
 """
 
