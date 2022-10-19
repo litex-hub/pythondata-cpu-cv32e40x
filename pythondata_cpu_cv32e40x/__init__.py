@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.6.0.post142"
-version_tuple = (0, 6, 0, 142)
+version_str = "0.6.0.post148"
+version_tuple = (0, 6, 0, 148)
 try:
     from packaging.version import Version as V
-    pversion = V("0.6.0.post142")
+    pversion = V("0.6.0.post148")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.6.0.post0"
-data_version_tuple = (0, 6, 0, 0)
+data_version_str = "0.6.0.post6"
+data_version_tuple = (0, 6, 0, 6)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.6.0.post0")
+    pdata_version = V("0.6.0.post6")
 except ImportError:
     pass
-data_git_hash = "383be6ebc6987a0d97c0462e0adb417f2b0f29e8"
-data_git_describe = "0.6.0-0-g383be6eb"
+data_git_hash = "eac5a0fe86c6509dddc2faba2a4c4118b97a29cf"
+data_git_describe = "0.6.0-6-geac5a0fe"
 data_git_msg = """\
-commit 383be6ebc6987a0d97c0462e0adb417f2b0f29e8
-Merge: 2144858d 76d9a0fd
-Author: silabs-oysteink <66771756+silabs-oysteink@users.noreply.github.com>
-Date:   Wed Oct 12 08:48:25 2022 +0200
+commit eac5a0fe86c6509dddc2faba2a4c4118b97a29cf
+Merge: 383be6eb 255a2a33
+Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
+Date:   Wed Oct 19 07:57:41 2022 +0200
 
-    Merge pull request #688 from Silabs-ArjanB/ArjanB_csrrsx0
+    Merge pull request #689 from silabs-oysteink/clic-updates
     
-    Fixed description for which CSR instructions on mscratchcsw and mscra…
+    Updates related to PR #680
 
 """
 
