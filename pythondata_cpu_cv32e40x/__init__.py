@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.6.0.post148"
-version_tuple = (0, 6, 0, 148)
+version_str = "0.6.0.post150"
+version_tuple = (0, 6, 0, 150)
 try:
     from packaging.version import Version as V
-    pversion = V("0.6.0.post148")
+    pversion = V("0.6.0.post150")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.6.0.post6"
-data_version_tuple = (0, 6, 0, 6)
+data_version_str = "0.6.0.post8"
+data_version_tuple = (0, 6, 0, 8)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.6.0.post6")
+    pdata_version = V("0.6.0.post8")
 except ImportError:
     pass
-data_git_hash = "eac5a0fe86c6509dddc2faba2a4c4118b97a29cf"
-data_git_describe = "0.6.0-6-geac5a0fe"
+data_git_hash = "42281285739d2238a9031144e4373ef2ab6a25d2"
+data_git_describe = "0.6.0-8-g42281285"
 data_git_msg = """\
-commit eac5a0fe86c6509dddc2faba2a4c4118b97a29cf
-Merge: 383be6eb 255a2a33
+commit 42281285739d2238a9031144e4373ef2ab6a25d2
+Merge: eac5a0fe 202d4b9d
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Wed Oct 19 07:57:41 2022 +0200
+Date:   Wed Oct 19 15:47:37 2022 +0200
 
-    Merge pull request #689 from silabs-oysteink/clic-updates
+    Merge pull request #690 from silabs-oivind/fix_e40s_issue_277
     
-    Updates related to PR #680
+    Clear mstatus.mprv when entering user mode through dret
 
 """
 
