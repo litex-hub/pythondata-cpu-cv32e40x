@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.6.0.post150"
-version_tuple = (0, 6, 0, 150)
+version_str = "0.6.0.post153"
+version_tuple = (0, 6, 0, 153)
 try:
     from packaging.version import Version as V
-    pversion = V("0.6.0.post150")
+    pversion = V("0.6.0.post153")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.6.0.post8"
-data_version_tuple = (0, 6, 0, 8)
+data_version_str = "0.6.0.post11"
+data_version_tuple = (0, 6, 0, 11)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.6.0.post8")
+    pdata_version = V("0.6.0.post11")
 except ImportError:
     pass
-data_git_hash = "42281285739d2238a9031144e4373ef2ab6a25d2"
-data_git_describe = "0.6.0-8-g42281285"
+data_git_hash = "642cfb2f20825677916c2abc8410e242ff4eb450"
+data_git_describe = "0.6.0-11-g642cfb2f"
 data_git_msg = """\
-commit 42281285739d2238a9031144e4373ef2ab6a25d2
-Merge: eac5a0fe 202d4b9d
+commit 642cfb2f20825677916c2abc8410e242ff4eb450
+Merge: 42281285 1721994b
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Wed Oct 19 15:47:37 2022 +0200
+Date:   Thu Oct 20 12:31:42 2022 +0200
 
-    Merge pull request #690 from silabs-oivind/fix_e40s_issue_277
+    Merge pull request #691 from silabs-oysteink/zero-replicate-fixes
     
-    Clear mstatus.mprv when entering user mode through dret
+    Removed possible zero-replication code
 
 """
 
