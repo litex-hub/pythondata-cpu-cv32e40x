@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.6.0.post153"
-version_tuple = (0, 6, 0, 153)
+version_str = "0.6.0.post156"
+version_tuple = (0, 6, 0, 156)
 try:
     from packaging.version import Version as V
-    pversion = V("0.6.0.post153")
+    pversion = V("0.6.0.post156")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.6.0.post11"
-data_version_tuple = (0, 6, 0, 11)
+data_version_str = "0.6.0.post14"
+data_version_tuple = (0, 6, 0, 14)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.6.0.post11")
+    pdata_version = V("0.6.0.post14")
 except ImportError:
     pass
-data_git_hash = "642cfb2f20825677916c2abc8410e242ff4eb450"
-data_git_describe = "0.6.0-11-g642cfb2f"
+data_git_hash = "93bf5453d9d87bcc24983f562c33a368ba9cfbf4"
+data_git_describe = "0.6.0-14-g93bf5453"
 data_git_msg = """\
-commit 642cfb2f20825677916c2abc8410e242ff4eb450
-Merge: 42281285 1721994b
+commit 93bf5453d9d87bcc24983f562c33a368ba9cfbf4
+Merge: 642cfb2f badde443
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Thu Oct 20 12:31:42 2022 +0200
+Date:   Thu Oct 27 12:59:10 2022 +0200
 
-    Merge pull request #691 from silabs-oysteink/zero-replicate-fixes
+    Merge pull request #692 from silabs-oysteink/silabs-oysteink_minhv-cherry-pick
     
-    Removed possible zero-replication code
+    Merge minhv handling from CV32E40S
 
 """
 
