@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.6.0.post156"
-version_tuple = (0, 6, 0, 156)
+version_str = "0.6.0.post159"
+version_tuple = (0, 6, 0, 159)
 try:
     from packaging.version import Version as V
-    pversion = V("0.6.0.post156")
+    pversion = V("0.6.0.post159")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.6.0.post14"
-data_version_tuple = (0, 6, 0, 14)
+data_version_str = "0.6.0.post17"
+data_version_tuple = (0, 6, 0, 17)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.6.0.post14")
+    pdata_version = V("0.6.0.post17")
 except ImportError:
     pass
-data_git_hash = "93bf5453d9d87bcc24983f562c33a368ba9cfbf4"
-data_git_describe = "0.6.0-14-g93bf5453"
+data_git_hash = "057c0cd850760bd952528e52289bf4d4f2758dbf"
+data_git_describe = "0.6.0-17-g057c0cd8"
 data_git_msg = """\
-commit 93bf5453d9d87bcc24983f562c33a368ba9cfbf4
-Merge: 642cfb2f badde443
+commit 057c0cd850760bd952528e52289bf4d4f2758dbf
+Merge: 93bf5453 37ef9460
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Thu Oct 27 12:59:10 2022 +0200
+Date:   Tue Nov 1 13:57:16 2022 +0100
 
-    Merge pull request #692 from silabs-oysteink/silabs-oysteink_minhv-cherry-pick
+    Merge pull request #693 from silabs-oysteink/minhv-clear-wb
     
-    Merge minhv handling from CV32E40S
+    mcause.minhv clear from WB stage
 
 """
 
