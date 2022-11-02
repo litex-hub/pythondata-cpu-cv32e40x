@@ -4,33 +4,33 @@ data_location = os.path.join(__dir__, "system_verilog")
 src = "https://github.com/openhwgroup/cv32e40x"
 
 # Module version
-version_str = "0.6.0.post159"
-version_tuple = (0, 6, 0, 159)
+version_str = "0.6.0.post161"
+version_tuple = (0, 6, 0, 161)
 try:
     from packaging.version import Version as V
-    pversion = V("0.6.0.post159")
+    pversion = V("0.6.0.post161")
 except ImportError:
     pass
 
 # Data version info
-data_version_str = "0.6.0.post17"
-data_version_tuple = (0, 6, 0, 17)
+data_version_str = "0.6.0.post19"
+data_version_tuple = (0, 6, 0, 19)
 try:
     from packaging.version import Version as V
-    pdata_version = V("0.6.0.post17")
+    pdata_version = V("0.6.0.post19")
 except ImportError:
     pass
-data_git_hash = "057c0cd850760bd952528e52289bf4d4f2758dbf"
-data_git_describe = "0.6.0-17-g057c0cd8"
+data_git_hash = "727c573ee721025e8bb9cef5a7d26b15811c3676"
+data_git_describe = "0.6.0-19-g727c573e"
 data_git_msg = """\
-commit 057c0cd850760bd952528e52289bf4d4f2758dbf
-Merge: 93bf5453 37ef9460
+commit 727c573ee721025e8bb9cef5a7d26b15811c3676
+Merge: 057c0cd8 011baa6c
 Author: Arjan Bink <40633348+Silabs-ArjanB@users.noreply.github.com>
-Date:   Tue Nov 1 13:57:16 2022 +0100
+Date:   Wed Nov 2 12:15:40 2022 +0100
 
-    Merge pull request #693 from silabs-oysteink/minhv-clear-wb
+    Merge pull request #694 from silabs-oysteink/silabs-oysteink_ptr-mcause-stall
     
-    mcause.minhv clear from WB stage
+    CSR stall on CLIC pointers writing to mcause.minhv
 
 """
 
